@@ -7,3 +7,10 @@ title VARCHAR(250) NOT NULL,
 price_old VARCHAR(250) DEFAULT NULL,
 price VARCHAR(250) DEFAULT NULL
 );
+
+DROP TABLE IF EXISTS authors;
+
+CREATE TABLE authors (
+    id int AUTO_INCREMENT,
+    name varchar(100) NOT NULL UNIQUE
+);

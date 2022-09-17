@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -9,18 +10,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BookService {
+@Profile("default")
+public class BookService implements BookServiceInterface {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public BookService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Book> getBooksData(){
+    @Override
+    public List<Author> getAuthorsData() {
+        List<Author> authors = jdbcTemplate.query("SELECT * FROM authors", (ResultSet rs, int rownum) -> {
+            Author author = new Author();
+            author.setId(rs.getInt("id"));
+            author.setName(rs.getString("name"));
+            return author;
+        });
+        return new ArrayList<>(authors);
+    }
 
-        List<Book> books = jdbcTemplate.query("SELECT * FROM books", (ResultSet rs, int rownum)->{
+    @Override
+    public List<Book> getBooksData() {
+        List<Book> books = jdbcTemplate.query("SELECT * FROM books", (ResultSet rs, int rownum) -> {
             Book book = new Book();
             book.setId(rs.getInt("id"));
             book.setAuthor(rs.getString("author_id"));
