@@ -26,6 +26,10 @@ public class BookServiceDev implements BookServiceInterface {
     @Autowired
     public BookServiceDev(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        generateAuthorData();
+    }
+
+    public void generateAuthorData() {
         Faker faker = new Faker(new Locale("ru"));
         // получить id авторов из БД
         List<Author> authors = jdbcTemplate.query("SELECT DISTINCT CAST(author_id AS INT) AS author_id FROM books " +
@@ -34,38 +38,17 @@ public class BookServiceDev implements BookServiceInterface {
             author.setId(rs.getInt("author_id"));
             return author;
         });
-        // сгенерировать уникальные имена и присвоить обьектам
+        // сгенерировать уникальные имена
         List<String> uniqNames = Stream.generate(() ->
                 faker.name().firstName().concat(" ").concat(faker.name().lastName()))
                 .distinct().limit(authors.size()).collect(Collectors.toList());
+        //присвоить id
         IntStream.range(0, uniqNames.size()).forEach(id -> authors.get(id).setName(uniqNames.get(id)));
         // запись в БД
         SqlParameterSource[] batch = SqlParameterSourceUtils.createBatch(authors.toArray());
         NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
         int[] updateCounts = namedParameterJdbcTemplate.batchUpdate(
                 "INSERT INTO authors (id, name) VALUES (:id ,:name)", batch);
-//        jdbcTemplate.batchUpdate("INSERT INTO authors (name) VALUES (?)",
-//                new BatchPreparedStatementSetter() {
-//                    @Override
-//                    public void setValues(PreparedStatement ps, int i) throws SQLException {
-//                        ps.setString(1, authors.get(i).getName());
-//                    }
-//                    @Override
-//                    public int getBatchSize() {
-//                        return authors.size();
-//                    }
-//                });
-    }
-
-    @Override
-    public List<Author> getAuthorsData() {
-        List<Author> authors = jdbcTemplate.query("SELECT * FROM authors", (ResultSet rs, int rownum) -> {
-            Author author = new Author();
-            author.setId(rs.getInt("id"));
-            author.setName(rs.getString("name"));
-            return author;
-        });
-        return new ArrayList<>(authors);
     }
 
     @Override
