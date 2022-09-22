@@ -11,8 +11,7 @@ import java.util.List;
 
 @Service
 @Profile("default")
-public class BookService implements BookServiceInterface {
-
+public class BookService implements BookServiceInterface{
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
