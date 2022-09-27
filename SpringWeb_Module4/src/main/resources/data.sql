@@ -1,0 +1,1 @@
+INSERT INTO books(author,title,priceOld,price) VALUES ('Dostoevsky','Idiot',350,400)
