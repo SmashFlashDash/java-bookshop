@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.data.author;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

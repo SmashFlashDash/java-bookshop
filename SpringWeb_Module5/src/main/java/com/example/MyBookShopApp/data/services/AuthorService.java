@@ -1,5 +1,7 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.data.services;
 
+import com.example.MyBookShopApp.data.author.Author;
+import com.example.MyBookShopApp.data.author.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,6 @@ public class AuthorService {
     }
 
     public Map<String, List<Author>> getAuthorsMap(){
-        return authorRepository.findAll().stream().collect(Collectors.groupingBy((Author a)-> a.getLastName().substring(0,1)));
+        return authorRepository.findAll().stream().collect(Collectors.groupingBy((Author a)-> a.getName().substring(0,1)));
     }
 }
