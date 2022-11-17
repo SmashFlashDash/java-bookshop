@@ -23,16 +23,16 @@ public class Author {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
 
-//    @OneToMany(mappedBy = "author")
-//    private List<Book> bookList = new ArrayList<>();
-//
-//    public List<Book> getBookList() {
-//        return bookList;
-//    }
-//
-//    public void setBookList(List<Book> bookList) {
-//        this.bookList = bookList;
-//    }
+    @OneToMany(mappedBy = "author")
+    private List<Book> bookList = new ArrayList<>();
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
 
     public Integer getId() {
         return id;
@@ -71,6 +71,8 @@ public class Author {
         return "Author{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", slug='" + slug + '\'' +
                 '}';
     }
 }

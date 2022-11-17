@@ -42,7 +42,7 @@ insert into book (id, description, discount, image, is_bestseller, price, pub_da
 insert into book (id, description, discount, image, is_bestseller, price, pub_date, slug, title) values (20, '', 30, '', 49, 60, '2022/04/17', '', 'Che: Part One');
 insert into book (id, description, discount, image, is_bestseller, price, pub_date, slug, title) values (21, '', 77, '', 71, 50, '2022/04/19', '', 'Category 7: The End of the World');
 
-insert into book2author (id, author_id, book_id) values (1, 4, 1);
+insert into book2author (id, author_id, book_id) values (1, 1, 1);
 insert into book2author (id, author_id, book_id) values (2, 7, 2);
 insert into book2author (id, author_id, book_id) values (3, 4, 3);
 insert into book2author (id, author_id, book_id) values (4, 16, 4);
@@ -63,3 +63,25 @@ insert into book2author (id, author_id, book_id) values (18, 2, 18);
 insert into book2author (id, author_id, book_id) values (19, 4, 19);
 insert into book2author (id, author_id, book_id) values (20, 16, 20);
 insert into book2author (id, author_id, book_id) values (21, 21, 21);
+
+insert into genre (id, name, parent_id, slug) values (1, 'Fantasy', 0, 'This is slug');
+insert into book2genre (id, book_id, genre_id) values (1, 1, 1);
+insert into book2genre (id, book_id, genre_id) values (1, 2, 1);
+
+insert into users (id, balance, hash, name, reg_time) values (1, 1000, '0hash', 'Joshe', '2022-11-11 15:00:00');
+insert into users (id, balance, hash, name, reg_time) values (2, 10000, '1hash', 'Timmy', '2022-11-11 15:00:00');
+insert into book2user (id, book_id, time, type_id, user_id) values (1, 1, '2022-11-11 15:00:00', 1, 1);
+insert into book2user (id, book_id, time, type_id, user_id) values (2, 2, '2022-11-11 15:00:00', 1, 1);
+insert into book2user (id, book_id, time, type_id, user_id) values (3, 1, '2022-11-11 15:00:00', 1, 2);
+
+insert into file_download (id, user_id, book_id, count) values (1, 1, 1, 100);
+insert into file_download (id, user_id, book_id, count) values (2, 1, 2, 200);
+insert into file_download (id, user_id, book_id, count) values (3, 2, 2, 300);
+
+insert into balance_transaction (id, user_id, time, value, book_id, description) values (1, 1, '2022-11-11 15:00:00', 100, 1, 'description');
+insert into balance_transaction (id, user_id, time, value, book_id, description) values (2, 1, '2022-11-11 15:00:00', 200, 1, 'description2');
+insert into balance_transaction (id, user_id, time, value, book_id, description) values (3, 2, '2022-11-11 15:00:00', 300, 1, 'description3');
+
+insert into book_review (id, book_id, user_id, time, text) values (1, 1, 1, '2022-11-11 15:00:00', 'text');
+insert into book_review (id, book_id, user_id, time, text) values (2, 1, 1, '2022-11-11 15:00:00', 'text2');
+insert into book_review (id, book_id, user_id, time, text) values (3, 1, 2, '2022-11-11 15:00:00', 'text3');

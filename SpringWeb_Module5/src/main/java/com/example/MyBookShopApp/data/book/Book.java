@@ -1,9 +1,15 @@
 package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.author.Author;
+import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
+import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+import com.example.MyBookShopApp.data.user.UserEntity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -38,12 +44,89 @@ public class Book {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String title;
 
-    // прописать связть на все двойные таблицы
-    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "book2author",
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "authorId")})
     private Author author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "book2genre",
+            joinColumns = {@JoinColumn(name = "bookId")},
+            inverseJoinColumns = {@JoinColumn(name = "genreId")})
+    private GenreEntity genre;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "book2user",
+            joinColumns = {@JoinColumn(name = "bookId")},
+            inverseJoinColumns = {@JoinColumn(name = "userId")})
+    private List<UserEntity> users;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "file_download",
+            joinColumns = @JoinColumn(name = "bookId", referencedColumnName = "Id"),
+            inverseJoinColumns = @JoinColumn(name = "userId"))
+    private List<FileDownloadEntity> fileDownload;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "balance_transaction",
+//            joinColumns = @JoinColumn(name = "bookId"),
+//            inverseJoinColumns = @JoinColumn(name = "userId"))
+//    private List<BalanceTransactionEntity> balanceTransaction;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "book_review",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReview;
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public GenreEntity getGenre() {
+        return genre;
+    }
+
+    public void setGenre(GenreEntity genre) {
+        this.genre = genre;
+    }
+
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
+    }
+
+    public List<FileDownloadEntity> getFileDownload() {
+        return fileDownload;
+    }
+
+    public void setFileDownload(List<FileDownloadEntity> fileDownloadEntities) {
+        this.fileDownload = fileDownloadEntities;
+    }
+
+//    public List<BalanceTransactionEntity> getBalanceTransaction() {
+//        return balanceTransaction;
+//    }
+//
+//    public void setBalanceTransaction(List<BalanceTransactionEntity> balanceTransactionEntity) {
+//        this.balanceTransaction = balanceTransactionEntity;
+//    }
+//
+//    public List<BookReviewEntity> getBookReview() {
+//        return bookReview;
+//    }
+//
+//    public void setBookReview(List<BookReviewEntity> bookReviewEntity) {
+//        this.bookReview = bookReviewEntity;
+//    }
 
     public Integer getId() {
         return id;
@@ -115,14 +198,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 
     @Override

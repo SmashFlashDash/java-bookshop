@@ -1,7 +1,13 @@
 package com.example.MyBookShopApp.data.user;
 
+import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
+import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
+import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +28,68 @@ public class UserEntity {
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private List<Book> books;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "file_download",
+//            joinColumns = @JoinColumn(name = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "bookId"))
+//    private List<FileDownloadEntity> fileDownload;
+//
+//    // TODO: не правильно мапит по UserId
+//    //  всегда получает обьект по balance_transaction.id=1
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "balance_transaction",
+//            joinColumns = @JoinColumn(name = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "bookId"))
+//    private List<BalanceTransactionEntity> BalanceTransaction;
+//
+//
+//    // TODO: не правильно мапит по UserId
+//    //  всегда получает обьект по book_review.id=1
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "book_review",
+//            joinColumns = @JoinColumn(name = "userId"),
+//            inverseJoinColumns = @JoinColumn(name = "bookId"))
+//    private List<BookReviewEntity> bookReview;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "message",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReviewEntity;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "balance_transaction",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReviewEntity;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "file_download",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReviewEntity;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "book2user",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReviewEntity;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_contact",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReviewEntity;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "book_review_like",
+//            joinColumns = {@JoinColumn(name = "bookId")},
+//            inverseJoinColumns = {@JoinColumn(name = "userId")})
+//    private List<BookReviewEntity> bookReviewEntity;
 
     public int getId() {
         return id;
