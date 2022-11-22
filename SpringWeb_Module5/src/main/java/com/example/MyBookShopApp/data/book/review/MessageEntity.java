@@ -1,5 +1,7 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import com.example.MyBookShopApp.data.user.UserEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,6 +30,18 @@ public class MessageEntity {
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    private UserEntity user;
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
     public int getId() {
         return id;

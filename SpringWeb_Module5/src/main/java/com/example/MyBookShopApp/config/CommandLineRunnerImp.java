@@ -64,13 +64,12 @@ public class CommandLineRunnerImp implements CommandLineRunner {
         Logger.getLogger(CommandLineRunnerImp.class.getSimpleName())
                 .info(author1.get().toString());
 
-        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
+//        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
 //        Session session = sessionFactory.getCurrentSession();
 //        Session session = sessionFactory.openSession();
         Session session = em.unwrap(Session.class);
         Transaction tx = session.beginTransaction();
-        Query query = session.createQuery("from UserEntity");
-        List<UserEntity> users = query.getResultList();
+        List<UserEntity> users  = session.createQuery("from UserEntity").getResultList();
 
         System.out.println(author1.get());
 

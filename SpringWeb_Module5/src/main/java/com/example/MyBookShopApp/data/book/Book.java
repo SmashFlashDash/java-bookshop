@@ -62,23 +62,20 @@ public class Book {
             inverseJoinColumns = {@JoinColumn(name = "userId")})
     private List<UserEntity> users;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "file_download",
-            joinColumns = @JoinColumn(name = "bookId", referencedColumnName = "Id"),
-            inverseJoinColumns = @JoinColumn(name = "userId"))
+    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "file_download",
+//            joinColumns = @JoinColumn(name = "bookId", referencedColumnName = "Id"),
+//            inverseJoinColumns = @JoinColumn(name = "userId"))
+    @JoinColumn(name = "bookId")
     private List<FileDownloadEntity> fileDownload;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "balance_transaction",
-//            joinColumns = @JoinColumn(name = "bookId"),
-//            inverseJoinColumns = @JoinColumn(name = "userId"))
-//    private List<BalanceTransactionEntity> balanceTransaction;
-//
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "book_review",
-//            joinColumns = {@JoinColumn(name = "bookId")},
-//            inverseJoinColumns = {@JoinColumn(name = "userId")})
-//    private List<BookReviewEntity> bookReview;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookId")
+    private List<BalanceTransactionEntity> balanceTransaction;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookId")
+    private List<BookReviewEntity> bookReview;
 
     public Author getAuthor() {
         return author;
@@ -112,21 +109,21 @@ public class Book {
         this.fileDownload = fileDownloadEntities;
     }
 
-//    public List<BalanceTransactionEntity> getBalanceTransaction() {
-//        return balanceTransaction;
-//    }
-//
-//    public void setBalanceTransaction(List<BalanceTransactionEntity> balanceTransactionEntity) {
-//        this.balanceTransaction = balanceTransactionEntity;
-//    }
-//
-//    public List<BookReviewEntity> getBookReview() {
-//        return bookReview;
-//    }
-//
-//    public void setBookReview(List<BookReviewEntity> bookReviewEntity) {
-//        this.bookReview = bookReviewEntity;
-//    }
+    public List<BalanceTransactionEntity> getBalanceTransaction() {
+        return balanceTransaction;
+    }
+
+    public void setBalanceTransaction(List<BalanceTransactionEntity> balanceTransaction) {
+        this.balanceTransaction = balanceTransaction;
+    }
+
+    public List<BookReviewEntity> getBookReview() {
+        return bookReview;
+    }
+
+    public void setBookReview(List<BookReviewEntity> bookReview) {
+        this.bookReview = bookReview;
+    }
 
     public Integer getId() {
         return id;

@@ -85,3 +85,13 @@ insert into balance_transaction (id, user_id, time, value, book_id, description)
 insert into book_review (id, book_id, user_id, time, text) values (1, 1, 1, '2022-11-11 15:00:00', 'text');
 insert into book_review (id, book_id, user_id, time, text) values (2, 1, 1, '2022-11-11 15:00:00', 'text2');
 insert into book_review (id, book_id, user_id, time, text) values (3, 1, 2, '2022-11-11 15:00:00', 'text3');
+
+insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (1, 0, 'code', '2022-11-11 15:00:00', 0, 'contact', 1, 1);
+insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (2, 0, 'code2', '2022-11-11 15:00:00', 0, 'contact2', 0, 2);
+
+insert into message (id, email, name, subject, text, time, user_id) values (1, 'email', 'name', 'subject', 'text', '2022-11-11 15:00:00', 1);
+insert into message (id, email, name, subject, text, time, user_id) values (2, 'email2', 'name2', 'subject2', 'text2', '2022-11-11 15:00:00', 2);
+
+insert into book_review_like (id, review_id, time, user_id, value) values (1, 1, '2022-11-11 15:00:00', 1, 100);
+insert into book_review_like (id, review_id, time, user_id, value) values (2, 1, '2022-11-11 15:00:00', 2, 100);
+insert into book_review_like (id, review_id, time, user_id, value) values (3, 2, '2022-11-11 15:00:00', 2, 100);

@@ -23,6 +23,18 @@ public class BookReviewLikeEntity {
     @Column(columnDefinition = "SMALLINT NOT NULL")
     private short value;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reviewId", insertable = false, updatable = false)
+    private BookReviewEntity review;
+
+    public BookReviewEntity getReview() {
+        return review;
+    }
+
+    public void setReview(BookReviewEntity review) {
+        this.review = review;
+    }
+
     public int getId() {
         return id;
     }

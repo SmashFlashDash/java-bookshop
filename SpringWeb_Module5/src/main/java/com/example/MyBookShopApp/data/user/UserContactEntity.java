@@ -33,6 +33,17 @@ public class UserContactEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
+    @OneToOne(mappedBy = "userContact")
+    private UserEntity user;
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
     public int getId() {
         return id;
     }

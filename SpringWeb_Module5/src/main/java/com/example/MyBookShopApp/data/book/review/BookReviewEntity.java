@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.data.book.review;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "book_review")
@@ -22,6 +23,17 @@ public class BookReviewEntity {
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
+
+    @OneToMany(mappedBy = "review")
+    private List<BookReviewLikeEntity> bookReviewLike;
+
+    public List<BookReviewLikeEntity> getBookReviewLike() {
+        return bookReviewLike;
+    }
+
+    public void setBookReviewLike(List<BookReviewLikeEntity> bookReviewLike) {
+        this.bookReviewLike = bookReviewLike;
+    }
 
     public int getId() {
         return id;
