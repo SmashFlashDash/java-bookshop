@@ -59,10 +59,10 @@ public class CommandLineRunnerImp implements CommandLineRunner {
         Optional<Book> book2 = bookRepository.findById(2);
         Optional<Author> author1 = authorRepository.findById(1);
 
-        Logger.getLogger(CommandLineRunnerImp.class.getSimpleName())
-                .info(book1.get().toString());
-        Logger.getLogger(CommandLineRunnerImp.class.getSimpleName())
-                .info(author1.get().toString());
+//        Logger.getLogger(CommandLineRunnerImp.class.getSimpleName())
+//                .info(book1.get().toString());
+//        Logger.getLogger(CommandLineRunnerImp.class.getSimpleName())
+//                .info(author1.get().toString());
 
 //        SessionFactory sessionFactory = emf.unwrap(SessionFactory.class);
 //        Session session = sessionFactory.getCurrentSession();
@@ -71,7 +71,7 @@ public class CommandLineRunnerImp implements CommandLineRunner {
         Transaction tx = session.beginTransaction();
         List<UserEntity> users  = session.createQuery("from UserEntity").getResultList();
 
-        System.out.println(author1.get());
+//        System.out.println(author1.get());
 
 //        for (int i=0; i<5; i++){
 //            createTestEntity(new TestEntity());
