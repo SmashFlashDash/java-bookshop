@@ -64,7 +64,8 @@ p.error-browser
                     </h2>
                 </header>
                 <div class="Cards Cards_search Cards_refresh">
-                    <div class="Card" th:each="book:${searchResults}" th:insert="~{fragments/book_card_fragment ::bookFragment}"></div>
+                    <div class="Card" th:each="book:${searchResults}"
+                         th:insert="~{fragments/book_card_fragment ::bookFragment(book=${book}, class='Card-fragment')}"></div>
 <!--                    <div class="Card" th:each="book : ${searchResults}">-->
 <!--                        <div class="Card-picture"><a href="#"><img  th:src="${book.image}"-->
 <!--                                                                    src="/assets/img/content/main/card.jpg"-->

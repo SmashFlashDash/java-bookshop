@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div class="Card-fragment" th:fragment="bookFragment">
+<div class="Card-fragment" th:class= "${class}" th:fragment="bookFragment(book, class)">
     <a class="Card-picture" href="/books/slug.html">
         <img th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
@@ -13,8 +13,10 @@
         </div>
     </a>
     <div class="Card-content">
-        <strong class="Card-title"><a th:text="${book.title}"
-                                      href="/books/slug.html">Техника</a></strong>
+        <strong class="Card-title">
+            <a th:text="${book.title}"
+               href="/books/slug.html">Техника
+            </a></strong>
 <!--        <div class="Card-description" th:text="${book.author?.getName()}">Кондратенко Александр Петрович</div>-->
         <div class="Card-description" th:text="${book.author != null ? book.author.getName() : 'no_author'}">Кондратенко Александр Петрович</div>
         <div class="Card-cost">

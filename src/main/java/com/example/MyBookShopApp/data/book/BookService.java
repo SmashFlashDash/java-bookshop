@@ -2,8 +2,11 @@ package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.BookRepository;
+import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.GenreRepository;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagRepository;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.Query;
@@ -19,10 +22,12 @@ import java.util.List;
 public class BookService {
     BookRepository bookRepository;
     TagRepository tagRepository;
+    GenreRepository genreRepository;
     @Autowired
-    public BookService(BookRepository bookRepository, TagRepository tagRepository) {
+    public BookService(BookRepository bookRepository, TagRepository tagRepository, GenreRepository genreRepository) {
         this.bookRepository = bookRepository;
         this.tagRepository = tagRepository;
+        this.genreRepository = genreRepository;
     }
 
     public List<Book> getBooksData() {
@@ -74,10 +79,9 @@ public class BookService {
     public Page<Book> getPageOfNewBooksDateBetween(Date from, Date to, Integer offset, Integer limit) {
         return bookRepository.findAllByPubDateBetweenOrderByPubDateDesc(from, to, PageRequest.of(offset, limit));
     }
-    public Page<Book> getPageOfBooksByTag(String tag, Integer offset, Integer limit) {
-        // Как ускорить запрос мб сохранить idTag
-        // получить tagEntity из model а в TagDto кидать tagEntity
-        TagEntity tagEntity = tagRepository.findByTag(tag);
+    public Page<Book> getPageOfBooksByTag(TagEntity tagEntity, Integer offset, Integer limit) {
+        // TODO: как перенести метод в TagService чтобы получить tagEntity потом обратиться к полю
+        //  tagEntity.books но возвращать список pageble
         if (tagEntity == null){
             return Page.empty();
         } else {
@@ -93,5 +97,15 @@ public class BookService {
 //            start = end;
 //        }
 //        return new PageImpl<>(books.subList(start, end), pageRequest, books.size());
+    }
+
+    public Page<Book> getPageOfBooksByGenre(GenreEntity genreEntity, Integer offset, Integer limit){
+        // TODO: как перенести метод в GenreService чтобы получить genreEntity потом обратиться к полю
+        //  genreEntity.books но возвращать обьекты pageble
+        if (genreEntity == null){
+            return Page.empty();
+        } else {
+            return bookRepository.findAllByGenreOrderByPubDateDesc(genreEntity, PageRequest.of(offset, limit));
+        }
     }
 }
