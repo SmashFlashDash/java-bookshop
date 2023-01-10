@@ -2,15 +2,13 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.BooksPageDto;
 import com.example.MyBookShopApp.data.book.BookService;
+import com.example.MyBookShopApp.data.genre.GenreService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Pattern;
 import java.time.Instant;
@@ -20,9 +18,11 @@ import java.util.Date;
 public class BooksPageController {
 
     private final BookService bookService;
+    private final GenreService genreService;
     @Autowired
-    private BooksPageController(BookService bookService){
+    private BooksPageController(BookService bookService, GenreService genreService){
         this.bookService = bookService;
+        this.genreService = genreService;
     }
 //    @InitBinder
 //    public void initBinder(@RequestParam("from") String from, @RequestParam("to") String to,  WebDataBinder binder) {
@@ -63,6 +63,13 @@ public class BooksPageController {
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
                                             @RequestParam("limit") Integer limit){
         return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
+    }
+    @GetMapping("/books/genre/page/{slug}")
+    @ResponseBody
+    public BooksPageDto getGenreBooksPage(@PathVariable("slug") String slug,
+                                          @RequestParam("offset") Integer offset,
+                                          @RequestParam("limit") Integer limit){
+        return new BooksPageDto(bookService.getPageOfBooksByListGenres(genreService.getGenreNodes(slug), offset, limit).getContent());
     }
 
     @GetMapping("/books/popular")

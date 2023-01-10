@@ -80,27 +80,27 @@ insert into author (id, name, photo, slug) values (20, 'Mannie Kochel', 'http://
 insert into author (id, name, photo, slug) values (21, 'Vite Bellon', 'http://dummyimage.com/159x100.png/cc0000/ffffff', 'vbellonk@wunderground.com');
 
 
-insert into genre (id, name, parent_id, slug) values (1, 'Documentary|Sci-Fi', 10, 'Crime|Drama|Film-Noir|Romance');
-insert into genre (id, name, parent_id, slug) values (2, 'Drama|Sci-Fi', 9, 'Comedy');
-insert into genre (id, name, parent_id, slug) values (3, 'Drama|Mystery|Thriller', 0, 'Drama|Romance');
-insert into genre (id, name, parent_id, slug) values (4, 'Comedy|Crime|Drama|Mystery', 5, 'Comedy');
-insert into genre (id, name, parent_id, slug) values (5, 'Comedy|Romance', 3, 'Comedy|Horror');
-insert into genre (id, name, parent_id, slug) values (6, 'Drama|Musical', 10, 'Action|Comedy');
-insert into genre (id, name, parent_id, slug) values (7, 'Comedy', 2, 'Action|Crime|Mystery|Thriller');
-insert into genre (id, name, parent_id, slug) values (8, 'Crime|Drama|Thriller', 6, 'Comedy|Romance');
-insert into genre (id, name, parent_id, slug) values (9, 'Action|Adventure', 1, 'Drama|Romance');
-insert into genre (id, name, parent_id, slug) values (10, 'Drama', 5, 'Action|Adventure|Comedy|Crime');
-insert into genre (id, name, parent_id, slug) values (11, 'Drama', 5, 'Drama');
-insert into genre (id, name, parent_id, slug) values (12, 'Action|Comedy|Crime|Drama', 4, 'Crime|Drama|Horror|Thriller');
-insert into genre (id, name, parent_id, slug) values (13, 'Children|Fantasy|Sci-Fi', 9, 'Action|Comedy|Fantasy|Horror');
-insert into genre (id, name, parent_id, slug) values (14, 'Crime|Drama', 10, 'Drama|Romance');
-insert into genre (id, name, parent_id, slug) values (15, 'Drama', 4, 'Drama');
-insert into genre (id, name, parent_id, slug) values (16, 'Drama', 8, 'Action|Sci-Fi');
-insert into genre (id, name, parent_id, slug) values (17, 'Comedy', 7, 'Action|Sci-Fi');
-insert into genre (id, name, parent_id, slug) values (18, 'Comedy', 6, 'Drama');
-insert into genre (id, name, parent_id, slug) values (19, 'Drama|Romance', 0, 'Drama|Romance');
-insert into genre (id, name, parent_id, slug) values (20, 'Action|Crime|Drama|Thriller', 3, 'Horror|Thriller');
-insert into genre (id, name, parent_id, slug) values (21, 'Documentary', 3, 'Drama');
+insert into genre (id, name, parent_id, slug) values (1, 'Documentary', null, 'documentary');
+insert into genre (id, name, parent_id, slug) values (2, 'Sci-Fi', null, 'sci_fi');
+insert into genre (id, name, parent_id, slug) values (3, 'Musical', null, 'musical');
+insert into genre (id, name, parent_id, slug) values (4, 'Crime', 1, 'crime');
+insert into genre (id, name, parent_id, slug) values (5, 'Comedy|Romance', 1, 'comedy_romance');
+insert into genre (id, name, parent_id, slug) values (6, 'Drama|Musical', 1, 'drama_musical');
+insert into genre (id, name, parent_id, slug) values (7, 'Comedy', 2, 'comedy');
+insert into genre (id, name, parent_id, slug) values (8, 'Crime|Drama|Thriller', 2, 'crime_drama_thriller');
+insert into genre (id, name, parent_id, slug) values (9, 'Action|Adventure', 2, 'action_adventure');
+insert into genre (id, name, parent_id, slug) values (10, 'Action|Adventure|Comedy', 2, 'action_adventure_comedy');
+insert into genre (id, name, parent_id, slug) values (11, 'Action|Comedy', 3, 'action_comedy');
+insert into genre (id, name, parent_id, slug) values (12, 'Action|Sci-Fi', 3, 'action_sci_fi');
+insert into genre (id, name, parent_id, slug) values (13, 'Action', 3, 'action');
+insert into genre (id, name, parent_id, slug) values (14, 'Crime|Thriller', 3, 'crime_thriller');
+insert into genre (id, name, parent_id, slug) values (15, 'Thriller', 3, 'thriller');
+insert into genre (id, name, parent_id, slug) values (16, 'Drama|Action', 3, 'drama_action');
+insert into genre (id, name, parent_id, slug) values (17, 'Action|Comedy|Musical', 3, 'action_comedy_musical');
+insert into genre (id, name, parent_id, slug) values (18, 'Comedy|Fomedy', 3, 'comedy_fomedy');
+insert into genre (id, name, parent_id, slug) values (19, 'Action|Romance', 15, 'action_romance');
+insert into genre (id, name, parent_id, slug) values (20, 'Action|Crime|Thriller', 15, 'action_crime_thriller');
+insert into genre (id, name, parent_id, slug) values (21, 'Western', 15, 'western');
 
 
 insert into users (id, balance, hash, name, reg_time) values (1, 649, '10fb670b93848837ad8f4a7b8fee8f7687d4b827', 'Edin Giraudot', '2022-08-09 03:21:10');
