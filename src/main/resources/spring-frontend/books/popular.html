@@ -58,7 +58,8 @@
             </h1>
           </div>
           <div class="Cards Cards_refresh" >
-            <div class="Card" th:each="book:${popularBooks}" th:insert="~{fragments/book_card_fragment ::bookFragment}"></div>
+            <div class="Card" th:each="book:${popularBooks}"
+                 th:insert="~{fragments/book_card_fragment ::bookFragment(book=${book}, class='Card-fragment')}"></div>
             <div class="Cards-footer Cards-footer_center">
               <a class="btn btn_primary" href="#" data-refreshshow="popular" data-refreshoffset="0" data-refreshlimit="10">Показать еще</a>
             </div>

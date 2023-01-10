@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div class="Card-fragment" th:fragment="bookFragment">
+<div class="Card-fragment" th:class= "${class}" th:fragment="bookFragment(book, class)">
     <a class="Card-picture" href="/books/slug.html">
         <img th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
