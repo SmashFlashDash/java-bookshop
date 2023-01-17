@@ -49,4 +49,7 @@ public class GenreService {
         return root;
     }
 
+    public List<GenreEntity> getGenresBySlugsArray(List<String> slugs) {
+        return genreRepository.findBySlugIn(slugs);
+    }
 }

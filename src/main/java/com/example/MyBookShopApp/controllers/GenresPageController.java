@@ -30,6 +30,8 @@ public class GenresPageController {
 //    books для вывода на странице сайта при помощи уже имеющегося в вашем распоряжении механизма
 //    пагинации контента.
 //    Рендеринг дерева жанров может быть осуществлён средствами Thymeleaf или JQuery на ваш выбор.
+
+    // select * where id =, and parent_id =
     GenreService genreService;
     BookService bookService;
 
@@ -46,12 +48,17 @@ public class GenresPageController {
 
     @GetMapping("/genres/**")
     public String slugPage(HttpServletRequest request, Model model){
-        String[] s = request.getRequestURI().split("/");
-        model.addAttribute("pathVars",
-                IntStream.range(0, s.length).filter(i -> i > 1).mapToObj(i -> s[i]).collect(Collectors.toList()));
+        String[] _slugs = request.getRequestURI().split("/");
+        List<String> slugs = IntStream.range(0, _slugs.length).filter(i -> i > 1).mapToObj(i -> _slugs[i]).collect(Collectors.toList());
+        List<GenreEntity> genres = genreService.getGenresBySlugsArray(slugs);
+        model.addAttribute("pathVars", genres.stream().map(g -> g.getSlug()).collect(Collectors.toList()));
+        model.addAttribute("genres", genres);
+        // model.addAttribute("pathVars",
+        //         IntStream.range(0, _slugs.length).filter(i -> i > 1).mapToObj(i -> _slugs[i]).collect(Collectors.toList()));
         // Сначала надо получить список всех slugs потом взять книжки
         // или рекурсивный sql
-        GenreEntity genre = genreService.getGenreEntityBySlug(s[s.length - 1]);
+        // сюда надо кидать names а не slugs, а получить их по slugs из адреса
+        GenreEntity genre = genreService.getGenreEntityBySlug(slugs.get(slugs.size() - 1));
         model.addAttribute("genre", genre);
         model.addAttribute("books", bookService.getPageOfBooksByGenre(genre, 0, 10).getContent());
         return "/genres/slug";

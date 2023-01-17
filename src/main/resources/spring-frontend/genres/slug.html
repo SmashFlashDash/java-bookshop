@@ -51,7 +51,7 @@
           </li>
           <li class="breadcrumbs-item" th:each="path,iter : ${pathVars}">
             <a th:href="'/genres/' + ${#strings.listJoin(pathVars.subList(0, iter.index+1), '/')}"
-               th:text="${pathVars.get(iter.index)}"></a>
+               th:text="${genres.get(iter.index).getName()}"></a>
           </li>
         </ul>
         <header class="Middle-header">
