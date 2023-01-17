@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
+import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 //    List<Book> findBookByAuthor_Name(String name);
@@ -27,6 +28,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
     Page<Book> findAllByTagsContainingOrderByPubDateDesc(TagEntity tag, Pageable nexPage);
     Page<Book> findAllByGenreOrderByPubDateDesc(GenreEntity genre, Pageable nexPage);
+    Page<Book> findAllByGenreInOrderByPubDateDesc(List<GenreEntity> genre, Pageable nexPage);
 
     @Query("FROM Book b ORDER BY b.statBought + 0.7 * b.statInCart + 0.4 * b.statPostponed DESC")
     Page<Book> findAllByOrderByPopular(Pageable nextPage);

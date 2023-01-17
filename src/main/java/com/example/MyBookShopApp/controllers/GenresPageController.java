@@ -1,11 +1,13 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.BookService;
 import com.example.MyBookShopApp.data.genre.GenreDto;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.genre.GenreService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,24 +50,34 @@ public class GenresPageController {
 
     @GetMapping("/genres/**")
     public String slugPage(HttpServletRequest request, Model model){
-        String[] _slugs = request.getRequestURI().split("/");
-        List<String> slugs = IntStream.range(0, _slugs.length).filter(i -> i > 1).mapToObj(i -> _slugs[i]).collect(Collectors.toList());
+        ArrayList<String> slugs = new ArrayList<>(Arrays.asList(request.getRequestURI().split("/")));
+        slugs.removeIf(s -> (s.equals("") || s.equals("genres")));
         List<GenreEntity> genres = genreService.getGenresBySlugsArray(slugs);
-        model.addAttribute("pathVars", genres.stream().map(g -> g.getSlug()).collect(Collectors.toList()));
+        model.addAttribute("pathVars", genres.stream().map(GenreEntity::getSlug).collect(Collectors.toList()));
         model.addAttribute("genres", genres);
+
         // model.addAttribute("pathVars",
         //         IntStream.range(0, _slugs.length).filter(i -> i > 1).mapToObj(i -> _slugs[i]).collect(Collectors.toList()));
         // Сначала надо получить список всех slugs потом взять книжки
         // или рекурсивный sql
         // сюда надо кидать names а не slugs, а получить их по slugs из адреса
-        GenreEntity genre = genreService.getGenreEntityBySlug(slugs.get(slugs.size() - 1));
-        model.addAttribute("genre", genre);
-        model.addAttribute("books", bookService.getPageOfBooksByGenre(genre, 0, 10).getContent());
+//        GenreEntity genre = genreService.getGenreEntityBySlug(slugs.get(slugs.size() - 1));
+//        Page<Book> books = bookService.getPageOfBooksByGenres(genres, 0, 10);
+
+        // TODO
+        // в bookService кинуть genre и получить список книг по всем childs
+
+        // надо брать последний genre все его книги и все книги наслудемые
+        model.addAttribute("books", bookService.getPageOfBooksByGenre(genres.get(genres.size()-1), 0, 10).getContent());
         return "/genres/slug";
     }
 
     @GetMapping("/genres")
     public String postponedPage(Model model){
+        // TODO: сделать чтобы Map обрабатывался в конструкторе dto
+        // там он сам раскидывает все потом считает количество книг и в наследумых классах
+        // и там же в конструкторе сделать сортировку
+        // или из метода вызывать всю logic по hashMap
         model.addAttribute("genres", genreService.getAllGenresDto());
         return "/genres/index";
     }

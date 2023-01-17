@@ -105,7 +105,12 @@ public class BookService {
         if (genreEntity == null){
             return Page.empty();
         } else {
+            // получить все наследуемые genres
             return bookRepository.findAllByGenreOrderByPubDateDesc(genreEntity, PageRequest.of(offset, limit));
         }
+    }
+
+    public Page<Book> getPageOfBooksByGenres(List<GenreEntity> genres, Integer offset, Integer limit) {
+        return bookRepository.findAllByGenreInOrderByPubDateDesc(genres, PageRequest.of(offset, limit));
     }
 }

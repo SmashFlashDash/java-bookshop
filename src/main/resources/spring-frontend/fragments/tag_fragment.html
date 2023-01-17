@@ -14,7 +14,7 @@
        th:remove="${genre.getMaxDepth()==0} ? tag : none">
     <div class="Tags-title" th:remove="${genre.getMaxDepth()==0} ? tag : none">
       <div class="Tag">
-        <a th:href="'/genres/' + ${genre.getSlug()}">
+        <a th:href="'/genres' + ${genre.getSlug()}">
           <span th:text="${genre.getItem().getName()}" th:remove="tag"></span>
           <span class="undefined-amount" th:text=" '('+ ${genre.getCountBooks()} + ')'"></span>
         </a>
