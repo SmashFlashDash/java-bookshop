@@ -13,10 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.net.ContentHandler;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BookService {
@@ -99,13 +96,16 @@ public class BookService {
 //        return new PageImpl<>(books.subList(start, end), pageRequest, books.size());
     }
 
-    public Page<Book> getPageOfBooksByGenre(GenreEntity genreEntity, Integer offset, Integer limit){
+    public Page<Book> getPageOfBooksByTreeGenre(GenreEntity genreEntity, Integer offset, Integer limit){
         // TODO: как перенести метод в GenreService чтобы получить genreEntity потом обратиться к полю
         //  genreEntity.books но возвращать обьекты pageble
         if (genreEntity == null){
             return Page.empty();
         } else {
             // получить все наследуемые genres
+            List<Book> books = new ArrayList<>();
+            books.addAll(genreEntity.getBooks());
+            // сделать в sql структуру с path
             return bookRepository.findAllByGenreOrderByPubDateDesc(genreEntity, PageRequest.of(offset, limit));
         }
     }

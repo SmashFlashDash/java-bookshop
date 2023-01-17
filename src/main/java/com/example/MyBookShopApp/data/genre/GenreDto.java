@@ -1,9 +1,7 @@
 package com.example.MyBookShopApp.data.genre;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GenreDto implements Comparable<GenreDto> {
     private final List<GenreDto> childs = new ArrayList<>();
@@ -93,14 +91,29 @@ public class GenreDto implements Comparable<GenreDto> {
         return maxDepth;
     }
 
+    public void treeOfMap(List<GenreEntity> genres) {
+       Map<Integer, GenreDto> genresMap =  genres.stream().collect(Collectors.toMap(GenreEntity::getId, GenreDto::new));
+        for (Map.Entry<Integer, GenreDto> item : genresMap.entrySet()){
+            GenreDto dto = item.getValue();
+            Integer parId = dto.getItem().getParentId();
+            if (parId == null){
+                addChild(dto);
+            } else {
+                genresMap.get(parId).addChild(dto);
+            }
+        }
+        calculateDepth();
+        calculateCountBooks();
+    }
+
     // TODO: не сортирует при update значений
     @Override
     public int compareTo(GenreDto o) {
         if (this.getMaxDepth() == null || o.getMaxDepth() == null) {
             return -1;
         }
-        return Comparator.comparing(GenreDto::getMaxDepth)
-                .thenComparingInt(GenreDto::getCountBooks)
-                .compare(this, o);
+        return Comparator.comparing(f -> o.getItem().getName()).compare(this, o);
     }
+
+
 }

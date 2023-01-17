@@ -68,7 +68,7 @@ public class GenresPageController {
         // в bookService кинуть genre и получить список книг по всем childs
 
         // надо брать последний genre все его книги и все книги наслудемые
-        model.addAttribute("books", bookService.getPageOfBooksByGenre(genres.get(genres.size()-1), 0, 10).getContent());
+        model.addAttribute("books", bookService.getPageOfBooksByTreeGenre(genres.get(genres.size()-1), 0, 10).getContent());
         return "/genres/slug";
     }
 

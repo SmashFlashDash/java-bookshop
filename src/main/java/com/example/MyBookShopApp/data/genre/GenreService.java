@@ -28,24 +28,14 @@ public class GenreService {
     }
 
     public GenreDto getAllGenresDto(){
-        Map<Integer, GenreDto> tmpMap = genreRepository.findAll().stream()
-                .collect(Collectors.toMap(GenreEntity::getId, GenreDto::new));
         GenreDto root = new GenreDto();
-        for (Map.Entry<Integer, GenreDto> item : tmpMap.entrySet()){
-            GenreDto dto = item.getValue();
-            Integer parId = dto.getItem().getParentId();
-            if (parId == null){
-                root.addChild(dto);
-            } else {
-                tmpMap.get(parId).addChild(dto);
-            }
-        }
+        root.treeOfMap(genreRepository.findAll());
         // TODO: вынести триггер в БД при добаавлении в book2genre изменять поле countBooks в genreEntity
         // но тогда и у жанров наслужемых изменяется количество
         // можно обьеденить два метода с рекурсиями
         // TODO: TreeSet не сортирует при update значений
-        root.calculateCountBooks();
-        root.calculateDepth();
+        // root.calculateCountBooks();
+        // root.calculateDepth();
         return root;
     }
 
