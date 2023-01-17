@@ -97,6 +97,7 @@ public class BookService {
     }
 
     public Page<Book> getPageOfBooksByTreeGenre(GenreEntity genreEntity, Integer offset, Integer limit){
+    public Page<Book> getPageOfBooksByGenre(GenreEntity genreEntity, Integer offset, Integer limit){
         // TODO: как перенести метод в GenreService чтобы получить genreEntity потом обратиться к полю
         //  genreEntity.books но возвращать обьекты pageble
         if (genreEntity == null){

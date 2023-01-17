@@ -97,7 +97,7 @@ insert into genre (id, name, parent_id, slug) values (14, 'Crime|Thriller', 3, '
 insert into genre (id, name, parent_id, slug) values (15, 'Thriller', 3, 'thriller');
 insert into genre (id, name, parent_id, slug) values (16, 'Drama|Action', 3, 'drama_action');
 insert into genre (id, name, parent_id, slug) values (17, 'Action|Comedy|Musical', 3, 'action_comedy_musical');
-insert into genre (id, name, parent_id, slug) values (18, 'Bomedy1', 3, 'Bomedy');
+insert into genre (id, name, parent_id, slug) values (18, 'Comedy|Fomedy', 3, 'comedy_fomedy');
 insert into genre (id, name, parent_id, slug) values (19, 'Action|Romance', 15, 'action_romance');
 insert into genre (id, name, parent_id, slug) values (20, 'Action|Crime|Thriller', 15, 'action_crime_thriller');
 insert into genre (id, name, parent_id, slug) values (21, 'Western', 15, 'western');

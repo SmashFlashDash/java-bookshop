@@ -1,13 +1,11 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.BookService;
 import com.example.MyBookShopApp.data.genre.GenreDto;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.genre.GenreService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +30,6 @@ public class GenresPageController {
 //    books для вывода на странице сайта при помощи уже имеющегося в вашем распоряжении механизма
 //    пагинации контента.
 //    Рендеринг дерева жанров может быть осуществлён средствами Thymeleaf или JQuery на ваш выбор.
-
-    // select * where id =, and parent_id =
     GenreService genreService;
     BookService bookService;
 

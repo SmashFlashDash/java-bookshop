@@ -1,13 +1,13 @@
 package com.example.MyBookShopApp.data.genre;
 
+import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,18 +28,25 @@ public class GenreService {
     }
 
     public GenreDto getAllGenresDto(){
+        Map<Integer, GenreDto> tmpMap = genreRepository.findAll().stream()
+                .collect(Collectors.toMap(GenreEntity::getId, GenreDto::new));
         GenreDto root = new GenreDto();
-        root.treeOfMap(genreRepository.findAll());
+        for (Map.Entry<Integer, GenreDto> item : tmpMap.entrySet()){
+            GenreDto dto = item.getValue();
+            Integer parId = dto.getItem().getParentId();
+            if (parId == null){
+                root.addChild(dto);
+            } else {
+                tmpMap.get(parId).addChild(dto);
+            }
+        }
         // TODO: вынести триггер в БД при добаавлении в book2genre изменять поле countBooks в genreEntity
         // но тогда и у жанров наслужемых изменяется количество
         // можно обьеденить два метода с рекурсиями
-        // TODO: TreeSet не сортирует при update значений
-        // root.calculateCountBooks();
-        // root.calculateDepth();
+        root.calculateCountBooks();
+        root.calculateDepth();
+        root.sortByNames();
+        root.getChilds().sort(Comparator.comparing(GenreDto::getMaxDepth).reversed());
         return root;
-    }
-
-    public List<GenreEntity> getGenresBySlugsArray(List<String> slugs) {
-        return genreRepository.findBySlugIn(slugs);
     }
 }

@@ -91,29 +91,24 @@ public class GenreDto implements Comparable<GenreDto> {
         return maxDepth;
     }
 
-    public void treeOfMap(List<GenreEntity> genres) {
-       Map<Integer, GenreDto> genresMap =  genres.stream().collect(Collectors.toMap(GenreEntity::getId, GenreDto::new));
-        for (Map.Entry<Integer, GenreDto> item : genresMap.entrySet()){
-            GenreDto dto = item.getValue();
-            Integer parId = dto.getItem().getParentId();
-            if (parId == null){
-                addChild(dto);
-            } else {
-                genresMap.get(parId).addChild(dto);
+
+    public void sortByNames(){
+        if (childs.size() != 0) {
+            Collections.sort(childs);
+            for (GenreDto g : childs){
+                g.sortByNames();
             }
         }
-        calculateDepth();
-        calculateCountBooks();
     }
 
-    // TODO: не сортирует при update значений
     @Override
     public int compareTo(GenreDto o) {
         if (this.getMaxDepth() == null || o.getMaxDepth() == null) {
             return -1;
         }
-        return Comparator.comparing(f -> o.getItem().getName()).compare(this, o);
+        return Comparator.comparing(GenreDto::getSlug).compare(this, o);
+//        return Comparator.comparing(GenreDto::getMaxDepth).reversed()
+//                .thenComparing(GenreDto::getCountBooks)
+//                .compare(this, o);
     }
-
-
 }
