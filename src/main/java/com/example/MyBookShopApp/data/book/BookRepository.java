@@ -1,8 +1,10 @@
 package com.example.MyBookShopApp.data.book;
 
+import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,4 +41,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Page<Book> findAllByPubDateAfterOrderByPubDateDesc(Date from, Pageable nextPage);
     Page<Book> findAllByPubDateBeforeOrderByPubDateDesc(Date to, Pageable nextPage);
     Page<Book> findAllByPubDateBetweenOrderByPubDateDesc(Date from, Date to, Pageable nextPage);
+    Page<Book> findAllByAuthorOrderByPubDateDesc(Author authorBySlug, Pageable nextPage);
 }

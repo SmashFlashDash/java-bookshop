@@ -11,28 +11,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
-// TODO: в следующие адреса запрос приходит два раза второй в dto favicon.ico
-//@GetMapping("/search/{searchWord}")   SearchPageController
-//@GetMapping(value = {"/tags/{tagWord}"})  TagPageController
-// потому что такая ссылка в каждом html
-//<link href="favicon.ico" rel="shortcut icon">
-// заменить href="favicon.ico" на th:href="@{favicon.ico}"  href="/favicon.ico"
-// TODO: в bookService не лучший запрос через TagService и GenreService
-//public Page<Book> getPageOfBooksByTag
-//public Page<Book> getPageOfBooksByGenre
-// как перенести метод в TagService чтобы получить tagEntity потом обратиться к полю
-// tagEntity.books но возвращать список pageble
-// как перенести метод в GenreService чтобы получить genreEntity потом обратиться к полю
-// genreEntity.books но возвращать обьекты pageble
+
 // TODO: GenreService лучше вынести триггер в БД при добаавлении в book2genre изменять поле countBooks в genreEntity
 // вместо того чтобы кажыдй раз получать все книги чтобы посчитать кол-во книг для жанра
 // public GenreDto getAllGenresDto()
-// TODO: можно ли переносить обьект при переходе на другой EndPoint
-// TODO: как отобразить tree структуру в thymeleaf
-//public String postponedPage(Model model)
-// TODO: правильно ли ставить JsonIgnore
-// public List<TagEntity> tagsBooks()
-
 
 
 @Controller
@@ -90,11 +72,4 @@ public class MainPageController {
     public String mainPage() {
         return "index";
     }
-
-//    // Страница authors
-//    @GetMapping("/authors")
-//    public String getAuthors(Model model){
-//        return "/authors/index";
-//    }
-
 }

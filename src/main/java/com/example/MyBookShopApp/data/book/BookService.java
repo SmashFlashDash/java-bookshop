@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.data.book;
 
+import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.BookRepository;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
@@ -92,5 +93,9 @@ public class BookService {
         } else {
             return bookRepository.findAllByGenreInOrderByPubDateDesc(genres, PageRequest.of(offset, limit));
         }
+    }
+
+    public Page<Book> getPageOfBooksByAuthor(Author author, Integer offset, Integer limit) {
+        return bookRepository.findAllByAuthorOrderByPubDateDesc(author, PageRequest.of(offset, limit));
     }
 }

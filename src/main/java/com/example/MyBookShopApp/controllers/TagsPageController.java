@@ -29,14 +29,7 @@ public class TagsPageController {
         return "Null";
     }
 
-    @GetMapping("/books/tags/page/{tagWord}")
-    @ResponseBody
-    public BooksPageDto getPageBooksTag(@PathVariable(value = "tagWord", required = false) TagDto tagWord,
-                                      @RequestParam("offset") Integer offset,
-                                      @RequestParam("limit") Integer limit) {
-        TagEntity tag = tagService.findByTagName(tagWord.getTag());
-        return new BooksPageDto(bookService.getPageOfBooksByTag(tag, offset, limit).getContent());
-    }
+
 
     @GetMapping("/tags/{tagWord}")
     public String getBooksTag(@PathVariable(value = "tagWord") TagDto tagWord, Model model){
