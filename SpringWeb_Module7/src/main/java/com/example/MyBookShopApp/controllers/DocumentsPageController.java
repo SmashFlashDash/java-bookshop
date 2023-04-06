@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DocumentsPageController {
 
     @GetMapping("index")
-    public String postponedPage(Model model){
+    public String postponedPage(Model model) {
         return "/documents/index";
     }
 }

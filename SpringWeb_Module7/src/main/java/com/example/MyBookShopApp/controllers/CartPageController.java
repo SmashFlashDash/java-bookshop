@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CartPageController {
 
     @GetMapping("cart")
-    public String postponedPage(Model model){
+    public String postponedPage(Model model) {
         return "cart";
     }
 }

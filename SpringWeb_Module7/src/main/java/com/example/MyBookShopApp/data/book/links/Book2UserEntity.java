@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "book2user")
+@Table(name = "book2user",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"bookId", "userId"}))
 public class Book2UserEntity {
 
     @Id

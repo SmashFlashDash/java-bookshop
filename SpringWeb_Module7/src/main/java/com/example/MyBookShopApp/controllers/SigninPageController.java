@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SigninPageController {
 
     @GetMapping("signin")
-    public String postponedPage(Model model){
+    public String postponedPage(Model model) {
         return "signin";
     }
 }

@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 public class GlobalExceptionHandlerController {
 
     @ExceptionHandler(EmptySearchException.class)
-    public String handleEmptySearchException(EmptySearchException e, RedirectAttributes redirectAttributes){
+    public String handleEmptySearchException(EmptySearchException e, RedirectAttributes redirectAttributes) {
         Logger.getLogger(this.getClass().getSimpleName()).warning(e.getLocalizedMessage());
-        redirectAttributes.addFlashAttribute("searchError",e);
+        redirectAttributes.addFlashAttribute("searchError", e);
         return "redirect:/";
     }
 }

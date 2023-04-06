@@ -1,7 +1,5 @@
 package com.example.MyBookShopApp.data.book.file;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
 
 @Entity

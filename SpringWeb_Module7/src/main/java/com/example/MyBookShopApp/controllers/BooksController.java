@@ -1,11 +1,20 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
+import com.example.MyBookShopApp.services.AuthorService;
+import com.example.MyBookShopApp.dto.BooksPageDto;
+import com.example.MyBookShopApp.services.GenreService;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.ResourceStorage;
+import com.example.MyBookShopApp.data.tag.TagDto;
+import com.example.MyBookShopApp.data.tag.TagEntity;
+import com.example.MyBookShopApp.data.tag.TagService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +23,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Pattern;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Date;
 import java.util.logging.Logger;
 
 @Controller
@@ -25,26 +36,75 @@ public class BooksController {
     private final BookRepository bookRepository;
     private final BookService bookService;
     private final ResourceStorage storage;
+    private final TagService tagService;
+    private final GenreService genreService;
+    private final AuthorService authorService;
 
 
     @Autowired
-    public BooksController(BookService bookService, BookRepository bookRepository,ResourceStorage storage) {
+    public BooksController(BookService bookService, BookRepository bookRepository, ResourceStorage storage,
+                           TagService tagService, GenreService genreService, AuthorService authorService) {
         this.bookService = bookService;
         this.bookRepository = bookRepository;
         this.storage = storage;
+        this.tagService = tagService;
+        this.genreService = genreService;
+        this.authorService = authorService;
     }
 
     @GetMapping("/recent")
-    public String recentPage(Model model){
+    public String recentPage(Model model) {
         model.addAttribute("recentBooks", bookService.getBooksData());
         return "/books/recent";
     }
 
+
+//    @GetMapping("/popular")
+//    public String getPopularBooks(Model model) {
+//        model.addAttribute("active", "Popular");
+//        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 10).getContent());
+//        return "/books/popular";
+//    }
     @GetMapping("/popular")
-    public String popularPage(Model model){
+    public String popularPage(Model model) {
         model.addAttribute("popularBooks", bookService.getBooksData());
         return "/books/popular";
     }
+    @GetMapping("/popular/page")
+    @ResponseBody
+    public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
+                                            @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfPopularBooks(offset, limit).getContent());
+    }
+
+
+    @RequestMapping("/recent")
+    public String getNewBooks(Model model) {
+        model.addAttribute("active", "Recent");
+        model.addAttribute("newBooks", bookService.getPageOfNewBooksDateBetween(
+                new DateTime().minusMonths(1).toDate(), new Date(), 0, 10).getContent());
+        return "/books/recent";
+    }
+    @GetMapping(value = "/recent/page")
+    @ResponseBody
+    public BooksPageDto getNewBooksPage(
+            @RequestParam(name = "from", required = false)
+            @Pattern(regexp = "\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d$", message = "wrong format") @DateTimeFormat(pattern = "dd.MM.yyyy") Date from,
+            @RequestParam(name = "to", required = false)
+            @Pattern(regexp = "\\d\\d\\.\\d\\d\\.\\d\\d\\d\\d$", message = "wrong format") @DateTimeFormat(pattern = "dd.MM.yyyy") Date to,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("limit") Integer limit) {
+        if (from == null && to == null) {
+            return new BooksPageDto(bookService.getPageOfNewBooks(offset, limit).getContent());
+        } else if (from != null && to != null) {
+            return new BooksPageDto(bookService.getPageOfNewBooksDateBetween(from, to, offset, limit).getContent());
+        } else if (from != null) {
+            return new BooksPageDto(bookService.getPageOfNewBooksDateFrom(from, offset, limit).getContent());
+        } else {
+            return new BooksPageDto(bookService.getPageOfNewBooksDateTo(to, offset, limit).getContent());
+        }
+    }
+
 
     @GetMapping("/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
@@ -52,32 +112,75 @@ public class BooksController {
         model.addAttribute("slugBook", book);
         return "/books/slug";
     }
-
     @PostMapping("/{slug}/img/save")
-    public String saveNewBookImage(@RequestParam("file")MultipartFile file,@PathVariable("slug")String slug) throws IOException {
-        String savePath = storage.saveNewBookImage(file,slug);
+    public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
+        String savePath = storage.saveNewBookImage(file, slug);
         Book bookToUpdate = bookRepository.findBookBySlug(slug);
         bookToUpdate.setImage(savePath);
         bookRepository.save(bookToUpdate); //save new path in db here
 
-        return "redirect:/books/"+slug;
+        return "redirect:/books/" + slug;
     }
 
+
     @GetMapping("/download/{hash}")
-    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash")String hash) throws IOException{
+    public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
         Path path = storage.getBookFilePath(hash);
-        Logger.getLogger(this.getClass().getSimpleName()).info("book file path: "+path);
+        Logger.getLogger(this.getClass().getSimpleName()).info("book file path: " + path);
 
         MediaType mediaType = storage.getBookFileMime(hash);
-        Logger.getLogger(this.getClass().getSimpleName()).info("book file mime type: "+mediaType);
+        Logger.getLogger(this.getClass().getSimpleName()).info("book file mime type: " + mediaType);
 
         byte[] data = storage.getBookFileByteArray(hash);
-        Logger.getLogger(this.getClass().getSimpleName()).info("book file data len: "+data.length);
+        Logger.getLogger(this.getClass().getSimpleName()).info("book file data len: " + data.length);
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename="+path.getFileName().toString())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
                 .contentType(mediaType)
                 .contentLength(data.length)
                 .body(new ByteArrayResource(data));
     }
+
+    @GetMapping("/recommended/page")
+    @ResponseBody
+    public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") Integer offset,
+                                                @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
+    }
+
+
+    @GetMapping("/tags/page/{tagWord}")
+    @ResponseBody
+    public BooksPageDto getPageBooksTag(@PathVariable(value = "tagWord", required = false) TagDto tagWord,
+                                        @RequestParam("offset") Integer offset,
+                                        @RequestParam("limit") Integer limit) {
+        TagEntity tag = tagService.findByTagName(tagWord.getTag());
+        return new BooksPageDto(bookService.getPageOfBooksByTag(tag, offset, limit).getContent());
+    }
+
+    @GetMapping("/genre/page/{slug}")
+    @ResponseBody
+    public BooksPageDto getGenreBooksPage(@PathVariable("slug") String slug,
+                                          @RequestParam("offset") Integer offset,
+                                          @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfBooksByListGenres(genreService.getGenreNodes(slug), offset, limit).getContent());
+    }
+
+    @GetMapping("/author/{slug}")
+    public String getAuthorBooks(@PathVariable("slug") String slug, Model model) {
+        Author author = authorService.getAuthorBySlug(slug);
+        model.addAttribute("author", author);
+        model.addAttribute("books", bookService.getPageOfBooksByAuthor(author, 0, 10).getContent());
+        return "/books/author";
+    }
+
+    @GetMapping("/author/page/{slug}")
+    @ResponseBody
+    public BooksPageDto getAuthorBooksPage(@PathVariable("slug") String slug,
+                                           @RequestParam("offset") Integer offset,
+                                           @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfBooksByAuthor(authorService.getAuthorBySlug(slug), offset, limit).getContent());
+    }
+
+
 }

@@ -23,7 +23,7 @@ public class ApiResponse<T> {
         this();
         this.status = httpStatus;
         this.message = message;
-        this.debugMessage=ex.getLocalizedMessage();
+        this.debugMessage = ex.getLocalizedMessage();
     }
 
     public HttpStatus getStatus() {

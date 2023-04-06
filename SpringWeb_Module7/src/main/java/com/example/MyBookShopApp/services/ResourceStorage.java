@@ -65,7 +65,7 @@ public class ResourceStorage {
 
         if (mimeType != null) {
             return MediaType.parseMediaType(mimeType);
-        }else {
+        } else {
             return MediaType.APPLICATION_OCTET_STREAM;
         }
     }
