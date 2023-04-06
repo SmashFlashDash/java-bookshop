@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.data.services;
+package com.example.MyBookShopApp.data.author;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.author.AuthorRepository;
@@ -17,6 +17,10 @@ public class AuthorService {
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
+    }
+
+    public Author getAuthorBySlug(String slug){
+        return authorRepository.findBySlug(slug);
     }
 
     public Map<String, List<Author>> getAuthorsMap(){

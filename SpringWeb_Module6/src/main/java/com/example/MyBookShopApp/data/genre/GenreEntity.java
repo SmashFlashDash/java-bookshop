@@ -14,12 +14,12 @@ public class GenreEntity {
     private int id;
 
     @Column(columnDefinition = "INT")
-    private int parentId;
+    private Integer parentId;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL", unique = true)
     private String slug;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "genre")
@@ -41,11 +41,11 @@ public class GenreEntity {
         this.id = id;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
