@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.data.author;
 
 import com.example.MyBookShopApp.data.book.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -23,8 +25,30 @@ public class Author {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String slug;
 
+    @Column(columnDefinition = "VARCHAR(1000) NOT NULL")
+    private String littleBiography;
+
+    @Column(columnDefinition = "TEXT")
+    private String extendBiography;
+
     @OneToMany(mappedBy = "author")
     private List<Book> bookList = new ArrayList<>();
+
+    public String getLittleBiography() {
+        return littleBiography;
+    }
+
+    public void setLittleBiography(String littleBiography) {
+        this.littleBiography = littleBiography;
+    }
+
+    public String getExtendBiography() {
+        return extendBiography;
+    }
+
+    public void setExtendBiography(String extendBiography) {
+        this.extendBiography = extendBiography;
+    }
 
     public List<Book> getBookList() {
         return bookList;

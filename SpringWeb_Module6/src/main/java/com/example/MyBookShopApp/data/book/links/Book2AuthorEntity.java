@@ -16,7 +16,7 @@ public class Book2AuthorEntity {
     @Column(columnDefinition = "INT NOT NULL")
     private int authorId;
 
-    @Column(columnDefinition = "INT NOT NULL  DEFAULT 0")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0")
     private int sortIndex;
 
     public int getId() {

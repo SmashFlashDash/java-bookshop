@@ -39,30 +39,33 @@
         <div class="wrap">
             <nav class="menuModal" id="navigate">
                 <ul class="menu menu_main">
-                    <li class="menu-item menu-item_ACTIVE"><a class="menu-link" href="index.html"
-                                                              th:href="@{/}"
-                                                              th:text="#{topbar.main}">Главная</a>
+                    <li class="menu-item menu-item_ACTIVE" th:class="${#strings.equals(active, 'Main')} ? 'menu-item menu-item_ACTIVE' : 'menu-item'">
+                        <a class="menu-link" href="index.html" th:href="@{/}">Главная</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="genres.html"
-                                             th:href="@{/genres/}"
-                                             th:text="#{topbar.genres}">Жанры</a>
+                    <li class="menu-item" th:class="${#strings.equals(active, 'Genres')} ? 'menu-item menu-item_ACTIVE' : 'menu-item'">
+                        <a class="menu-link" href="genres.html" th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="nove.html"
-                                             th:href="@{/books/recent}"
-                                             th:text="#{topbar.news}">Новинки</a>
+                    <li class="menu-item" th:class="${#strings.equals(active, 'Recent')} ? 'menu-item menu-item_ACTIVE' : 'menu-item'">
+                        <a class="menu-link" href="nove.html" th:href="@{/books/recent}" th:text="#{topbar.news}">Новинки</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="popular.html"
-                                             th:href="@{/books/popular}"
-                                             th:text="#{topbar.popular}">Популярное</a>
+                    <li class="menu-item" th:class="${#strings.equals(active, 'Popular')} ? 'menu-item menu-item_ACTIVE' : 'menu-item'">
+                        <a class="menu-link" href="popular.html" th:href="@{/books/popular}" th:text="#{topbar.popular}">Популярное</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="authors.html"
-                                             th:href="@{/authors}"
-                                             th:text="#{topbar.authors}">Авторы</a>
+                    <li class="menu-item" th:class="${#strings.equals(active, 'Authors')} ? 'menu-item menu-item_ACTIVE' : 'menu-item'">
+                        <a class="menu-link" href="authors.html" th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
 </header>
+<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+        <li th:class="${#strings.equals(activeLink, 'Home')} ? 'nav-item active' : 'nav-item'"><a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a></li>
+        <li th:class="${#strings.equals(activeLink, 'Register')} ? 'nav-item active' : 'nav-item'"><a class="nav-link" href="/register">Register</a></li>
+        <li th:class="${#strings.equals(activeLink, 'Login')} ? 'nav-item active' : 'nav-item'" sec:authorize="isAnonymous()"><a class="nav-link" th:href="@{/login}">Login <span class="sr-only">(current)</span></a></li>
+        <li class="nav-item active" sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}">Logout <span class="sr-only">(current)</span></a></li>
+    </ul>
+</div>
 </body>
 </html>
