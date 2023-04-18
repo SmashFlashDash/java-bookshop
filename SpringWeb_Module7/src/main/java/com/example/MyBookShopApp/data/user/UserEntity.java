@@ -2,8 +2,8 @@ package com.example.MyBookShopApp.data.user;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
-import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
-import com.example.MyBookShopApp.data.book.review.BookReviewLikeEntity;
+import com.example.MyBookShopApp.data.book.review.BookReview;
+import com.example.MyBookShopApp.data.book.review.BookReviewLike;
 import com.example.MyBookShopApp.data.book.review.MessageEntity;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
 
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "`user`")
 public class UserEntity {
 
     @Id
@@ -39,22 +39,22 @@ public class UserEntity {
     private List<FileDownloadEntity> fileDownload;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
     private List<BalanceTransactionEntity> BalanceTransaction;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<MessageEntity> message;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "userId")
     private UserContactEntity userContact;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private List<BookReviewEntity> bookReview;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<BookReview> bookReview;
 
     @OneToMany
     @JoinColumn(name = "userId")
-    private List<BookReviewLikeEntity> bookReviewLike;
+    private List<BookReviewLike> bookReviewLike;
 
     public List<MessageEntity> getMessage() {
         return message;
@@ -62,6 +62,14 @@ public class UserEntity {
 
     public void setMessage(List<MessageEntity> message) {
         this.message = message;
+    }
+
+    public List<BookReview> getBookReview() {
+        return bookReview;
+    }
+
+    public void setBookReview(List<BookReview> bookReview) {
+        this.bookReview = bookReview;
     }
 
     public List<Book> getBooks() {
@@ -88,14 +96,6 @@ public class UserEntity {
         BalanceTransaction = balanceTransaction;
     }
 
-//    public List<MessageEntity> getMessage() {
-//        return message;
-//    }
-//
-//    public void setMessage(List<MessageEntity> message) {
-//        this.message = message;
-//    }
-
     public UserContactEntity getUserContact() {
         return userContact;
     }
@@ -104,19 +104,11 @@ public class UserEntity {
         this.userContact = userContact;
     }
 
-    public List<BookReviewEntity> getBookReview() {
-        return bookReview;
-    }
-
-    public void setBookReview(List<BookReviewEntity> bookReview) {
-        this.bookReview = bookReview;
-    }
-
-    public List<BookReviewLikeEntity> getBookReviewLike() {
+    public List<BookReviewLike> getBookReviewLike() {
         return bookReviewLike;
     }
 
-    public void setBookReviewLike(List<BookReviewLikeEntity> bookReviewLike) {
+    public void setBookReviewLike(List<BookReviewLike> bookReviewLike) {
         this.bookReviewLike = bookReviewLike;
     }
 

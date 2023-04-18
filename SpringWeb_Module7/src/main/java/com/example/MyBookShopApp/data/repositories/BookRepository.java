@@ -55,6 +55,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query("from Book where isBestseller=1")
     List<Book> getBestsellers();
+
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 

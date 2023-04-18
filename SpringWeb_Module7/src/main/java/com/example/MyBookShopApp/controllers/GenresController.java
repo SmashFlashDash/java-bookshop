@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 
 @Controller
 //@RequestMapping("/genres")
-public class GenresPageController {
+public class GenresController {
     GenreService genreService;
     BookService bookService;
 
     @Autowired
-    public GenresPageController(GenreService genreService, BookService bookService) {
+    public GenresController(GenreService genreService, BookService bookService) {
         this.genreService = genreService;
         this.bookService = bookService;
     }

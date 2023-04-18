@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class TagsPageController {
+public class TagsController {
     private final BookService bookService;
     private final TagService tagService;
 
     @Autowired
-    public TagsPageController(BookService bookService, TagService tagService) {
+    public TagsController(BookService bookService, TagService tagService) {
         this.bookService = bookService;
         this.tagService = tagService;
     }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "book_file_type")
-public class BookFileTypeEntity {
+public class BookFileType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

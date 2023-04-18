@@ -2,12 +2,11 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.services.AuthorService;
+import com.example.MyBookShopApp.data.book.review.BookReview;
+import com.example.MyBookShopApp.dto.BookRatingDto;
+import com.example.MyBookShopApp.services.*;
 import com.example.MyBookShopApp.dto.BooksPageDto;
-import com.example.MyBookShopApp.services.GenreService;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
-import com.example.MyBookShopApp.services.BookService;
-import com.example.MyBookShopApp.services.ResourceStorage;
 import com.example.MyBookShopApp.data.tag.TagDto;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagService;
@@ -27,35 +26,63 @@ import javax.validation.constraints.Pattern;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/books")
 public class BooksController {
-
     private final BookRepository bookRepository;
     private final BookService bookService;
     private final ResourceStorage storage;
     private final TagService tagService;
     private final GenreService genreService;
     private final AuthorService authorService;
+    private final BookRatingService bookRating;
+    private final BookReviewService bookReviewService;
+
+    // TODO:
+    //  добавить в Book метод getDiscountPrice
+    //  как добавить в fragment_header отображение кол-ва книг в корзине, и это должно выполняться на всех страницах
+    //  не работает чтение куки в cart может связано с localhost, в /cart куки всегда null
+    //  не очень решение @GetMapping("/favicon.ico") в BooksController
+    //  не рабоатет крестик в оверлэй скачать книгу
+    //  и скачка книг какойт exception
+    //  -------
+    //  Задание 1. Добавление книг в категорию «Отложенное»
+    //  Что нужно сделать
+    //  В вашем проекте пользователь может перемещать книги в категорию «Отложенное» перед покупкой или чтобы составить список чтения.
+    //  Реализуйте функционал и необходимую логику раздела «Отложенное», учитывая, что его работа связана с такими процессами, как, например, расчёт
+    //  рекомендаций для пользователей или определение популярности книги.
+    //  ---------
+    //  Задание 2. Механизм оценок и рейтингов книг
+    //  Что нужно сделать
+    //  Система рейтингов книг позволяет пользователям ориентироваться в контенте магазина, помогает упорядочить данные и сформировать рекомендации.
+    //  Реализуйте функционал и необходимую логику данного раздела интернет-магазина.
+    //  ----------
+    //  Задание 3. Функционал отзывов на книгу
+    //  Что нужно сделать
+    //  Возможность оставить отзыв, рецензию, комментарий, сообщение, мнение о чём-либо, в том числе и о книге, — основа коммуникации людей в сети.
+    //  Реализуйте функционал и необходимую логику данного раздела, чтобы пользователи магазина могли оставлять отзывы о приобретённой книге.
+    //  Советы и рекомендации
+    //  При выполнении задания руководствуйтесь документацией к проекту: техническим заданием, структурой данных.
+    //  Обратите внимание, что пользовательский интерфейс в этом разделе будет меняться в зависимости от того, авторизован пользователь или нет.
+    //  До тех пор, пока вы не познакомитесь с разделом безопасности и разграничения доступа к ресурсам интернет-магазина в следующих модулях, предполагается,
+    //  что доступ к разделу отзывов есть у всех пользователей.
 
 
     @Autowired
     public BooksController(BookService bookService, BookRepository bookRepository, ResourceStorage storage,
-                           TagService tagService, GenreService genreService, AuthorService authorService) {
+                           TagService tagService, GenreService genreService, AuthorService authorService,
+                           BookRatingService bookRating, BookReviewService bookReviewService) {
         this.bookService = bookService;
         this.bookRepository = bookRepository;
         this.storage = storage;
         this.tagService = tagService;
         this.genreService = genreService;
         this.authorService = authorService;
-    }
-
-    @GetMapping("/recent")
-    public String recentPage(Model model) {
-        model.addAttribute("recentBooks", bookService.getBooksData());
-        return "/books/recent";
+        this.bookRating = bookRating;
+        this.bookReviewService = bookReviewService;
     }
 
 
@@ -67,6 +94,7 @@ public class BooksController {
 //    }
     @GetMapping("/popular")
     public String popularPage(Model model) {
+        model.addAttribute("active", "Popular");
         model.addAttribute("popularBooks", bookService.getBooksData());
         return "/books/popular";
     }
@@ -78,6 +106,11 @@ public class BooksController {
     }
 
 
+//    @GetMapping("/recent")
+//    public String recentPage(Model model) {
+//        model.addAttribute("recentBooks", bookService.getBooksData());
+//        return "/books/recent";
+//    }
     @RequestMapping("/recent")
     public String getNewBooks(Model model) {
         model.addAttribute("active", "Recent");
@@ -105,12 +138,16 @@ public class BooksController {
         }
     }
 
-
+    // TODO: считаем всех пользвотелей авторизованными и старница slugmy
     @GetMapping("/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Model model) {
         Book book = bookRepository.findBookBySlug(slug);
+        BookRatingDto bookRatingDto = bookRating.getBookRating(book.getId());
+        List<BookReview> reviews = bookReviewService.getReviewsByBook(book);
+        model.addAttribute("bookRating", bookRatingDto);
+        model.addAttribute("reviews", reviews);
         model.addAttribute("slugBook", book);
-        return "/books/slug";
+        return "/books/slugmy";
     }
     @PostMapping("/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {

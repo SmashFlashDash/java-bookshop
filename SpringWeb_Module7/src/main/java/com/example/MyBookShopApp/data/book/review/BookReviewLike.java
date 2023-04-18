@@ -1,19 +1,20 @@
 package com.example.MyBookShopApp.data.book.review;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "book_review")
-public class BookReviewEntity {
+@Table(name = "book_review_like")
+public class BookReviewLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(columnDefinition = "INT NOT NULL")
-    private int bookId;
+    private int reviewId;
 
     @Column(columnDefinition = "INT NOT NULL")
     private int userId;
@@ -21,18 +22,19 @@ public class BookReviewEntity {
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
-    @Column(columnDefinition = "TEXT NOT NULL")
-    private String text;
+    @Column(columnDefinition = "SMALLINT NOT NULL")
+    private short value;
 
-    @OneToMany(mappedBy = "review")
-    private List<BookReviewLikeEntity> bookReviewLike;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reviewId", insertable = false, updatable = false)
+    private BookReview review;
 
-    public List<BookReviewLikeEntity> getBookReviewLike() {
-        return bookReviewLike;
+    public BookReview getReview() {
+        return review;
     }
 
-    public void setBookReviewLike(List<BookReviewLikeEntity> bookReviewLike) {
-        this.bookReviewLike = bookReviewLike;
+    public void setReview(BookReview review) {
+        this.review = review;
     }
 
     public int getId() {
@@ -43,12 +45,12 @@ public class BookReviewEntity {
         this.id = id;
     }
 
-    public int getBookId() {
-        return bookId;
+    public int getReviewId() {
+        return reviewId;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
     public int getUserId() {
@@ -67,11 +69,11 @@ public class BookReviewEntity {
         this.time = time;
     }
 
-    public String getText() {
-        return text;
+    public short getValue() {
+        return value;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setValue(short value) {
+        this.value = value;
     }
 }

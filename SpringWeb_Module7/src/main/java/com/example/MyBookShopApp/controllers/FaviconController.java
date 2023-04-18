@@ -1,14 +1,13 @@
 package com.example.MyBookShopApp.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class SigninPageController {
-
-    @GetMapping("signin")
-    public String postponedPage(Model model) {
-        return "signin";
+public class FaviconController {
+    @ResponseBody
+    @GetMapping("favicon.ico")
+    void returnNoFavicon() {
     }
 }
