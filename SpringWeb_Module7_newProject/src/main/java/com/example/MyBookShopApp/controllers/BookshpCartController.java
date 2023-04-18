@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.repositories.BookRepository;
+import com.example.MyBookShopApp.data.Book;
+import com.example.MyBookShopApp.data.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.StringJoiner;
 
 @Controller
-@RequestMapping("/book")
-public class BooksCartController {
+@RequestMapping("/books")
+public class BookshpCartController {
 
     @ModelAttribute(name = "bookCart")
     public List<Book> bookCart() {
@@ -26,7 +26,7 @@ public class BooksCartController {
     private final BookRepository bookRepository;
 
     @Autowired
-    public BooksCartController(BookRepository bookRepository) {
+    public BookshpCartController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
@@ -38,8 +38,7 @@ public class BooksCartController {
         } else {
             model.addAttribute("isCartEmpty", false);
             cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
-            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) :
-                    cartContents;
+            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) : cartContents;
             String[] cookieSlugs = cartContents.split("/");
             List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
             model.addAttribute("bookCart", booksFromCookieSlugs);
@@ -50,15 +49,16 @@ public class BooksCartController {
 
     @PostMapping("/changeBookStatus/cart/remove/{slug}")
     public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug, @CookieValue(name =
-            "cartContents", required = false) String cartContents, HttpServletResponse response, Model model) {
-        if (cartContents != null && !cartContents.equals("")) {
+            "cartContents", required = false) String cartContents, HttpServletResponse response, Model model){
+
+        if (cartContents != null && !cartContents.equals("")){
             ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
             cookieBooks.remove(slug);
             Cookie cookie = new Cookie("cartContents", String.join("/", cookieBooks));
             cookie.setPath("/books");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
-        } else {
+        }else {
             model.addAttribute("isCartEmpty", true);
         }
 

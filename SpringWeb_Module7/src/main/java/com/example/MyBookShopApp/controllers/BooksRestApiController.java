@@ -53,27 +53,15 @@ public class BooksRestApiController {
         return ResponseEntity.ok(bookService.getBooksWithPriceBetween(min, max));
     }
 
-//    @GetMapping("/books/with-max-discount")
-//    @ApiOperation("get list of book with max price")
-//    public ResponseEntity<List<Book>> maxPriceBooks() {
-//        return ResponseEntity.ok(bookService.getBooksWithMaxPrice());
-//    }
-//
-//    @GetMapping("/books/bestsellers")
-//    @ApiOperation("get bestseller book (which is_bestseller = 1)")
-//    public ResponseEntity<List<Book>> bestSellerBooks() {
-//        return ResponseEntity.ok(bookService.getBestsellers());
-//    }
-
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ApiResponse<Book>> handleMissingServletRequestParameterException(Exception exception) {
-        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Missing required parameters",
-                exception), HttpStatus.BAD_REQUEST);
+    @GetMapping("/books/with-max-discount")
+    @ApiOperation("get list of book with max price")
+    public ResponseEntity<List<Book>> maxPriceBooks() {
+        return ResponseEntity.ok(bookService.getBooksWithMaxPrice());
     }
 
-    @ExceptionHandler(BookstoreApiWrongParameterException.class)
-    public ResponseEntity<ApiResponse<Book>> handleBookstoreApiWrongParameterException(Exception exception) {
-        return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Bad parameter value...", exception)
-                , HttpStatus.BAD_REQUEST);
+    @GetMapping("/books/bestsellers")
+    @ApiOperation("get bestseller book (which is_bestseller = 1)")
+    public ResponseEntity<List<Book>> bestSellerBooks() {
+        return ResponseEntity.ok(bookService.getBestsellers());
     }
 }
