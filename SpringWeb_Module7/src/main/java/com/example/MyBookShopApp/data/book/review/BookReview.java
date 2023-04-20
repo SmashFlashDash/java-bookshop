@@ -13,11 +13,7 @@ import java.util.List;
 public class BookReview {
 
     @Id
-    // TODO: ERROR: duplicate key value violates unique constraint "book_review_pkey"
-    //  Подробности: Key (id)=(1) already exists.
-    @GenericGenerator(name="generator", strategy="increment")
-    @GeneratedValue(generator="generator")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(columnDefinition = "INT NOT NULL")
@@ -36,9 +32,9 @@ public class BookReview {
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "book_rating_id", referencedColumnName = "id")
-    private BookRating bookRating;
+//    @OneToOne(optional = false)
+//    @JoinColumn(name = "book_rating_id", referencedColumnName = "id")
+//    private BookRating bookRating;
 
     @OneToMany(mappedBy = "review")
     private List<BookReviewLike> bookReviewLike;
@@ -51,13 +47,13 @@ public class BookReview {
         return user;
     }
 
-    public BookRating getBookRating() {
-        return bookRating;
-    }
-
-    public void setBookRating(BookRating bookRating) {
-        this.bookRating = bookRating;
-    }
+//    public BookRating getBookRating() {
+//        return bookRating;
+//    }
+//
+//    public void setBookRating(BookRating bookRating) {
+//        this.bookRating = bookRating;
+//    }
 
     public List<BookReviewLike> getBookReviewLike() {
         return bookReviewLike;

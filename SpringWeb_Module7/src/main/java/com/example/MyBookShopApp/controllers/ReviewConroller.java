@@ -31,9 +31,7 @@ public class ReviewConroller {
                                                       HttpServletRequest request, HttpServletResponse response, Model model) {
         String text = request.getParameter("text");
         Integer bookId = Integer.parseInt(request.getParameter("bookId"));
-        // TODO: получить обьект рейтинга, связать его с новым отзывом, сохранить отзыв
-        //  где взять значение рейтинга
-        bookReviewService.addNewReview(bookId, text, (short) 1, 1);    // TODO: 2 заглушка
+        bookReviewService.addNewReview(bookId, text, 1);    // TODO: 2 заглушка
         return ResponseEntity.ok(new BookStatusDto(true));
     }
 }

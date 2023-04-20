@@ -29,18 +29,12 @@ public class BookReviewService {
         return reviewRepository.findAllByBookIdOrderByTimeDesc(book.getId());
     }
 
-    // TODO: доделать метод
     @Transactional
-    public void addNewReview(Integer bookId, String text, Short ratingValue, Integer userId) {
-        BookRating rating = new BookRating();
-        rating.setValue(ratingValue);
-        rating.setBookId(bookId);
-        ratingRepository.save(rating);
+    public void addNewReview(Integer bookId, String text, Integer userId) {
         BookReview review = new BookReview();
         review.setBookId(bookId);
         review.setText(text);
         review.setUserId(userId);
-        review.setBookRating(rating);
         reviewRepository.save(review);
     }
 }

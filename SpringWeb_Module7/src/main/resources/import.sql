@@ -773,50 +773,50 @@ insert into file_download (id, book_id, count, user_id) values (20, 14, 10, 6);
 insert into file_download (id, book_id, count, user_id) values (21, 20, 17, 6);
 
 
-insert into message (id, email, name, subject, text, time, user_id) values (1, 'criordan0@alexa.com', 'Costanza Riordan', 'nulla suspendisse', 'Pellentesque ultrices mattis odio.', '2022-06-04 16:29:33', 10);
-insert into message (id, email, name, subject, text, time, user_id) values (2, 'cpinnegar1@marriott.com', 'Coop Pinnegar', 'aliquam lacus', 'Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', '2022-06-26 13:33:23', 10);
-insert into message (id, email, name, subject, text, time, user_id) values (3, 'rhilland2@nymag.com', 'Ramonda Hilland', 'id nulla', 'Proin at turpis a pede posuere nonummy. Integer non velit.', '2022-09-23 10:47:56', 3);
-insert into message (id, email, name, subject, text, time, user_id) values (4, 'tbrowse3@goo.ne.jp', 'Tarrah Browse', 'enim lorem', 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', '2022-07-20 05:06:18', 4);
-insert into message (id, email, name, subject, text, time, user_id) values (5, 'rkillingsworth4@dedecms.com', 'Rance Killingsworth', 'condimentum', 'Integer ac leo. Pellentesque ultrices mattis odio.', '2022-03-05 13:08:10', 9);
-insert into message (id, email, name, subject, text, time, user_id) values (6, 'krecord5@livejournal.com', 'Kathryn Record', 'augue luctus', 'In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2022-02-25 11:51:23', 5);
-insert into message (id, email, name, subject, text, time, user_id) values (7, 'mfearns6@harvard.edu', 'Mycah Fearns', 'vel', 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula.', '2022-07-07 21:01:39', 9);
-insert into message (id, email, name, subject, text, time, user_id) values (8, 'hphizakarley7@stanford.edu', 'Hope Phizakarley', 'suspendisse accumsan', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', '2022-02-05 03:33:47', 4);
-insert into message (id, email, name, subject, text, time, user_id) values (9, 'kglendenning8@cnbc.com', 'Keefe Glendenning', 'vel ipsum', 'Nulla suscipit ligula in lacus.', '2022-08-11 09:32:51', 20);
-insert into message (id, email, name, subject, text, time, user_id) values (10, 'phanna9@slate.com', 'Paolo Hanna', 'semper interdum', 'Ut tellus. Nulla ut erat id mauris vulputate elementum.', '2022-01-20 02:25:38', 21);
-insert into message (id, email, name, subject, text, time, user_id) values (11, 'dtintoa@telegraph.co.uk', 'Donielle Tinto', 'id pretium', 'Suspendisse accumsan tortor quis turpis. Sed ante.', '2022-04-10 14:27:32', 13);
-insert into message (id, email, name, subject, text, time, user_id) values (12, 'rpuesb@telegraph.co.uk', 'Ray Pues', 'egestas', 'Nullam porttitor lacus at turpis.', '2022-04-19 13:30:00', 6);
-insert into message (id, email, name, subject, text, time, user_id) values (13, 'swennamc@bandcamp.com', 'Shena Wennam', 'morbi sem', 'Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.', '2022-08-15 01:05:59', 10);
-insert into message (id, email, name, subject, text, time, user_id) values (14, 'joddd@ehow.com', 'Jamal Odd', 'eleifend quam', 'Duis mattis egestas metus. Aenean fermentum.', '2022-03-07 21:49:49', 8);
-insert into message (id, email, name, subject, text, time, user_id) values (15, 'cabrahamse@pbs.org', 'Cherilynn Abrahams', 'justo morbi', 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '2022-06-28 12:13:47', 10);
-insert into message (id, email, name, subject, text, time, user_id) values (16, 'mblumsomf@ed.gov', 'Maighdiln Blumsom', 'in tempor', 'Etiam faucibus cursus urna.', '2022-08-11 15:48:47', 19);
-insert into message (id, email, name, subject, text, time, user_id) values (17, 'akalfg@oaic.gov.au', 'Albrecht Kalf', 'facilisi cras', 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.', '2022-02-19 10:47:34', 6);
-insert into message (id, email, name, subject, text, time, user_id) values (18, 'azorzinh@histats.com', 'Allayne Zorzin', 'nisi volutpat', 'Quisque ut erat.', '2022-04-09 12:11:11', 10);
-insert into message (id, email, name, subject, text, time, user_id) values (19, 'ttextoni@europa.eu', 'Towney Texton', 'vitae', 'Sed ante. Vivamus tortor.', '2022-10-01 03:55:25', 14);
-insert into message (id, email, name, subject, text, time, user_id) values (20, 'ploynesj@smh.com.au', 'Perice Loynes', 'ut', 'Duis consequat dui nec nisi volutpat eleifend.', '2022-11-16 05:48:35', 1);
-insert into message (id, email, name, subject, text, time, user_id) values (21, 'scolegatek@princeton.edu', 'Susanetta Colegate', 'dis parturient', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-10-21 02:48:26', 4);
+insert into message (email, name, subject, text, time, user_id) values ('criordan0@alexa.com', 'Costanza Riordan', 'nulla suspendisse', 'Pellentesque ultrices mattis odio.', '2022-06-04 16:29:33', 10);
+insert into message (email, name, subject, text, time, user_id) values ('cpinnegar1@marriott.com', 'Coop Pinnegar', 'aliquam lacus', 'Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', '2022-06-26 13:33:23', 10);
+insert into message (email, name, subject, text, time, user_id) values ('rhilland2@nymag.com', 'Ramonda Hilland', 'id nulla', 'Proin at turpis a pede posuere nonummy. Integer non velit.', '2022-09-23 10:47:56', 3);
+insert into message (email, name, subject, text, time, user_id) values ('tbrowse3@goo.ne.jp', 'Tarrah Browse', 'enim lorem', 'Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', '2022-07-20 05:06:18', 4);
+insert into message (email, name, subject, text, time, user_id) values ('rkillingsworth4@dedecms.com', 'Rance Killingsworth', 'condimentum', 'Integer ac leo. Pellentesque ultrices mattis odio.', '2022-03-05 13:08:10', 9);
+insert into message (email, name, subject, text, time, user_id) values ('krecord5@livejournal.com', 'Kathryn Record', 'augue luctus', 'In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2022-02-25 11:51:23', 5);
+insert into message (email, name, subject, text, time, user_id) values ('mfearns6@harvard.edu', 'Mycah Fearns', 'vel', 'Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula.', '2022-07-07 21:01:39', 9);
+insert into message (email, name, subject, text, time, user_id) values ('hphizakarley7@stanford.edu', 'Hope Phizakarley', 'suspendisse accumsan', 'Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', '2022-02-05 03:33:47', 4);
+insert into message (email, name, subject, text, time, user_id) values ('kglendenning8@cnbc.com', 'Keefe Glendenning', 'vel ipsum', 'Nulla suscipit ligula in lacus.', '2022-08-11 09:32:51', 20);
+insert into message (email, name, subject, text, time, user_id) values ('phanna9@slate.com', 'Paolo Hanna', 'semper interdum', 'Ut tellus. Nulla ut erat id mauris vulputate elementum.', '2022-01-20 02:25:38', 21);
+insert into message (email, name, subject, text, time, user_id) values ('dtintoa@telegraph.co.uk', 'Donielle Tinto', 'id pretium', 'Suspendisse accumsan tortor quis turpis. Sed ante.', '2022-04-10 14:27:32', 13);
+insert into message (email, name, subject, text, time, user_id) values ('rpuesb@telegraph.co.uk', 'Ray Pues', 'egestas', 'Nullam porttitor lacus at turpis.', '2022-04-19 13:30:00', 6);
+insert into message (email, name, subject, text, time, user_id) values ('swennamc@bandcamp.com', 'Shena Wennam', 'morbi sem', 'Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.', '2022-08-15 01:05:59', 10);
+insert into message (email, name, subject, text, time, user_id) values ('joddd@ehow.com', 'Jamal Odd', 'eleifend quam', 'Duis mattis egestas metus. Aenean fermentum.', '2022-03-07 21:49:49', 8);
+insert into message (email, name, subject, text, time, user_id) values ('cabrahamse@pbs.org', 'Cherilynn Abrahams', 'justo morbi', 'Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero.', '2022-06-28 12:13:47', 10);
+insert into message (email, name, subject, text, time, user_id) values ('mblumsomf@ed.gov', 'Maighdiln Blumsom', 'in tempor', 'Etiam faucibus cursus urna.', '2022-08-11 15:48:47', 19);
+insert into message (email, name, subject, text, time, user_id) values ('akalfg@oaic.gov.au', 'Albrecht Kalf', 'facilisi cras', 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet.', '2022-02-19 10:47:34', 6);
+insert into message (email, name, subject, text, time, user_id) values ('azorzinh@histats.com', 'Allayne Zorzin', 'nisi volutpat', 'Quisque ut erat.', '2022-04-09 12:11:11', 10);
+insert into message (email, name, subject, text, time, user_id) values ('ttextoni@europa.eu', 'Towney Texton', 'vitae', 'Sed ante. Vivamus tortor.', '2022-10-01 03:55:25', 14);
+insert into message (email, name, subject, text, time, user_id) values ('ploynesj@smh.com.au', 'Perice Loynes', 'ut', 'Duis consequat dui nec nisi volutpat eleifend.', '2022-11-16 05:48:35', 1);
+insert into message (email, name, subject, text, time, user_id) values ('scolegatek@princeton.edu', 'Susanetta Colegate', 'dis parturient', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-10-21 02:48:26', 4);
 
 
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (1, 4, '51146a164219833b64619a981c06bd5a8dc8583b', '2022-02-12 10:52:57', 9, '805-413-3781', 16, 3);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (2, 13, 'b2f7516a89f4e070ce140f55186bb5371540f79b', '2022-10-13 08:57:19', 18, '632-399-6240', 1, 18);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (3, 19, '376a29edb374d89843858ce34b2c9dea7017be82', '2022-09-08 14:23:32', 1, '863-335-8311', 10, 7);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (4, 15, '32e255e99b8cd1cb5e4da42a568b55af7b878ec0', '2022-01-04 07:00:41', 19, '921-231-9729', 19, 6);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (5, 18, 'f193762ce15c71ec8bbd7ca169d3e11c23263db2', '2022-08-24 15:30:19', 18, '739-702-5824', 8, 6);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (6, 6, '8c8477612cfbb1e14d62642128e90ed9e6d884ff', '2022-09-30 09:39:17', 16, '660-425-1390', 10, 9);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (7, 14, '77e82ad7a5922baadb167d69384976670bc853ba', '2022-12-06 15:30:24', 15, '937-900-0925', 14, 10);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (8, 13, '3e9b6aeab31fde003670f1a897b7a3dccab0984b', '2022-04-27 19:06:05', 12, '487-740-3516', 13, 17);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (9, 21, '0c96ab7363e100c89fa7e237f714edf35faa73db', '2021-12-25 00:09:13', 5, '221-928-3031', 4, 16);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (10, 13, 'fe3e703dbc276e8fbf1e608039dfe63734b976a9', '2022-07-15 10:18:52', 6, '504-770-4637', 8, 7);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (11, 15, 'ccedd151400ac1b7236b708dd3bbaeedac804bea', '2022-07-07 05:02:17', 15, '229-935-1625', 21, 6);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (12, 6, 'f14bd12795ceb0e0bc3cfafc56d0cd9b4d552687', '2022-07-21 21:30:25', 5, '359-915-7781', 2, 12);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (13, 18, '0dd4abb40cb4e367f800a21b4ab3b0287b8ac77f', '2022-06-23 18:55:17', 10, '500-830-1184', 3, 7);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (14, 18, 'fdf89258dffd056648d9deb625475d5d94bfa7c6', '2022-12-20 16:12:55', 17, '919-209-6826', 12, 9);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (15, 17, 'eb66004fd8b3842689cbe7acd8f524a5efb97262', '2022-06-23 22:27:04', 21, '961-587-9919', 2, 2);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (16, 16, 'b59551160e8b250f1e077427cf62740ab19e52ca', '2022-01-05 05:51:58', 1, '811-789-4724', 13, 12);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (17, 19, '1fed7316d90e12d9c6c21d31dad4c7086d3eb0ac', '2022-05-17 00:48:43', 15, '171-716-4316', 12, 5);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (18, 2, '308c5638113d3571fbfdaafa7dc30da91a507867', '2022-07-21 18:51:42', 7, '218-989-4880', 9, 14);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (19, 16, '80110a62a49c904a639452fcd8d1bd638ea17565', '2022-10-27 10:41:41', 4, '324-505-7686', 15, 8);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (20, 10, '04a5032deaf1137157f959e96dfffbc8ce13e8d1', '2022-03-15 14:45:08', 2, '799-966-9464', 18, 9);
-insert into user_contact (id, approved, code, code_time, code_trails, contact, type, user_id) values (21, 8, '15be81c3ffa08a4d8e590b72d62b19121f1172b3', '2022-06-02 04:36:31', 19, '533-700-3524', 17, 2);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (4, '51146a164219833b64619a981c06bd5a8dc8583b', '2022-02-12 10:52:57', 9, '805-413-3781', 16, 3);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (13, 'b2f7516a89f4e070ce140f55186bb5371540f79b', '2022-10-13 08:57:19', 18, '632-399-6240', 1, 18);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (19, '376a29edb374d89843858ce34b2c9dea7017be82', '2022-09-08 14:23:32', 1, '863-335-8311', 10, 7);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (15, '32e255e99b8cd1cb5e4da42a568b55af7b878ec0', '2022-01-04 07:00:41', 19, '921-231-9729', 19, 6);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (18, 'f193762ce15c71ec8bbd7ca169d3e11c23263db2', '2022-08-24 15:30:19', 18, '739-702-5824', 8, 6);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (6, '8c8477612cfbb1e14d62642128e90ed9e6d884ff', '2022-09-30 09:39:17', 16, '660-425-1390', 10, 9);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (14, '77e82ad7a5922baadb167d69384976670bc853ba', '2022-12-06 15:30:24', 15, '937-900-0925', 14, 10);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (13, '3e9b6aeab31fde003670f1a897b7a3dccab0984b', '2022-04-27 19:06:05', 12, '487-740-3516', 13, 17);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (21, '0c96ab7363e100c89fa7e237f714edf35faa73db', '2021-12-25 00:09:13', 5, '221-928-3031', 4, 16);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (13, 'fe3e703dbc276e8fbf1e608039dfe63734b976a9', '2022-07-15 10:18:52', 6, '504-770-4637', 8, 7);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (15, 'ccedd151400ac1b7236b708dd3bbaeedac804bea', '2022-07-07 05:02:17', 15, '229-935-1625', 21, 6);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (6, 'f14bd12795ceb0e0bc3cfafc56d0cd9b4d552687', '2022-07-21 21:30:25', 5, '359-915-7781', 2, 12);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (18, '0dd4abb40cb4e367f800a21b4ab3b0287b8ac77f', '2022-06-23 18:55:17', 10, '500-830-1184', 3, 7);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (18, 'fdf89258dffd056648d9deb625475d5d94bfa7c6', '2022-12-20 16:12:55', 17, '919-209-6826', 12, 9);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (17, 'eb66004fd8b3842689cbe7acd8f524a5efb97262', '2022-06-23 22:27:04', 21, '961-587-9919', 2, 2);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (16, 'b59551160e8b250f1e077427cf62740ab19e52ca', '2022-01-05 05:51:58', 1, '811-789-4724', 13, 12);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (19, '1fed7316d90e12d9c6c21d31dad4c7086d3eb0ac', '2022-05-17 00:48:43', 15, '171-716-4316', 12, 5);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (2, '308c5638113d3571fbfdaafa7dc30da91a507867', '2022-07-21 18:51:42', 7, '218-989-4880', 9, 14);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (16, '80110a62a49c904a639452fcd8d1bd638ea17565', '2022-10-27 10:41:41', 4, '324-505-7686', 15, 8);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (10, '04a5032deaf1137157f959e96dfffbc8ce13e8d1', '2022-03-15 14:45:08', 2, '799-966-9464', 18, 9);
+insert into user_contact (approved, code, code_time, code_trails, contact, type, user_id) values (8, '15be81c3ffa08a4d8e590b72d62b19121f1172b3', '2022-06-02 04:36:31', 19, '533-700-3524', 17, 2);
 
 
 -- insert into users_balance_transaction (user_entity_id, balance_transaction_id) values (1, 1);
@@ -843,52 +843,52 @@ insert into user_contact (id, approved, code, code_time, code_trails, contact, t
 
 
 -- рейтинги книги
-insert into book_rating (id, value, book_id) values (1, 1, 21);
-insert into book_rating (id, value, book_id) values (2, 1, 21);
-insert into book_rating (id, value, book_id) values (3, 1, 21);
-insert into book_rating (id, value, book_id) values (4, 1, 21);
-insert into book_rating (id, value, book_id) values (5, 1, 21);
-insert into book_rating (id, value, book_id) values (6, 1, 21);
-insert into book_rating (id, value, book_id) values (7, 1, 21);
-insert into book_rating (id, value, book_id) values (8, 1, 21);
-insert into book_rating (id, value, book_id) values (9, 1, 21);
-insert into book_rating (id, value, book_id) values (10, 1, 21);
-insert into book_rating (id, value, book_id) values (11, 5, 21);
-insert into book_rating (id, value, book_id) values (12, 5, 21);
-insert into book_rating (id, value, book_id) values (13, 5, 21);
-insert into book_rating (id, value, book_id) values (14, 5, 21);
-insert into book_rating (id, value, book_id) values (15, 5, 21);
-insert into book_rating (id, value, book_id) values (16, 5, 21);
-insert into book_rating (id, value, book_id) values (17, 5, 21);
-insert into book_rating (id, value, book_id) values (18, 5, 21);
-insert into book_rating (id, value, book_id) values (19, 5, 21);
-insert into book_rating (id, value, book_id) values (20, 5, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (1, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
+insert into book_rating (value, book_id) values (5, 21);
 
 
 -- отзыв на кингу с сылкой на рейтинг
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (1, 21, 'In blandit ultrices enim.', '2022-09-06 17:58:42', 15, 1);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (2, 21, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-11-16 17:11:47', 8, 2);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (3, 21, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2021-12-28 12:41:48', 4, 3);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (4, 21, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-05-16 06:57:05', 4, 4);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (5, 22, 'Morbi vel lectus in quam fringilla rhoncus.', '2022-05-12 11:56:50', 16, 5);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (6, 22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-11-14 21:18:44', 14, 6);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (7, 22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-02-11 06:38:28', 5, 7);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (8, 22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-02-11 00:13:04', 18, 8);
-insert into book_review (id, book_id, text, time, user_id, book_rating_id) values (9, 22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-10-10 20:56:45', 14, 9);
-insert into book_review (id, book_id, text,  time, user_id, book_rating_id) values (10, 22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-07-17 20:11:53', 8, 10);
+insert into book_review (book_id, text, time, user_id) values (21, 'In blandit ultrices enim.', '2022-09-06 17:58:42', 15);
+insert into book_review (book_id, text, time, user_id) values (21, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-11-16 17:11:47', 8);
+insert into book_review (book_id, text, time, user_id) values (21, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2021-12-28 12:41:48', 4);
+insert into book_review (book_id, text, time, user_id) values (21, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-05-16 06:57:05', 4);
+insert into book_review (book_id, text, time, user_id) values (22, 'Morbi vel lectus in quam fringilla rhoncus.', '2022-05-12 11:56:50', 16);
+insert into book_review (book_id, text, time, user_id) values (22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-11-14 21:18:44', 14);
+insert into book_review (book_id, text, time, user_id) values (22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-02-11 06:38:28', 5);
+insert into book_review (book_id, text, time, user_id) values (22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-02-11 00:13:04', 18);
+insert into book_review (book_id, text, time, user_id) values (22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-10-10 20:56:45', 14);
+insert into book_review (book_id, text, time, user_id) values (22, 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2022-07-17 20:11:53', 8);
 
 
 -- лайк на отзыв, Value должен быть в пределах 1 до 5
-insert into book_review_like (id, review_id, time, user_id, value) values (1, 1, '2022-11-18 03:42:54', 23, 9);
-insert into book_review_like (id, review_id, time, user_id, value) values (2, 1, '2022-08-13 07:34:15', 90, 10);
-insert into book_review_like (id, review_id, time, user_id, value) values (3, 1, '2022-05-06 19:29:25', 39, 12);
-insert into book_review_like (id, review_id, time, user_id, value) values (4, 1, '2022-11-23 06:41:39', 54, 5);
-insert into book_review_like (id, review_id, time, user_id, value) values (5, 10, '2022-06-27 20:59:47', 59, 2);
-insert into book_review_like (id, review_id, time, user_id, value) values (6, 10, '2022-02-20 07:13:30', 45, 17);
-insert into book_review_like (id, review_id, time, user_id, value) values (7, 10, '2022-08-29 15:31:08', 77, 1);
-insert into book_review_like (id, review_id, time, user_id, value) values (8, 10, '2022-04-30 15:51:10', 40, 6);
-insert into book_review_like (id, review_id, time, user_id, value) values (9, 10, '2022-03-09 13:26:43', 19, 1);
-insert into book_review_like (id, review_id, time, user_id, value) values (10, 10, '2022-01-29 15:02:13', 57, 20);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-11-18 03:42:54', 23, 9);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-08-13 07:34:15', 90, 10);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-05-06 19:29:25', 39, 12);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-11-23 06:41:39', 54, 5);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-06-27 20:59:47', 59, 2);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-02-20 07:13:30', 45, 17);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-08-29 15:31:08', 77, 1);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-04-30 15:51:10', 40, 6);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-03-09 13:26:43', 19, 1);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-01-29 15:02:13', 57, 20);
 
 
 

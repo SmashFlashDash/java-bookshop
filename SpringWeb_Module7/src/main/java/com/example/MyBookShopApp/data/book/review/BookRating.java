@@ -10,12 +10,7 @@ import javax.validation.constraints.Min;
 public class BookRating {
 
     @Id
-    // TODO: hibenrate секвенс не синхронизировался с вставленными в бд записями
-    //  org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "book_rating_pkey"
-    //  Подробности: Key (id)=(1) already exists.
-    @GenericGenerator(name="generator", strategy="increment")
-    @GeneratedValue(generator="generator")
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Min(1)
