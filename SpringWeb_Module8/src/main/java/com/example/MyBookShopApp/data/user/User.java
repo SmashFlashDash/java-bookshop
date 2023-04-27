@@ -31,6 +31,15 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String email;
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String password;
+
+    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    private String phone;
+
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<Book> books;
 
@@ -55,6 +64,30 @@ public class User {
     @OneToMany
     @JoinColumn(name = "userId")
     private List<BookReviewLike> bookReviewLike;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public List<MessageEntity> getMessage() {
         return message;
