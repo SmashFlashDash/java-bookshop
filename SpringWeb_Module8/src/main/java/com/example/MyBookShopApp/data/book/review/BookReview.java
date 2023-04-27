@@ -1,7 +1,6 @@
 package com.example.MyBookShopApp.data.book.review;
 
-import com.example.MyBookShopApp.data.user.UserEntity;
-import org.hibernate.annotations.GenericGenerator;
+import com.example.MyBookShopApp.data.user.User;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -41,9 +40,9 @@ public class BookReview {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private UserEntity user;
+    private User user;
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 

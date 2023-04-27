@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_contact")
-public class UserContactEntity {
+public class UserContact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +34,13 @@ public class UserContactEntity {
     private String contact;
 
     @OneToOne(mappedBy = "userContact")
-    private UserEntity user;
+    private User user;
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

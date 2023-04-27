@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "`user`")
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class UserEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private UserContactEntity userContact;
+    private UserContact userContact;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<BookReview> bookReview;
@@ -96,11 +96,11 @@ public class UserEntity {
         BalanceTransaction = balanceTransaction;
     }
 
-    public UserContactEntity getUserContact() {
+    public UserContact getUserContact() {
         return userContact;
     }
 
-    public void setUserContact(UserContactEntity userContact) {
+    public void setUserContact(UserContact userContact) {
         this.userContact = userContact;
     }
 

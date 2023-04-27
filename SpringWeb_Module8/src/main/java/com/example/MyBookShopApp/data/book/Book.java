@@ -7,7 +7,7 @@ import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
 import com.example.MyBookShopApp.data.tag.TagEntity;
-import com.example.MyBookShopApp.data.user.UserEntity;
+import com.example.MyBookShopApp.data.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -88,7 +88,7 @@ public class Book {
     @JoinTable(name = "book2user",
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "userId")})
-    private List<UserEntity> users;
+    private List<User> users;
 
     @OneToMany(mappedBy = "book")
     private List<BookFile> bookFileList = new ArrayList<>();
@@ -137,11 +137,11 @@ public class Book {
         this.genre = genre;
     }
 
-    public List<UserEntity> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserEntity> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
