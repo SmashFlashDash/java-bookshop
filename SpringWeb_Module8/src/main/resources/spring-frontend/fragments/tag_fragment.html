@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="fragmentTag(node)"
+     th:unless="${#lists.isEmpty(node.getChilds())}"
+     th:remove="tag">
+  <div class="Tags"
+       th:each="genre, iter : ${node.getChilds()}"
+       th:classappend="${genre.getMaxDepth() > 1} ? 'Tags_embed':''"
+       th:remove="${genre.getMaxDepth()==0} ? tag : none">
+    <div class="Tags-title" th:remove="${genre.getMaxDepth()==0} ? tag : none">
+      <div class="Tag">
+        <a th:href="'/genres/' + ${genre.getSlug()}">
+          <span th:text="${genre.getItem().getName()}" th:remove="tag"></span>
+          <span class="undefined-amount" th:text=" '('+ ${genre.getCountBooks()} + ')'"></span>
+        </a>
+      </div>
+    </div>
+    <th:block th:if="${genre.getMaxDepth() > 0}" th:replace="this :: fragmentTag(node=${genre})">
+    </th:block>
+  </div>
+</div>
+</body>
+</html>
