@@ -10,6 +10,7 @@ import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "`user`")
@@ -183,5 +184,15 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toHexString(hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, balance, name, email, password, phone);
     }
 }
