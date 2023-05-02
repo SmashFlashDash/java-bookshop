@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,32 +19,30 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class UserRegister {
+public class UserAuthService {
 
     private final UserRepository bookstoreUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService bookstoreUserDetailsService;
+    private final UserDetailsService userDetailsService;
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public UserRegister(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                        AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
-                        JWTUtil jwtUtil) {
+    public UserAuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                           AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
+                           JWTUtil jwtUtil) {
         this.bookstoreUserRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
-        this.bookstoreUserDetailsService = userDetailsService;
+        this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
     }
 
     public void registerNewUser(RegistrationForm registrationForm) {
-
+        // TODO: если пользователя нет в БД если есть exception нужен
         if (bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail()) == null) {
             User user = new User();
             user.setName(registrationForm.getName());
-            // TODO: как в UserContact добавить mail и phone и засейвить
-            //  еще транзакцией сделать
             user.setEmail(registrationForm.getEmail());
             user.setPhone(registrationForm.getPhone());
             user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
@@ -56,8 +55,7 @@ public class UserRegister {
 
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
         Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
-                        payload.getCode()));
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
@@ -66,11 +64,15 @@ public class UserRegister {
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
-                payload.getCode()));
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
+        // TODO: поидее из контекста уже можео получить т.к авторизовались а не из бд
+        //  тоесть черех getCurrentUser()
         BookstoreUserDetails userDetails =
-                (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(payload.getContact());
-
+                (BookstoreUserDetails) userDetailsService.loadUserByUsername(payload.getContact());
         String jwtToken = jwtUtil.generateToken(userDetails);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult(jwtToken);

@@ -4,9 +4,8 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.dto.ContactConfirmationPayload;
 import com.example.MyBookShopApp.dto.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.RegistrationForm;
-import com.example.MyBookShopApp.services.UserRegister;
+import com.example.MyBookShopApp.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,18 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Controller
 public class AuthUserController {
 
-    private final UserRegister userRegister;
+    private final UserAuthService userAuthService;
 
     @Autowired
-    public AuthUserController(UserRegister userRegister) {
-        this.userRegister = userRegister;
+    public AuthUserController(UserAuthService userAuthService) {
+        this.userAuthService = userAuthService;
     }
 
     @GetMapping("/signin")
@@ -60,7 +57,7 @@ public class AuthUserController {
 
     @PostMapping("/reg")
     public String handleUserRegistration(RegistrationForm registrationForm, Model model) {
-        userRegister.registerNewUser(registrationForm);
+        userAuthService.registerNewUser(registrationForm);
         model.addAttribute("regOk", true);
         return "signin";
     }
@@ -69,21 +66,24 @@ public class AuthUserController {
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
                                                    HttpServletResponse httpServletResponse) {
-        // TODO: не работает логин
-        ContactConfirmationResponse loginResponse = userRegister.jwtLogin(payload);
+        // TODO: не работает логин если по телефону, т.к UserDetailsService search by email
+        //  login по email почему то бросает org.springframework.security.authentication.BadCredentialsException: Bad credentials
+        //  бросал BadCredentionals так как отправляет в пароль тот что написан на форме ContactConfirmation
+        ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
         Cookie cookie = new Cookie("token", loginResponse.getResult());
         httpServletResponse.addCookie(cookie);
         return loginResponse;
     }
 
     @GetMapping("/my")
-    public String handleMy() {
+    public String handleMy(Model model) {
+        model.addAttribute("curUsr", userAuthService.getCurrentUser());
         return "my";
     }
 
     @GetMapping("/profile")
     public String handleProfile(Model model) {
-        model.addAttribute("curUsr", userRegister.getCurrentUser());
+        model.addAttribute("curUsr", userAuthService.getCurrentUser());
         return "profile";
     }
 
