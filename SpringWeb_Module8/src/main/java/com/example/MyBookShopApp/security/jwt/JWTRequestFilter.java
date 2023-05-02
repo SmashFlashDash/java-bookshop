@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.security.jwt;
 
-import com.example.MyBookShopApp.security.BookstoreUserDetails;
-import com.example.MyBookShopApp.services.UserDetailsService;
+import com.example.MyBookShopApp.security.UserDetailsImpl;
+import com.example.MyBookShopApp.security.UserDetailsServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -18,11 +18,11 @@ import java.io.IOException;
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService bookstoreUserDetailsService;
+    private final UserDetailsServiceImpl bookstoreUserDetailsService;
     private final JWTUtil jwtUtil;
 
-    public JWTRequestFilter(UserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil) {
-        this.bookstoreUserDetailsService = bookstoreUserDetailsService;
+    public JWTRequestFilter(UserDetailsServiceImpl userDetailsService, JWTUtil jwtUtil) {
+        this.bookstoreUserDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -41,7 +41,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 }
 
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    BookstoreUserDetails userDetails = (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(username);
+                    UserDetailsImpl userDetails = (UserDetailsImpl) bookstoreUserDetailsService.loadUserByUsername(username);
                     if (jwtUtil.validateToken(token, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken =
                                 new UsernamePasswordAuthenticationToken(

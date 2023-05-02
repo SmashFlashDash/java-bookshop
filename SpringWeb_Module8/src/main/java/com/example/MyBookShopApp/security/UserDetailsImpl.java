@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class BookstoreUserDetails implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private final User bookstoreUser;
 
-    public BookstoreUserDetails(User bookstoreUser) {
+    public UserDetailsImpl(User bookstoreUser) {
         this.bookstoreUser = bookstoreUser;
     }
 

@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.config;
 
+import com.example.MyBookShopApp.security.UserDetailsServiceImpl;
 import com.example.MyBookShopApp.security.jwt.JWTRequestFilter;
-import com.example.MyBookShopApp.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -19,11 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final JWTRequestFilter filter;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, JWTRequestFilter filter) {
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JWTRequestFilter filter) {
         this.userDetailsService = userDetailsService;
         this.filter = filter;
     }

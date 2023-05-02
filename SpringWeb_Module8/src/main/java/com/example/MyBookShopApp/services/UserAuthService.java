@@ -5,7 +5,8 @@ import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.dto.ContactConfirmationPayload;
 import com.example.MyBookShopApp.dto.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.RegistrationForm;
-import com.example.MyBookShopApp.security.BookstoreUserDetails;
+import com.example.MyBookShopApp.security.UserDetailsImpl;
+import com.example.MyBookShopApp.security.UserDetailsServiceImpl;
 import com.example.MyBookShopApp.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,12 +25,12 @@ public class UserAuthService {
     private final UserRepository bookstoreUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final JWTUtil jwtUtil;
 
     @Autowired
     public UserAuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                           AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
+                           AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService,
                            JWTUtil jwtUtil) {
         this.bookstoreUserRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -53,26 +54,18 @@ public class UserAuthService {
         }
     }
 
-    public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
-        Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
-
+    public ContactConfirmationResponse login(ContactConfirmationPayload payload) throws AuthenticationException {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult("true");
         return response;
     }
 
-    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-        }
-        // TODO: поидее из контекста уже можео получить т.к авторизовались а не из бд
-        //  тоесть черех getCurrentUser()
-        BookstoreUserDetails userDetails =
-                (BookstoreUserDetails) userDetailsService.loadUserByUsername(payload.getContact());
+    public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) throws AuthenticationException {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
+        // BookstoreUserDetails userDetails = (BookstoreUserDetails) userDetailsService.loadUserByUsername(payload.getContact());
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         String jwtToken = jwtUtil.generateToken(userDetails);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult(jwtToken);
@@ -80,8 +73,7 @@ public class UserAuthService {
     }
 
     public Object getCurrentUser() {
-        BookstoreUserDetails userDetails =
-                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails.getBookstoreUser();
+        return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .getBookstoreUser();
     }
 }

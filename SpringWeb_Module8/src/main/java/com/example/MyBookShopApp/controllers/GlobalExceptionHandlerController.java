@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.dto.ApiResponse;
+import com.example.MyBookShopApp.dto.ContactConfirmationResponse;
 import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
 import com.example.MyBookShopApp.errs.EmptySearchException;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.logging.Logger;
 
 @ControllerAdvice
@@ -33,5 +35,14 @@ public class GlobalExceptionHandlerController {
     public ResponseEntity<ApiResponse<Book>> handleMissingServletRequestParameterException(Exception exception) {
         return new ResponseEntity<>(new ApiResponse<>(HttpStatus.BAD_REQUEST, "Missing required parameters",
                 exception), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public boolean handleAuthentificationException(Exception exception) {
+        // TODO: хорошо обьект вернуть но нужно изменить sript.min.js
+        // ContactConfirmationResponse response = new ContactConfirmationResponse();
+        // response.setResult(exception.getMessage());
+        // return response;
+        return false;
     }
 }
