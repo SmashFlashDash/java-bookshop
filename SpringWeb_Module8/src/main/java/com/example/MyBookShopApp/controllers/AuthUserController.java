@@ -4,14 +4,12 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.dto.ContactConfirmationPayload;
 import com.example.MyBookShopApp.dto.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.RegistrationForm;
+import com.example.MyBookShopApp.services.TokenService;
 import com.example.MyBookShopApp.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +18,12 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthUserController {
 
     private final UserAuthService userAuthService;
+    private final TokenService tokenService;
 
     @Autowired
-    public AuthUserController(UserAuthService userAuthService) {
+    public AuthUserController(UserAuthService userAuthService, TokenService tokenService) {
         this.userAuthService = userAuthService;
+        this.tokenService = tokenService;
     }
 
     @GetMapping("/signin")
@@ -66,9 +66,6 @@ public class AuthUserController {
     @ResponseBody
     public ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
                                                    HttpServletResponse httpServletResponse) {
-        // TODO: не работает логин если по телефону, т.к UserDetailsService search by email
-        //  login по email почему то бросает org.springframework.security.authentication.BadCredentialsException: Bad credentials
-        //  бросал BadCredentionals так как отправляет в пароль тот что написан на форме ContactConfirmation
         ContactConfirmationResponse loginResponse = userAuthService.jwtLogin(payload);
         Cookie cookie = new Cookie("token", loginResponse.getResult());
         httpServletResponse.addCookie(cookie);
@@ -88,17 +85,15 @@ public class AuthUserController {
     }
 
 //    @GetMapping("/logout")
-//    public String handleLogout(HttpServletRequest request) {
+//    public String handleLogout(@CookieValue(value = "token", required = false) Cookie token) {
 //        HttpSession session = request.getSession();
 //        SecurityContextHolder.clearContext();
 //        if (session != null) {
 //            session.invalidate();
 //        }
-//
 //        for (Cookie cookie : request.getCookies()) {
 //            cookie.setMaxAge(0);
 //        }
-//
 //        return "redirect:/";
 //    }
 }

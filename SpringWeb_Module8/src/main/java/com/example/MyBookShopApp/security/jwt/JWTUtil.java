@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class JWTUtil {
 
     @Value("${auth.secret}")
-    private String secret;
+    private String SECRET;
 
     private String createToken(Map<String, Object> claims, String username) {
         return Jwts
@@ -25,7 +25,7 @@ public class JWTUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+                .signWith(SignatureAlgorithm.HS256, SECRET).compact();
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -39,7 +39,7 @@ public class JWTUtil {
     }
 
     private Claims extractAllClaims(String token){
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
     }
 
     public String extractUsername(String token){

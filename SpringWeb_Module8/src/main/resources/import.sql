@@ -203,6 +203,7 @@ insert into "user" (password, email, phone, balance, hash, name, reg_time) value
 insert into "user" (password, email, phone, balance, hash, name, reg_time) values ('www', 'email@mail', '+901 901 00 00', 753, '49aa052fdd554f209231b4e834e7f5f83f1d2955', 'Hamel Jephcote', '2022-05-20 20:54:26');
 insert into "user" (password, email, phone, balance, hash, name, reg_time) values ('www', 'email@mail', '+901 901 00 00', 867, 'b4399bb4f9e850834ce4a542492f66a16fc80f5a', 'Barny Clulee', '2022-09-27 10:51:15');
 insert into "user" (password, email, phone, balance, hash, name, reg_time) values ('www', 'email@mail', '+901 901 00 00', 943, '627248f64e785a5f7bdc2f31a23a7d82369e3f6f', 'Pam Quaif', '2022-03-06 01:58:36');
+insert into "user" (password, email, phone, balance, hash, name, reg_time) values ('$2a$10$XzXiuJ1jQZciIVzGhp6uluDXAjrvsUW/W.wvP7n/XnWH9SnIcK7L6', 'w@w.w', '+7 (222) 222-22-22', 0, '4523e808', 'w', '2023-05-06 14:04:58.428116');
 
 
 insert into tag (id, tag, slug, description) values (1, 'challenge', 'challenge', 'nunc');
