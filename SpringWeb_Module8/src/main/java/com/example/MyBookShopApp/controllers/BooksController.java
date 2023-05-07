@@ -3,13 +3,13 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.review.BookReview;
-import com.example.MyBookShopApp.dto.BookRatingDto;
-import com.example.MyBookShopApp.services.*;
-import com.example.MyBookShopApp.dto.BooksPageDto;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.tag.TagDto;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagService;
+import com.example.MyBookShopApp.dto.BookRatingDto;
+import com.example.MyBookShopApp.dto.BooksPageDto;
+import com.example.MyBookShopApp.services.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -57,7 +57,7 @@ public class BooksController {
     }
 
 
-//    @GetMapping("/popular")
+    //    @GetMapping("/popular")
 //    public String getPopularBooks(Model model) {
 //        model.addAttribute("active", "Popular");
 //        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 10).getContent());
@@ -69,6 +69,7 @@ public class BooksController {
         model.addAttribute("popularBooks", bookService.getBooksData());
         return "/books/popular";
     }
+
     @GetMapping("/popular/page")
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
@@ -77,7 +78,7 @@ public class BooksController {
     }
 
 
-//    @GetMapping("/recent")
+    //    @GetMapping("/recent")
 //    public String recentPage(Model model) {
 //        model.addAttribute("recentBooks", bookService.getBooksData());
 //        return "/books/recent";
@@ -89,6 +90,7 @@ public class BooksController {
                 new DateTime().minusMonths(1).toDate(), new Date(), 0, 10).getContent());
         return "/books/recent";
     }
+
     @GetMapping(value = "/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(
@@ -120,6 +122,7 @@ public class BooksController {
         model.addAttribute("slugBook", book);
         return "/books/slugmy";
     }
+
     @PostMapping("/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {
         String savePath = storage.saveNewBookImage(file, slug);

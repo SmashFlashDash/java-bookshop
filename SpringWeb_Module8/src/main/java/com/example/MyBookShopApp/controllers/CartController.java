@@ -2,20 +2,15 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
-import com.example.MyBookShopApp.dto.BookStatusDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
 
 @Controller
 public class CartController {

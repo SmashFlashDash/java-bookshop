@@ -1,8 +1,8 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.genre.GenreEntity;
-import com.example.MyBookShopApp.services.GenreService;
 import com.example.MyBookShopApp.services.BookService;
+import com.example.MyBookShopApp.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

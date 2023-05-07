@@ -15,12 +15,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
-public class UserAuthService {
+public class AuthService {
 
     private final UserRepository bookstoreUserRepository;
     private final PasswordEncoder passwordEncoder;
@@ -29,9 +30,9 @@ public class UserAuthService {
     private final JWTUtil jwtUtil;
 
     @Autowired
-    public UserAuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                           AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService,
-                           JWTUtil jwtUtil) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService,
+                       JWTUtil jwtUtil) {
         this.bookstoreUserRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -41,7 +42,7 @@ public class UserAuthService {
 
     public void registerNewUser(RegistrationForm registrationForm) {
         // TODO: если пользователя нет в БД если есть exception нужен
-        if (bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail()) == null) {
+        if (bookstoreUserRepository.findUserByEmail(registrationForm.getEmail()) == null) {
             User user = new User();
             user.setName(registrationForm.getName());
             user.setEmail(registrationForm.getEmail());
@@ -64,7 +65,6 @@ public class UserAuthService {
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
-        // BookstoreUserDetails userDetails = (BookstoreUserDetails) userDetailsService.loadUserByUsername(payload.getContact());
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         String jwtToken = jwtUtil.generateToken(userDetails);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
@@ -73,7 +73,10 @@ public class UserAuthService {
     }
 
     public Object getCurrentUser() {
-        return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-                .getBookstoreUser();
+        // TODO: в контексте может быть класс OAuthUser и надо писать как кастануть
+        //  или .getPrincipal.getClass() и через if уже писать
+        // ((DefaultOAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+//         DefaultOidcUser s = ((DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getBookstoreUser();
     }
 }

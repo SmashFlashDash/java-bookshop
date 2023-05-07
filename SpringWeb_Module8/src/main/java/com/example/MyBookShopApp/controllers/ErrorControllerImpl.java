@@ -1,13 +1,15 @@
 package com.example.MyBookShopApp.controllers;
 
+import com.example.MyBookShopApp.dto.ApiResponse;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -20,9 +22,16 @@ public class ErrorControllerImpl implements ErrorController {
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
         return String.format("<html><body><h2>Error Page</h2>" +
                         "<div>Status code: <b>%s</b></div>"
-                        +"<div>Exception Message: <b>%s</b></div><body></html>",
-                statusCode, exception==null? "N/A": exception.getMessage());
+                        + "<div>Exception Message: <b>%s</b></div><body></html>",
+                statusCode, exception == null ? "N/A" : exception.getMessage());
     }
+
+// страница браузера 404
+//    @RequestMapping("/error")
+//    @ResponseBody
+//    public ResponseEntity handleError2(HttpServletRequest request, Model model) {
+//        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+//    }
 
 
 }

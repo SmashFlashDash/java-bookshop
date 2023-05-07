@@ -6,15 +6,23 @@ import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.book.review.BookReviewLike;
 import com.example.MyBookShopApp.data.book.review.MessageEntity;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+@Data
 @Entity
 @Table(name = "`user`")
 public class User {
+//public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,133 +74,34 @@ public class User {
     @JoinColumn(name = "userId")
     private List<BookReviewLike> bookReviewLike;
 
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public List<MessageEntity> getMessage() {
-        return message;
-    }
-
-    public void setMessage(List<MessageEntity> message) {
-        this.message = message;
-    }
-
-    public List<BookReview> getBookReview() {
-        return bookReview;
-    }
-
-    public void setBookReview(List<BookReview> bookReview) {
-        this.bookReview = bookReview;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    public List<FileDownloadEntity> getFileDownload() {
-        return fileDownload;
-    }
-
-    public void setFileDownload(List<FileDownloadEntity> fileDownload) {
-        this.fileDownload = fileDownload;
-    }
-
-    public List<BalanceTransactionEntity> getBalanceTransaction() {
-        return BalanceTransaction;
-    }
-
-    public void setBalanceTransaction(List<BalanceTransactionEntity> balanceTransaction) {
-        BalanceTransaction = balanceTransaction;
-    }
-
-    public UserContact getUserContact() {
-        return userContact;
-    }
-
-    public void setUserContact(UserContact userContact) {
-        this.userContact = userContact;
-    }
-
-    public List<BookReviewLike> getBookReviewLike() {
-        return bookReviewLike;
-    }
-
-    public void setBookReviewLike(List<BookReviewLike> bookReviewLike) {
-        this.bookReviewLike = bookReviewLike;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
-
-    public LocalDateTime getRegTime() {
-        return regTime;
-    }
-
-    public void setRegTime(LocalDateTime regTime) {
-        this.regTime = regTime;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return Integer.toHexString(hashCode());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, balance, name, email, password, phone);
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return getEmail();
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
 }

@@ -1,6 +1,5 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.dto.BookStatusDto;
 import com.example.MyBookShopApp.services.BookRatingService;
 import org.springframework.beans.factory.annotation.Autowired;

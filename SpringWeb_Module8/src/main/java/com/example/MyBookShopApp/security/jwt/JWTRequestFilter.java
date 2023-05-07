@@ -5,6 +5,8 @@ import com.example.MyBookShopApp.security.UserDetailsImpl;
 import com.example.MyBookShopApp.security.UserDetailsServiceImpl;
 import com.example.MyBookShopApp.services.TokenService;
 import io.jsonwebtoken.JwtException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,38 +21,50 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-    private final UserDetailsServiceImpl bookstoreUserDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final JWTUtil jwtUtil;
     private final TokenService tokenService;
     private final GlobalExceptionHandlerController handlerController;
 
-    public JWTRequestFilter(UserDetailsServiceImpl userDetailsService, JWTUtil jwtUtil, TokenService tokenService, GlobalExceptionHandlerController handlerController) {
-        this.bookstoreUserDetailsService = userDetailsService;
-        this.jwtUtil = jwtUtil;
-        this.tokenService = tokenService;
-        this.handlerController = handlerController;
-    }
-
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        Cookie[] cookies = httpServletRequest.getCookies();
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+//        final String authHeader = request.getHeader("Authorization");
+//        final String jwt;
+//        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+//            System.out.println("no jwt Bearer");
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//        jwt = authHeader.substring(7);
+//        final String userName = jwtUtil.extractUsername(jwt);
+//        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//              UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
+//              if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//                  UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//                  authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                  SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//              }
+//        }
+
+
+        Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("token")) {
                     if (tokenService.isJwtInBlackList(cookie.getValue())) continue;
                     String token = cookie.getValue();
                     try {
-                        // TODO: если изменить jwt jwtUtl бросает Exception надо обрабатывать?
                         String username = jwtUtil.extractUsername(token);
-                        // TODO: authentification можно убрать или это для Oauth?
                         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                            UserDetailsImpl userDetails = (UserDetailsImpl) bookstoreUserDetailsService.loadUserByUsername(username);
+                            UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
                             if (jwtUtil.validateToken(token, userDetails)) {
                                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                             }
                         }
@@ -62,7 +76,9 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 }
             }
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        filterChain.doFilter(request, response);
     }
+
+
 }
 
