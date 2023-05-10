@@ -21,13 +21,11 @@ import java.util.logging.Logger;
 @Service
 public class ResourceStorage {
 
+    private final BookFileRepository bookFileRepository;
     @Value("${upload.path}")
     String uploadPath;
-
     @Value("${download.path}")
     String downloadPath;
-
-    private final BookFileRepository bookFileRepository;
 
     @Autowired
     public ResourceStorage(BookFileRepository bookFileRepository) {

@@ -1,14 +1,12 @@
 package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.book.review.BookRating;
 import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import java.util.List;
 

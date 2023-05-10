@@ -26,7 +26,7 @@ public class BookRatingService {
     }
 
     public BookRatingDto getBookRating(Integer id) {
-        List<BookRatingItem> listValues =  bookRating.getRatingsCount(id);
+        List<BookRatingItem> listValues = bookRating.getRatingsCount(id);
         return new BookRatingDto(listValues);
     }
 }

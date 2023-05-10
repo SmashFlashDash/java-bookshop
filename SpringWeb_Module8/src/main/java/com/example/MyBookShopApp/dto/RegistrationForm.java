@@ -1,11 +1,16 @@
 package com.example.MyBookShopApp.dto;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class RegistrationForm {
 
     private String name;
     private String email;
     private String phone;
     private String pass;
+    private String oauth;
 
     public String getName() {
         return name;
@@ -37,5 +42,13 @@ public class RegistrationForm {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getOauth() {
+        return oauth;
+    }
+
+    public void setOauth(String oauth) {
+        this.oauth = oauth;
     }
 }

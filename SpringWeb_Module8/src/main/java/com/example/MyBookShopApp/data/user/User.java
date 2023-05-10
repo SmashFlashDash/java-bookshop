@@ -7,14 +7,10 @@ import com.example.MyBookShopApp.data.book.review.BookReviewLike;
 import com.example.MyBookShopApp.data.book.review.MessageEntity;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,13 +18,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "`user`")
 public class User {
-//public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255) UNIQUE NOT NULL")
     private String hash;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
@@ -40,68 +34,44 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String email;
-
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String password;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String phone;
-
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<Book> books;
+    private List<Book> books  = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private List<FileDownloadEntity> fileDownload;
+    private List<FileDownloadEntity> fileDownload  = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private List<BalanceTransactionEntity> BalanceTransaction;
+    private List<BalanceTransactionEntity> BalanceTransaction  = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<MessageEntity> message;
+    private List<MessageEntity> message  = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private UserContact userContact;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+            orphanRemoval = true ,fetch = FetchType.EAGER)
+    private List<UserContact> contacts  = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<BookReview> bookReview;
+    private List<BookReview> bookReview  = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private List<BookReviewLike> bookReviewLike;
+    private List<BookReviewLike> bookReviewLike = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return hash.equals(user.hash);
+    }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return getEmail();
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, regTime);
+    }
 }

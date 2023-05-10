@@ -1,9 +1,9 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.dto.GenreDto;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.genre.MapperGenreEntityToGenreDro;
 import com.example.MyBookShopApp.data.repositories.GenreRepository;
+import com.example.MyBookShopApp.dto.GenreDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -29,37 +29,37 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public List<Book> getBooksWithPriceBetween(Integer min, Integer max){
+    public List<Book> getBooksWithPriceBetween(Integer min, Integer max) {
         return bookRepository.findAllByPriceBetween(min, max);
     }
 
-    public List<Book> getBooksByAuthor(String authorName){
+    public List<Book> getBooksByAuthor(String authorName) {
         return bookRepository.findBooksByAuthorNameContaining(authorName);
     }
 
     public List<Book> getBooksByTitle(String title) throws BookstoreApiWrongParameterException {
-        if(title.equals("") || title.length()<=1){
+        if (title.equals("") || title.length() <= 1) {
             throw new BookstoreApiWrongParameterException("Wrong values passed to one or more parameters");
-        }else{
+        } else {
             List<Book> data = bookRepository.findBooksByTitleContaining(title);
-            if(data.size()>0){
+            if (data.size() > 0) {
                 return data;
-            }else {
+            } else {
                 throw new BookstoreApiWrongParameterException("No data found with specified parameters...");
             }
         }
     }
 
-    public List<Book> getBooksWithMaxPrice(){
+    public List<Book> getBooksWithMaxPrice() {
         return bookRepository.getBooksWithMaxDiscount();
     }
 
-    public List<Book> getBestsellers(){
+    public List<Book> getBestsellers() {
         return bookRepository.getBestsellers();
     }
 
-    public Page<Book> getPageofRecommendedBooks(Integer offset, Integer limit){
-        Pageable nextPage = PageRequest.of(offset,limit);
+    public Page<Book> getPageofRecommendedBooks(Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findAll(nextPage);
     }
 

@@ -67,7 +67,7 @@
           <div class="Tabs-wrap">
             <div class="Tabs-block" id="basic">
               <div class="Profile">
-                <form class="form Profile-form" action="#" method="post">
+                <form class="form Profile-form" th:action="@{/profile}" action="#" method="post">
                   <div class="row">
                     <div class="row-block">
                       <div class="form-group">
@@ -112,7 +112,10 @@
                           <button class="btn btn_primary" type="submit">Сохранить
                           </button>
                         </div>
-                        <div class="Profile-success">Профиль успешно сохранен
+                        <div class="Profile-success"
+                             th:if="${updated!=null}"
+                             th:text="${error!=null? error : 'Профиль успешно сохранен'}"
+                             th:style="${error!=null? 'color: red' : 'color: #2aa73a'}">Профиль успешно сохранен
                         </div>
                       </div>
                     </div>

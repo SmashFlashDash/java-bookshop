@@ -33,25 +33,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-//        final String authHeader = request.getHeader("Authorization");
-//        final String jwt;
-//        if (authHeader == null || !authHeader.startsWith("Bearer")) {
-//            System.out.println("no jwt Bearer");
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
-//        jwt = authHeader.substring(7);
-//        final String userName = jwtUtil.extractUsername(jwt);
-//        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//              UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
-//              if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-//                  UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//                  authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//                  SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//              }
-//        }
-
-
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -61,7 +42,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                     try {
                         String username = jwtUtil.extractUsername(token);
                         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                            UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(username);
+                            UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
                             if (jwtUtil.validateToken(token, userDetails)) {
                                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

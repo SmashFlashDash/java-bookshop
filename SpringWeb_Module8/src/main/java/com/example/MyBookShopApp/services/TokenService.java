@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TokenService {
     private final BlackListJwtRepository jwtBlackList;
-    
+
     @Autowired
     public TokenService(BlackListJwtRepository jwtBlackList) {
         this.jwtBlackList = jwtBlackList;

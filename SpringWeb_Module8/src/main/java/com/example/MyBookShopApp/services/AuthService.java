@@ -1,58 +1,37 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.data.repositories.UserRepository;
 import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.dto.ContactConfirmationPayload;
 import com.example.MyBookShopApp.dto.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.RegistrationForm;
 import com.example.MyBookShopApp.security.UserDetailsImpl;
-import com.example.MyBookShopApp.security.UserDetailsServiceImpl;
 import com.example.MyBookShopApp.security.jwt.JWTUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
-
-    private final UserRepository bookstoreUserRepository;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
     private final JWTUtil jwtUtil;
 
-    @Autowired
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService,
-                       JWTUtil jwtUtil) {
-        this.bookstoreUserRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.jwtUtil = jwtUtil;
-    }
-
-    public void registerNewUser(RegistrationForm registrationForm) {
-        // TODO: если пользователя нет в БД если есть exception нужен
-        if (bookstoreUserRepository.findUserByEmail(registrationForm.getEmail()) == null) {
-            User user = new User();
-            user.setName(registrationForm.getName());
-            user.setEmail(registrationForm.getEmail());
-            user.setPhone(registrationForm.getPhone());
-            user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
-            user.setBalance(0);
-            user.setRegTime(LocalDateTime.now());
-            user.setHash(user.toString());
-            bookstoreUserRepository.save(user);
-        }
+    @Transactional
+    public User registerNewOrGetUser(RegistrationForm registrationForm) {
+        String[] contacts = {registrationForm.getPhone(), registrationForm.getEmail(), registrationForm.getOauth()};
+        List<String> contactsClear = Arrays.stream(contacts).filter(Objects::nonNull).collect(Collectors.toList());
+        return userService.findUserByContacts(contactsClear).orElseGet(() -> userService.saveNewUser(registrationForm));
     }
 
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) throws AuthenticationException {
@@ -63,6 +42,12 @@ public class AuthService {
         return response;
     }
 
+    //  TODO: ошибка если в User, UserContact FetchType.Lazy
+    // org.hibernate.LazyInitializationException: could not initialize proxy [com.example.MyBookShopApp.data.user.User#101] - no Session
+    //	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
+    //	at com.example.MyBookShopApp.security.UserDetailsImpl.getUsername(UserDetailsImpl.java:60) ~[classes/:na]
+    //	at com.example.MyBookShopApp.security.jwt.JWTUtil.validateToken(JWTUtil.java:59) ~[classes/:na]
+    //	at com.example.MyBookShopApp.security.jwt.JWTRequestFilter.doFilterInternal(JWTRequestFilter.java:46) ~[classes/:na]l
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -72,11 +57,7 @@ public class AuthService {
         return response;
     }
 
-    public Object getCurrentUser() {
-        // TODO: в контексте может быть класс OAuthUser и надо писать как кастануть
-        //  или .getPrincipal.getClass() и через if уже писать
-        // ((DefaultOAuth2User) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
-//         DefaultOidcUser s = ((DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getBookstoreUser();
+    public UserDetailsImpl getCurrentUser() {
+        return (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
