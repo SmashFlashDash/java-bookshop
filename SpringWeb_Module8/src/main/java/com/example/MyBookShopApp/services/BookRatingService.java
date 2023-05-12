@@ -2,7 +2,7 @@ package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.book.review.BookRating;
 import com.example.MyBookShopApp.data.repositories.RatingRepository;
-import com.example.MyBookShopApp.dto.BookRatingDto;
+import com.example.MyBookShopApp.dto.BookRatingStarsDto;
 import com.example.MyBookShopApp.dto.BookRatingItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,8 @@ public class BookRatingService {
         bookRating.save(rating);
     }
 
-    public BookRatingDto getBookRating(Integer id) {
+    public BookRatingStarsDto getBookRatingStars(Integer id) {
         List<BookRatingItem> listValues = bookRating.getRatingsCount(id);
-        return new BookRatingDto(listValues);
+        return new BookRatingStarsDto(listValues);
     }
 }

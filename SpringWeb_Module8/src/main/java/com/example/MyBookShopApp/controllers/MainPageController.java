@@ -5,9 +5,13 @@ import com.example.MyBookShopApp.data.search.SearchWordDto;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagService;
 import com.example.MyBookShopApp.dto.BooksPageDto;
+import com.example.MyBookShopApp.dto.UserDto;
 import com.example.MyBookShopApp.errs.EmptySearchException;
+import com.example.MyBookShopApp.services.AuthService;
 import com.example.MyBookShopApp.services.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class MainPageController {
     private final BookService bookService;
     private final TagService tagService;
-
-    @Autowired
-    public MainPageController(BookService bookService, TagService tagService) {
-        this.bookService = bookService;
-        this.tagService = tagService;
-    }
+    private final AuthService authService;
 
     @ModelAttribute("active")
     public String activePage() {

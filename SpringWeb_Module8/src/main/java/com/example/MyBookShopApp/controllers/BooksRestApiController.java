@@ -21,9 +21,7 @@ import java.util.List;
 @RequestMapping("/api")
 @Api(description = "book data api")
 public class BooksRestApiController {
-
     private final BookService bookService;
-
 
     @Autowired
     public BooksRestApiController(BookService bookService) {

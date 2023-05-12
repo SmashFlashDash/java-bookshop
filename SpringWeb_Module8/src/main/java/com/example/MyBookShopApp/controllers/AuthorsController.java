@@ -1,10 +1,14 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.author.Author;
+import com.example.MyBookShopApp.dto.UserDto;
+import com.example.MyBookShopApp.services.AuthService;
 import com.example.MyBookShopApp.services.AuthorService;
 import com.example.MyBookShopApp.services.BookService;
 import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,22 +20,16 @@ import java.util.Map;
 
 @Controller
 @Api("authors data")  // @Api чтобы класс попал в докуметаци
+@RequiredArgsConstructor
 public class AuthorsController {
-
     private final AuthorService authorService;
     private final BookService bookService;
-
-    @Autowired
-    public AuthorsController(AuthorService authorService, BookService bookService) {
-        this.authorService = authorService;
-        this.bookService = bookService;
-    }
+    private final AuthService authService;
 
     @ModelAttribute("authorsMap")
     public Map<String, List<Author>> authorsMap() {
         return authorService.getAuthorsMap();
     }
-
     @ModelAttribute("active")
     public String active() {
         return "Authors";

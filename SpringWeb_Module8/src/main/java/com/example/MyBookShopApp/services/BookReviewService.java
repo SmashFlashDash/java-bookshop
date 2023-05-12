@@ -24,6 +24,8 @@ public class BookReviewService {
 
     // получить reviews отсортированными по date
     public List<BookReview> getReviewsByBook(Book book) {
+        // List<BookReview> reviews = reviewRepository.findAllByBookIdOrderByTimeDesc(book.getId());
+        // reviews.forEach(BookReview::getUser);   // force get user for every review becase its Laza
         return reviewRepository.findAllByBookIdOrderByTimeDesc(book.getId());
     }
 

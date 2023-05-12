@@ -7,6 +7,7 @@ import com.example.MyBookShopApp.dto.RegistrationForm;
 import com.example.MyBookShopApp.security.UserDetailsImpl;
 import com.example.MyBookShopApp.security.jwt.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,9 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +60,11 @@ public class AuthService {
         return response;
     }
 
-    public UserDetailsImpl getCurrentUser() {
-        return (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public Optional<UserDetailsImpl> getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return Optional.empty();
+        }
+        return Optional.of((UserDetailsImpl) auth.getPrincipal());
     }
 }

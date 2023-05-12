@@ -2,10 +2,10 @@ package com.example.MyBookShopApp.dto;
 
 import java.util.*;
 
-public class BookRatingDto {
+public class BookRatingStarsDto {
     private final HashMap<Short, Integer> fiveRating = new HashMap<>();
 
-    public BookRatingDto(List<BookRatingItem> values) {
+    public BookRatingStarsDto(List<BookRatingItem> values) {
         fiveRating.put((short) 1, 0);
         fiveRating.put((short) 2, 0);
         fiveRating.put((short) 3, 0);

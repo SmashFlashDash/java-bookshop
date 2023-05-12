@@ -7,11 +7,11 @@ import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.tag.TagDto;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagService;
-import com.example.MyBookShopApp.dto.BookRatingDto;
+import com.example.MyBookShopApp.dto.BookRatingStarsDto;
 import com.example.MyBookShopApp.dto.BooksPageDto;
 import com.example.MyBookShopApp.services.*;
+import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -25,12 +25,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Pattern;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/books")
+@RequiredArgsConstructor
 public class BooksController {
     private final BookRepository bookRepository;
     private final BookService bookService;
@@ -40,22 +42,6 @@ public class BooksController {
     private final AuthorService authorService;
     private final BookRatingService bookRating;
     private final BookReviewService bookReviewService;
-
-
-    @Autowired
-    public BooksController(BookService bookService, BookRepository bookRepository, ResourceStorage storage,
-                           TagService tagService, GenreService genreService, AuthorService authorService,
-                           BookRatingService bookRating, BookReviewService bookReviewService) {
-        this.bookService = bookService;
-        this.bookRepository = bookRepository;
-        this.storage = storage;
-        this.tagService = tagService;
-        this.genreService = genreService;
-        this.authorService = authorService;
-        this.bookRating = bookRating;
-        this.bookReviewService = bookReviewService;
-    }
-
 
     //    @GetMapping("/popular")
 //    public String getPopularBooks(Model model) {
@@ -113,13 +99,18 @@ public class BooksController {
 
     // TODO: считаем всех пользвотелей авторизованными и старница slugmy
     @GetMapping("/{slug}")
-    public String bookPage(@PathVariable("slug") String slug, Model model) {
+    public String bookPage(@PathVariable("slug") String slug, Principal principal, Model model) {
         Book book = bookRepository.findBookBySlug(slug);
-        BookRatingDto bookRatingDto = bookRating.getBookRating(book.getId());
+        BookRatingStarsDto ratingStars = bookRating.getBookRatingStars(book.getId());
         List<BookReview> reviews = bookReviewService.getReviewsByBook(book);
-        model.addAttribute("bookRating", bookRatingDto);
-        model.addAttribute("reviews", reviews);
+        // TODO: ошибка с каким-то юзером в reviews
+        model.addAttribute("bookRating", ratingStars);
+        model.addAttribute("reviews", book.getBookReview());
+        // review.getUser().getName()
         model.addAttribute("slugBook", book);
+        if (principal == null) {
+            return "/books/slug";
+        }
         return "/books/slugmy";
     }
 

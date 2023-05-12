@@ -65,8 +65,7 @@ public class UserService {
     }
 
     public ProfileUpdateResponse updateUser(ProfileUpdateRequest upd) {
-
-        User user = authService.getCurrentUser().getBookstoreUser();
+        User user = authService.getCurrentUser().get().getBookstoreUser();
         if (!upd.getName().isEmpty()) user.setName(upd.getName());
         if (!upd.getPassword().isEmpty() & upd.getPassword().equals(upd.getPasswordReply()))
             user.setPassword(passwordEncoder.encode(upd.getPassword()));

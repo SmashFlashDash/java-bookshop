@@ -1,9 +1,13 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.dto.UserDto;
+import com.example.MyBookShopApp.services.AuthService;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.GenreService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +21,11 @@ import java.util.stream.Collectors;
 
 @Controller
 //@RequestMapping("/genres")
+@RequiredArgsConstructor
 public class GenresController {
-    GenreService genreService;
-    BookService bookService;
-
-    @Autowired
-    public GenresController(GenreService genreService, BookService bookService) {
-        this.genreService = genreService;
-        this.bookService = bookService;
-    }
+    private final GenreService genreService;
+    private final BookService bookService;
+    private final AuthService authService;
 
     @ModelAttribute("active")
     public String active() {

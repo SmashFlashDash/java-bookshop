@@ -38,7 +38,7 @@ public class BookReview {
     @OneToMany(mappedBy = "review")
     private List<BookReviewLike> bookReviewLike;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
 

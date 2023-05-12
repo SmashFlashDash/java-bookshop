@@ -22,7 +22,6 @@ import java.util.Map;
 public class AuthController {
     private final AuthService authService;
     private final UserService userService;
-    private final TokenService tokenService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping("/signin")
@@ -74,13 +73,14 @@ public class AuthController {
     @GetMapping("/my")
     public String handleMy(@AuthenticationPrincipal OAuth2User principal, Model model) {
         // TODO: можно было взять @AuthenticationPrincipal, но берется в сервисе
-        model.addAttribute("curUsr", new UserDto(authService.getCurrentUser()));
+
+        model.addAttribute("curUsr", new UserDto(authService.getCurrentUser().get()));
         return "my";
     }
 
     @GetMapping("/profile")
     public String handleProfile(Model model) {
-        model.addAttribute("curUsr", new UserDto(authService.getCurrentUser()));
+        model.addAttribute("curUsr", new UserDto(authService.getCurrentUser().get()));
         return "profile";
     }
 

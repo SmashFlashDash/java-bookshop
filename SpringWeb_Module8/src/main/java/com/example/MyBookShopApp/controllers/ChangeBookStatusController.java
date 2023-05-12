@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.dto.BookStatusDto;
 import com.example.MyBookShopApp.services.BookRatingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -15,14 +16,9 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 @RestController
+@RequiredArgsConstructor
 public class ChangeBookStatusController {
     private final BookRatingService bookRatingService;
-
-    @Autowired
-    public ChangeBookStatusController(BookRatingService bookRatingService) {
-        this.bookRatingService = bookRatingService;
-    }
-
 
     @ResponseBody
     @PostMapping("/books/changeBookStatus/{slug}")
@@ -51,9 +47,6 @@ public class ChangeBookStatusController {
         }
     }
 
-    // TODO: при установке рейтинга книге сохранить в куки книгу=значение рейтинга
-    //  и при доабвлении отзыва, если у этой книги есть этот куки то взять его id
-    //  или взять из модели у Dom обьекта значие
     @ResponseBody
     @PostMapping("/books/changeBookStatus")
     public ResponseEntity<BookStatusDto> handleRating(@CookieValue(name = "postContents", required = false) Cookie postContents,
