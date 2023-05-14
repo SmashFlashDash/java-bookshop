@@ -1,12 +1,17 @@
 package com.example.MyBookShopApp.data.book.review;
 
+import lombok.Data;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "book_review_like")
+@Table(name = "book_review_like",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "reviewId"}))
+@Data
 public class BookReviewLike {
 
     @Id
@@ -19,6 +24,7 @@ public class BookReviewLike {
     @Column(columnDefinition = "INT NOT NULL")
     private int userId;
 
+    @UpdateTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
@@ -28,52 +34,4 @@ public class BookReviewLike {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reviewId", insertable = false, updatable = false)
     private BookReview review;
-
-    public BookReview getReview() {
-        return review;
-    }
-
-    public void setReview(BookReview review) {
-        this.review = review;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public short getValue() {
-        return value;
-    }
-
-    public void setValue(short value) {
-        this.value = value;
-    }
 }

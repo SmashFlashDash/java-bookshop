@@ -3,14 +3,15 @@ package com.example.MyBookShopApp.dto;
 import java.util.*;
 
 public class BookRatingStarsDto {
-    private final HashMap<Short, Integer> fiveRating = new HashMap<>();
+    private final HashMap<Short, Integer> fiveRating = new HashMap<Short, Integer>() {{
+        this.put((short) 1, 0);
+        this.put((short) 2, 0);
+        this.put((short) 3, 0);
+        this.put((short) 4, 0);
+        this.put((short) 5, 0);
+    }};
 
     public BookRatingStarsDto(List<BookRatingItem> values) {
-        fiveRating.put((short) 1, 0);
-        fiveRating.put((short) 2, 0);
-        fiveRating.put((short) 3, 0);
-        fiveRating.put((short) 4, 0);
-        fiveRating.put((short) 5, 0);
         for(BookRatingItem rating : values) {
             fiveRating.put(rating.getValue(), rating.getCount());
         }

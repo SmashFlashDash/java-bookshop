@@ -881,16 +881,16 @@ insert into book_review (book_id, text, time, user_id) values (22, 'Lorem ipsum 
 
 
 -- лайк на отзыв, Value должен быть в пределах 1 до 5
-insert into book_review_like (review_id, time, user_id, value) values (1, '2022-11-18 03:42:54', 23, 9);
-insert into book_review_like (review_id, time, user_id, value) values (1, '2022-08-13 07:34:15', 90, 10);
-insert into book_review_like (review_id, time, user_id, value) values (1, '2022-05-06 19:29:25', 39, 12);
-insert into book_review_like (review_id, time, user_id, value) values (1, '2022-11-23 06:41:39', 54, 5);
-insert into book_review_like (review_id, time, user_id, value) values (10, '2022-06-27 20:59:47', 59, 2);
-insert into book_review_like (review_id, time, user_id, value) values (10, '2022-02-20 07:13:30', 45, 17);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-11-18 03:42:54', 23, 1);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-08-13 07:34:15', 90, 1);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-05-06 19:29:25', 39, -1);
+insert into book_review_like (review_id, time, user_id, value) values (1, '2022-11-23 06:41:39', 54, -1);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-06-27 20:59:47', 59, 1);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-02-20 07:13:30', 45, 1);
 insert into book_review_like (review_id, time, user_id, value) values (10, '2022-08-29 15:31:08', 77, 1);
-insert into book_review_like (review_id, time, user_id, value) values (10, '2022-04-30 15:51:10', 40, 6);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-04-30 15:51:10', 40, 1);
 insert into book_review_like (review_id, time, user_id, value) values (10, '2022-03-09 13:26:43', 19, 1);
-insert into book_review_like (review_id, time, user_id, value) values (10, '2022-01-29 15:02:13', 57, 20);
+insert into book_review_like (review_id, time, user_id, value) values (10, '2022-01-29 15:02:13', 57, 1);
 
 
 

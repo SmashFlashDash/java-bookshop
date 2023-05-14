@@ -4,6 +4,7 @@ import com.example.MyBookShopApp.data.user.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import lombok.Data;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "book_review")
+@Data
 public class BookReview {
 
     @Id
@@ -21,24 +23,16 @@ public class BookReview {
     @Column(columnDefinition = "INT NOT NULL")
     private int bookId;
 
-    // TODO: есть еще поле связи с user OneToMany правильно ли так делать
-    //  чтобы не запрашивать обьект user по id из бд
-    //  а сразу установить по id
     @Column(columnDefinition = "INT NOT NULL")
     private int userId;
 
     @UpdateTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
 
     @Column(columnDefinition = "TEXT NOT NULL")
     private String text;
-
-//    @OneToOne(optional = false)
-//    @JoinColumn(name = "book_rating_id", referencedColumnName = "id")
-//    private BookRating bookRating;
 
     @OneToMany(mappedBy = "review")
     private List<BookReviewLike> bookReviewLike;
@@ -47,63 +41,11 @@ public class BookReview {
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
 
-    public User getUser() {
-        return user;
+    public long getDislikesCount() {
+        return getBookReviewLike().stream().filter(f -> f.getValue() < 0).count();
     }
 
-//    public BookRating getBookRating() {
-//        return bookRating;
-//    }
-//
-//    public void setBookRating(BookRating bookRating) {
-//        this.bookRating = bookRating;
-//    }
-
-    public List<BookReviewLike> getBookReviewLike() {
-        return bookReviewLike;
-    }
-
-    public void setBookReviewLike(List<BookReviewLike> bookReviewLike) {
-        this.bookReviewLike = bookReviewLike;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public LocalDateTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
+    public long getLikesCount() {
+        return getBookReviewLike().stream().filter(f -> f.getValue() > 0).count();
     }
 }
