@@ -43,19 +43,12 @@ public class BooksController {
     private final BookRatingService bookRating;
     private final BookReviewService bookReviewService;
 
-    //    @GetMapping("/popular")
-//    public String getPopularBooks(Model model) {
-//        model.addAttribute("active", "Popular");
-//        model.addAttribute("popularBooks", bookService.getPageOfPopularBooks(0, 10).getContent());
-//        return "/books/popular";
-//    }
     @GetMapping("/popular")
     public String popularPage(Model model) {
         model.addAttribute("active", "Popular");
         model.addAttribute("popularBooks", bookService.getBooksData());
         return "/books/popular";
     }
-
     @GetMapping("/popular/page")
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
@@ -64,11 +57,6 @@ public class BooksController {
     }
 
 
-    //    @GetMapping("/recent")
-//    public String recentPage(Model model) {
-//        model.addAttribute("recentBooks", bookService.getBooksData());
-//        return "/books/recent";
-//    }
     @RequestMapping("/recent")
     public String getNewBooks(Model model) {
         model.addAttribute("active", "Recent");
@@ -76,7 +64,6 @@ public class BooksController {
                 new DateTime().minusMonths(1).toDate(), new Date(), 0, 10).getContent());
         return "/books/recent";
     }
-
     @GetMapping(value = "/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(
@@ -97,22 +84,19 @@ public class BooksController {
         }
     }
 
-    // TODO: считаем всех пользвотелей авторизованными и старница slugmy
+
     @GetMapping("/{slug}")
     public String bookPage(@PathVariable("slug") String slug, Principal principal, Model model) {
         Book book = bookRepository.findBookBySlug(slug);
-        BookRatingStarsDto ratingStars = bookRating.getBookRatingStars(book.getId());
-        List<BookReview> reviews = bookReviewService.getReviewsByBook(book);
-        // TODO: ошибка с каким-то юзером в reviews
-        model.addAttribute("bookRating", ratingStars);
-        model.addAttribute("reviews", book.getBookReview());
-        // review.getUser().getName()
+        model.addAttribute("bookRating", bookRating.getBookRatingStars(book.getId()));
+        model.addAttribute("reviews",bookReviewService.getReviewsByBook(book.getId()));
         model.addAttribute("slugBook", book);
         if (principal == null) {
             return "/books/slug";
         }
         return "/books/slugmy";
     }
+
 
     @PostMapping("/{slug}/img/save")
     public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException {

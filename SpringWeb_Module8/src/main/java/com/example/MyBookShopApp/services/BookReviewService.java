@@ -4,33 +4,29 @@ import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.repositories.ReviewRepository;
+import com.example.MyBookShopApp.security.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class BookReviewService {
+    private final AuthService authService;
     private final ReviewRepository reviewRepository;
-    private final RatingRepository ratingRepository;
 
-    @Autowired
-    public BookReviewService(ReviewRepository reviewRepository, RatingRepository ratingRepository) {
-        this.reviewRepository = reviewRepository;
-        this.ratingRepository = ratingRepository;
-    }
-
-    // получить reviews отсортированными по date
-    public List<BookReview> getReviewsByBook(Book book) {
-        // List<BookReview> reviews = reviewRepository.findAllByBookIdOrderByTimeDesc(book.getId());
-        // reviews.forEach(BookReview::getUser);   // force get user for every review becase its Laza
-        return reviewRepository.findAllByBookIdOrderByTimeDesc(book.getId());
+    public List<BookReview> getReviewsByBook(Integer bookId) {
+        return reviewRepository.findAllByBookIdOrderByTimeDesc(bookId);
     }
 
     @Transactional
-    public void addNewReview(Integer bookId, String text, Integer userId) {
+    @PreAuthorize("isAuthenticated()")
+    public void addNewReview(Integer bookId, String text) {
+        Integer userId = authService.getCurrentUser().get().getBookstoreUser().getId();
         BookReview review = new BookReview();
         review.setBookId(bookId);
         review.setText(text);

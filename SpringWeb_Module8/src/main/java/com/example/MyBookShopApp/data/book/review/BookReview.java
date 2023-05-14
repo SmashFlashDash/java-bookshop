@@ -1,6 +1,9 @@
 package com.example.MyBookShopApp.data.book.review;
 
 import com.example.MyBookShopApp.data.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -26,6 +29,8 @@ public class BookReview {
 
     @UpdateTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime time;
 
     @Column(columnDefinition = "TEXT NOT NULL")

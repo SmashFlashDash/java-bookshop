@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.dto.BookStatusDto;
+import com.example.MyBookShopApp.dto.ChangeBookStatusRequest;
 import com.example.MyBookShopApp.services.BookRatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,8 @@ public class ChangeBookStatusController {
     @PostMapping("/books/changeBookStatus")
     public ResponseEntity<BookStatusDto> handleRating(@CookieValue(name = "postContents", required = false) Cookie postContents,
                                                       @CookieValue(name = "cartContents", required = false) Cookie cartContents,
-                                                      HttpServletRequest request, HttpServletResponse response, Model model) {
-        Short value = Short.parseShort(request.getParameter("value"));
-        Integer bookId = Integer.parseInt(request.getParameter("bookId"));
-        bookRatingService.guestSetRaitingToBokk(bookId, value);
+                                                      @RequestBody ChangeBookStatusRequest status, HttpServletResponse response, Model model) {
+        bookRatingService.guestSetRaitingToBokk(status.getBookId(), status.getValue());
         return ResponseEntity.ok(new BookStatusDto(true));
     }
 

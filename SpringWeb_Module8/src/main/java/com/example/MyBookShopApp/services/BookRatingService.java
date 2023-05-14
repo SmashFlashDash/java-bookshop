@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.dto.BookRatingStarsDto;
 import com.example.MyBookShopApp.dto.BookRatingItem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class BookRatingService {
         this.bookRating = bookRating;
     }
 
+    @PreAuthorize("isAuthenticated()")
     public void guestSetRaitingToBokk(Integer bookId, Short value) {
         BookRating rating = new BookRating();
         rating.setBookId(bookId);
