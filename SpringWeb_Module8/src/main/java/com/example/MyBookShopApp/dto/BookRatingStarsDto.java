@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.dto;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 public class BookRatingStarsDto {
     private final HashMap<Short, Integer> fiveRating = new HashMap<Short, Integer>() {{
@@ -12,7 +13,7 @@ public class BookRatingStarsDto {
     }};
 
     public BookRatingStarsDto(List<BookRatingItem> values) {
-        for(BookRatingItem rating : values) {
+        for (BookRatingItem rating : values) {
             fiveRating.put(rating.getValue(), rating.getCount());
         }
     }

@@ -1,17 +1,12 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.book.review.BookReviewLike;
 import com.example.MyBookShopApp.data.repositories.BookReviewLikeRepository;
-import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.repositories.ReviewRepository;
-import com.example.MyBookShopApp.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

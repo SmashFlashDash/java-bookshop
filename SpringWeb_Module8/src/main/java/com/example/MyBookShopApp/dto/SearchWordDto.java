@@ -11,11 +11,11 @@ public class SearchWordDto {
     public SearchWordDto() {
     }
 
-    public void setExample(String example) {
-        this.example = example;
-    }
-
     public String getExample() {
         return example;
+    }
+
+    public void setExample(String example) {
+        this.example = example;
     }
 }

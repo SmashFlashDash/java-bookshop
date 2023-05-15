@@ -72,8 +72,6 @@ public class AuthController {
 
     @GetMapping("/my")
     public String handleMy(@AuthenticationPrincipal OAuth2User principal, Model model) {
-        // TODO: можно было взять @AuthenticationPrincipal, но берется в сервисе
-
         model.addAttribute("curUsr", new UserDto(authService.getCurrentUser().get()));
         return "my";
     }
@@ -86,7 +84,6 @@ public class AuthController {
 
     @PostMapping("/profile")
     public String updateProfile(@RequestParam Map<String,String> params, Model model) {
-        // TODO: надо разобрать данные и сейвить в таблицу
         ProfileUpdateRequest request = objectMapper.convertValue(params, ProfileUpdateRequest.class);
         ProfileUpdateResponse response = userService.updateUser(request);
         model.addAttribute("curUsr", new UserDto(response.getUser()));

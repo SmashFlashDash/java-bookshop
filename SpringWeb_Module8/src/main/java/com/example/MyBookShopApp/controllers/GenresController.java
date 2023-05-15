@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-//@RequestMapping("/genres")
 @RequiredArgsConstructor
 public class GenresController {
     private final GenreService genreService;

@@ -23,8 +23,8 @@ public class LogoutHandlerImpl implements LogoutHandler {
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals("token")) {
-              tokenService.saveJwtBlackList(cookie.getValue());
-              break;
+                tokenService.saveJwtBlackList(cookie.getValue());
+                break;
             }
         }
     }

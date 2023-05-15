@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@Api("authors data")  // @Api чтобы класс попал в докуметаци
+@Api("authors data")
 @RequiredArgsConstructor
 public class AuthorsController {
     private final AuthorService authorService;
@@ -45,12 +45,10 @@ public class AuthorsController {
 
     @GetMapping("/authors")
     public String authorsPage(Model model) {
-        // возвращать обьекты authors мб сделать pagebla
         model.addAttribute("authorsMap", authorService.getAuthorsMap());
         return "/authors/index";
     }
 
-    // добавим этот метод чтобы он попал в документацию API
     @GetMapping("/api/authors")
     public Map<String, List<Author>> authors() {
         return authorService.getAuthorsMap();

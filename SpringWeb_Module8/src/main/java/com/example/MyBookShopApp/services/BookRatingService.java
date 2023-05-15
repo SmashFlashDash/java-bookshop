@@ -2,8 +2,8 @@ package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.book.review.BookRating;
 import com.example.MyBookShopApp.data.repositories.RatingRepository;
-import com.example.MyBookShopApp.dto.BookRatingStarsDto;
 import com.example.MyBookShopApp.dto.BookRatingItem;
+import com.example.MyBookShopApp.dto.BookRatingStarsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

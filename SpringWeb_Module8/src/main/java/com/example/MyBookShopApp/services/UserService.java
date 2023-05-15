@@ -9,14 +9,11 @@ import com.example.MyBookShopApp.dto.ProfileUpdateRequest;
 import com.example.MyBookShopApp.dto.ProfileUpdateResponse;
 import com.example.MyBookShopApp.dto.RegistrationForm;
 import com.example.MyBookShopApp.security.UserDetailsImpl;
-import org.postgresql.util.PSQLException;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

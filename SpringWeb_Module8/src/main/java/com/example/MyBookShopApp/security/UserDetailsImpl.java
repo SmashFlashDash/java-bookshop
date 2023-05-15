@@ -2,7 +2,6 @@ package com.example.MyBookShopApp.security;
 
 import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.data.user.UserContact;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +39,7 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
         // TODO: приватные поля парсить по методам
         Map<String, Object> map = new HashMap<>();
         Field[] fields = bookstoreUser.getClass().getFields();
-        for(Field f : fields)
+        for (Field f : fields)
             map.put(f.getName(), f.get(bookstoreUser));
         return map;
     }
