@@ -8,7 +8,8 @@ public class SearchWordDto {
         this.example = example;
     }
 
-    public SearchWordDto(){}
+    public SearchWordDto() {
+    }
 
     public String getExample() {
         return example;

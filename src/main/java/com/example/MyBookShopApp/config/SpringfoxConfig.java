@@ -3,7 +3,6 @@ package com.example.MyBookShopApp.config;
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMapping;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -26,13 +25,13 @@ public class SpringfoxConfig {
                 .apiInfo(apiInfo());
     }
 
-    public ApiInfo apiInfo(){
+    public ApiInfo apiInfo() {
         return new ApiInfo(
                 "Bookshop API",
                 "API for bookstore",
                 "1.0",
                 "http://www.termsofservice.org",
-                new Contact("API owner","http://www.ownersite.com","owner@rmailer.org"),
+                new Contact("API owner", "http://www.ownersite.com", "owner@rmailer.org"),
                 "api_license",
                 "http://www.license.edu.org",
                 new ArrayList<>()

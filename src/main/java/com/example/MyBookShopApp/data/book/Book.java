@@ -1,18 +1,20 @@
 package com.example.MyBookShopApp.data.book;
 
 import com.example.MyBookShopApp.data.author.Author;
+import com.example.MyBookShopApp.data.book.file.BookFile;
 import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
-import com.example.MyBookShopApp.data.book.review.BookReviewEntity;
+import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
 import com.example.MyBookShopApp.data.tag.TagEntity;
-import com.example.MyBookShopApp.data.user.UserEntity;
+import com.example.MyBookShopApp.data.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +88,19 @@ public class Book {
     @JoinTable(name = "book2user",
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "userId")})
-    private List<UserEntity> users;
+    private List<User> users;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFileList = new ArrayList<>();
+
+    public List<BookFile> getBookFileList() {
+        return bookFileList;
+    }
+
+    public void setBookFileList(List<BookFile> bookFileList) {
+        this.bookFileList = bookFileList;
+    }
+
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
@@ -105,7 +119,7 @@ public class Book {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "bookId")
-    private List<BookReviewEntity> bookReview;
+    private List<BookReview> bookReview;
 
     public Author getAuthor() {
         return author;
@@ -123,11 +137,11 @@ public class Book {
         this.genre = genre;
     }
 
-    public List<UserEntity> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserEntity> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
@@ -147,11 +161,11 @@ public class Book {
         this.balanceTransaction = balanceTransaction;
     }
 
-    public List<BookReviewEntity> getBookReview() {
+    public List<BookReview> getBookReview() {
         return bookReview;
     }
 
-    public void setBookReview(List<BookReviewEntity> bookReview) {
+    public void setBookReview(List<BookReview> bookReview) {
         this.bookReview = bookReview;
     }
 
