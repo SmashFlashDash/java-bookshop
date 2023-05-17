@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.data.book.review;
 
-import com.example.MyBookShopApp.data.user.UserEntity;
+import com.example.MyBookShopApp.data.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,13 +33,13 @@ public class MessageEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private UserEntity user;
+    private User user;
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

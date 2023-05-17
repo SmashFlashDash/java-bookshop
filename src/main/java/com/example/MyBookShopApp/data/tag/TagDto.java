@@ -8,7 +8,8 @@ public class TagDto {
         this.tag = name;
     }
 
-    public TagDto(){}
+    public TagDto() {
+    }
 
     public String getTag() {
         return tag;
