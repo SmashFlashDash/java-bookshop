@@ -58,4 +58,14 @@ class AuthServiceTests {
         // проверка что userRepository вызвал save на обьект User был вызыван
 
     }
+
+//    @Test
+//    void registerNewUserFail(){
+//        Mockito.doReturn(new BookstoreUser())
+//                .when(bookstoreUserRepositoryMock)
+//                .findBookstoreUserByEmail(registrationForm.getEmail());
+//
+//        BookstoreUser user = userRegister.registerNewUser(registrationForm);
+//        assertNull(user);
+//    }
 }
