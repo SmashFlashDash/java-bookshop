@@ -1,4 +1,9 @@
 # Bookshop
+Веб приложение интернет магазин  
+<img src=".localdev/Bookshop.gif" alt="Bookshop Gif" width="890" height="500"/>
+
+## Libraries
+- Spring Boot
 
 ## Data model
-![alt text](https://github.com/codevarius/skillbox_java_framework_spring_course_data_structure/blob/master/src/main/resources/other/skillbox_java_framework_spring_db_img.png?raw=true)
+<img src=".localdev/db_img.jpg" alt="DataModel Picture" width="890" height="500"/>
