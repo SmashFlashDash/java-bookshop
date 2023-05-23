@@ -1,23 +1,18 @@
-package com.example.MyBookShopApp.services;
+package com.example.MyBookShopApp.module.services;
 
 import com.example.MyBookShopApp.data.repositories.UserRepository;
-import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.dto.RegistrationForm;
-import lombok.RequiredArgsConstructor;
-import org.hamcrest.CoreMatchers;
+import com.example.MyBookShopApp.services.AuthService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class AuthServiceTests {
+class AuthServiceTests_prev {
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
     private RegistrationForm registrationForm;
@@ -26,7 +21,7 @@ class AuthServiceTests {
     private UserRepository userRepositoryMock;
 
     @Autowired
-    public AuthServiceTests(PasswordEncoder passwordEncoder, AuthService authService) {
+    public AuthServiceTests_prev(PasswordEncoder passwordEncoder, AuthService authService) {
         this.passwordEncoder = passwordEncoder;
         this.authService = authService;
     }
