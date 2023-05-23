@@ -13,42 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
-
-//    List<Book> findBooksByAuthor_Name(String name);
-//
-//    @Query("from Book")
-//    List<Book> customFindAllBooks();
-//
-//    //NEW BOOK REST REPOSITORY
-//
-//    List<Book> findBooksByAuthorNameContaining(String authorsFirstName);
-//
-//    List<Book> findBooksByTitleContaining(String bookTitle);
-//
-//    List<Book> findAllByPriceBetween(Integer min, Integer max);
-//
-//    @Query("from Book where isBestseller = 1")
-//    List<Book> getBestsellers();
-//
-//    @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books", nativeQuery = true)
-//    List<Book> getBooksWithMaxDiscount();
-//
-//    Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
-//
-
-//
-
-
-//    List<Book> findBookByAuthor_Name(String name);
-//    @Query("from Book")
-//    List<Book> customFindAllBooks();
-//
-//    //NEW BOOK REST REPOSITORY COMMANDS
-//    List<Book> findBookByAuthorNameContaining(String authorFirstName);
-//    List<Book> findBookByTitleContaining(String bookTitle);
-//    List<Book> findBooksByPriceBetween(Integer min, Integer max);
-//    List<Book> findBooksByPriceIs(Integer price);
-
     Book findBookBySlug(String slug);
 
     List<Book> findBooksBySlugIn(String[] slugs);

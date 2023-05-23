@@ -1,4 +1,9 @@
-# skillbox_java_framework_spring_course_data_structure
-Basic data structure for Skillbox Java framework Spring course.
+# Bookshop
+Веб приложение интернет магазин  
+<img src=".localdev/Bookshop.gif" alt="Bookshop Gif" width="890" height="500"/>
 
-![alt text](https://github.com/codevarius/skillbox_java_framework_spring_course_data_structure/blob/master/src/main/resources/other/skillbox_java_framework_spring_db_img.png?raw=true)
+## Libraries
+- Spring Boot
+
+## Data model
+<img src=".localdev/db_img.jpg" alt="DataModel Picture" width="890" height="500"/>
