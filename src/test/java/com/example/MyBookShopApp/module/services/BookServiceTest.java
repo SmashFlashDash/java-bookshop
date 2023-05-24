@@ -4,87 +4,85 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BookServiceTest {
 
-  @BeforeEach
-  void setUp() {
-  }
+    @BeforeEach
+    void setUp() {
+    }
 
-  @AfterEach
-  void tearDown() {
-  }
+    @AfterEach
+    void tearDown() {
+    }
 
-  @Test
-  void getBooksData() {
-  }
+    @Test
+    void getBooksData() {
+    }
 
-  @Test
-  void getBooksWithPriceBetween() {
-  }
+    @Test
+    void getBooksWithPriceBetween() {
+    }
 
-  @Test
-  void getBooksByAuthor() {
-  }
+    @Test
+    void getBooksByAuthor() {
+    }
 
-  @Test
-  void getBooksByTitle() {
-  }
+    @Test
+    void getBooksByTitle() {
+    }
 
-  @Test
-  void getBooksWithMaxPrice() {
-  }
+    @Test
+    void getBooksWithMaxPrice() {
+    }
 
-  @Test
-  void getBestsellers() {
-  }
+    @Test
+    void getBestsellers() {
+    }
 
-  @Test
-  void getPageofRecommendedBooks() {
-  }
+    @Test
+    void getPageofRecommendedBooks() {
+    }
 
-  @Test
-  void getPageOfSearchResultBooks() {
-  }
+    @Test
+    void getPageOfSearchResultBooks() {
+    }
 
-  @Test
-  void getPageOfRecommendedBooks() {
-  }
+    @Test
+    void getPageOfRecommendedBooks() {
+    }
 
-  @Test
-  void getPageOfNewBooks() {
-  }
+    @Test
+    void getPageOfNewBooks() {
+    }
 
-  @Test
-  void getPageOfBestsellersBooks() {
-  }
+    @Test
+    void getPageOfBestsellersBooks() {
+    }
 
-  @Test
-  void getPageOfPopularBooks() {
-  }
+    @Test
+    void getPageOfPopularBooks() {
+    }
 
-  @Test
-  void getPageOfNewBooksDateFrom() {
-  }
+    @Test
+    void getPageOfNewBooksDateFrom() {
+    }
 
-  @Test
-  void getPageOfNewBooksDateTo() {
-  }
+    @Test
+    void getPageOfNewBooksDateTo() {
+    }
 
-  @Test
-  void getPageOfNewBooksDateBetween() {
-  }
+    @Test
+    void getPageOfNewBooksDateBetween() {
+    }
 
-  @Test
-  void getPageOfBooksByTag() {
-  }
+    @Test
+    void getPageOfBooksByTag() {
+    }
 
-  @Test
-  void getPageOfBooksByListGenres() {
-  }
+    @Test
+    void getPageOfBooksByListGenres() {
+    }
 
-  @Test
-  void getPageOfBooksByAuthor() {
-  }
+    @Test
+    void getPageOfBooksByAuthor() {
+    }
 }

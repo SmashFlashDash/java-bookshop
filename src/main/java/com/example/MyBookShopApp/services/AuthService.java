@@ -44,12 +44,6 @@ public class AuthService {
         return response;
     }
 
-    //  TODO: ошибка если в User, UserContact FetchType.Lazy
-    // org.hibernate.LazyInitializationException: could not initialize proxy [com.example.MyBookShopApp.data.user.User#101] - no Session
-    //	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:170) ~[hibernate-core-5.4.32.Final.jar:5.4.32.Final]
-    //	at com.example.MyBookShopApp.security.UserDetailsImpl.getUsername(UserDetailsImpl.java:60) ~[classes/:na]
-    //	at com.example.MyBookShopApp.security.jwt.JWTUtil.validateToken(JWTUtil.java:59) ~[classes/:na]
-    //	at com.example.MyBookShopApp.security.jwt.JWTRequestFilter.doFilterInternal(JWTRequestFilter.java:46) ~[classes/:na]l
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();

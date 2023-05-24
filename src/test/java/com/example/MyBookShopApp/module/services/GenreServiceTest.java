@@ -4,39 +4,37 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class GenreServiceTest {
 
-  @BeforeEach
-  void setUp() {
-  }
+    @BeforeEach
+    void setUp() {
+    }
 
-  @AfterEach
-  void tearDown() {
-  }
+    @AfterEach
+    void tearDown() {
+    }
 
-  @Test
-  void getGenreEntityByName() {
-  }
+    @Test
+    void getGenreEntityByName() {
+    }
 
-  @Test
-  void getGenreEntityBySlug() {
-  }
+    @Test
+    void getGenreEntityBySlug() {
+    }
 
-  @Test
-  void getGenreEntitesBySlugs() {
-  }
+    @Test
+    void getGenreEntitesBySlugs() {
+    }
 
-  @Test
-  void getAllGenresDto() {
-  }
+    @Test
+    void getAllGenresDto() {
+    }
 
-  @Test
-  void getGenreNodes() {
-  }
+    @Test
+    void getGenreNodes() {
+    }
 
-  @Test
-  void testGetGenreNodes() {
-  }
+    @Test
+    void testGetGenreNodes() {
+    }
 }

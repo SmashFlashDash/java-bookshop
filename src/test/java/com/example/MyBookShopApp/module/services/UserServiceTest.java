@@ -4,31 +4,29 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class UserServiceTest {
 
-  @BeforeEach
-  void setUp() {
-  }
+    @BeforeEach
+    void setUp() {
+    }
 
-  @AfterEach
-  void tearDown() {
-  }
+    @AfterEach
+    void tearDown() {
+    }
 
-  @Test
-  void findUserByContact() {
-  }
+    @Test
+    void findUserByContact() {
+    }
 
-  @Test
-  void findUserByContacts() {
-  }
+    @Test
+    void findUserByContacts() {
+    }
 
-  @Test
-  void saveNewUser() {
-  }
+    @Test
+    void saveNewUser() {
+    }
 
-  @Test
-  void updateUser() {
-  }
+    @Test
+    void updateUser() {
+    }
 }

@@ -1,16 +1,36 @@
 package com.example.MyBookShopApp.module.services;
 
+import com.example.MyBookShopApp.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class AuthorServiceTests {
+    //  Бизнес-логика, «мозг» вашего интернет-магазина, сконцентрирована в @Service — слое аннотированных классов и связанных с ними классов-сателлитов.
+//  От того, насколько качественно протестирован этот уровень, зависит стабильность и надёжность работы низкоуровневой логики вашего Spring-приложения.
+//  Однако не весь код вашего проекта нуждается в тестах — лишь наиболее критически важные его модули. Слишком большая плотность покрытия кода
+//  тестами может, наоборот, усложнить процесс разработки и поддержки проекта.
+//  Перед тем как приступить к написанию модульных тестов для логики вашего интернет-магазина, определите наиболее рисковые модули:
+//
+//  1. К ним можно отнести содержимое пакета security, в котором располагается код, отвечающий за аутентификацию, авторизацию, управление
+//  учётными записями пользователей. Протестируйте возможные кейсы при:
+//  регистрации пользователя
+//  авторизации пользователя (вкл. получение токена)
+//  2. Кроме пакета security внимания также заслуживает логика, отвечающая за обработку и расчёт оценок и рейтингов книг. Здесь протестируйте методы:
+//
+//  рассчитывающие популярность книги
+//  рейтинг отзыва на книгу
+//  список рекомендуемых пользователю книг.
+    private final UserService userService;
 
-  @Test
-  void getAuthorBySlug() {
-  }
+    @Test
+    void getAuthorBySlug() {
+    }
 
-  @Test
-  void getAuthorsMap() {
-  }
+    @Test
+    void getAuthorsMap() {
+    }
 }

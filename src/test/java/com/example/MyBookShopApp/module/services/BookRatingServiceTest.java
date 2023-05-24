@@ -4,23 +4,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BookRatingServiceTest {
 
-  @BeforeEach
-  void setUp() {
-  }
+    @BeforeEach
+    void setUp() {
+    }
 
-  @AfterEach
-  void tearDown() {
-  }
+    @AfterEach
+    void tearDown() {
+    }
 
-  @Test
-  void guestSetRaitingToBokk() {
-  }
+    @Test
+    void guestSetRaitingToBokk() {
+    }
 
-  @Test
-  void getBookRatingStars() {
-  }
+    @Test
+    void getBookRatingStars() {
+    }
 }
