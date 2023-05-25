@@ -2,12 +2,10 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.tag.TagDto;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagService;
-import com.example.MyBookShopApp.dto.BookRatingStarsDto;
 import com.example.MyBookShopApp.dto.BooksPageDto;
 import com.example.MyBookShopApp.services.*;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +25,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -49,6 +46,7 @@ public class BooksController {
         model.addAttribute("popularBooks", bookService.getBooksData());
         return "/books/popular";
     }
+
     @GetMapping("/popular/page")
     @ResponseBody
     public BooksPageDto getPopularBooksPage(@RequestParam("offset") Integer offset,
@@ -64,6 +62,7 @@ public class BooksController {
                 new DateTime().minusMonths(1).toDate(), new Date(), 0, 10).getContent());
         return "/books/recent";
     }
+
     @GetMapping(value = "/recent/page")
     @ResponseBody
     public BooksPageDto getNewBooksPage(
@@ -89,7 +88,7 @@ public class BooksController {
     public String bookPage(@PathVariable("slug") String slug, Principal principal, Model model) {
         Book book = bookRepository.findBookBySlug(slug);
         model.addAttribute("bookRating", bookRating.getBookRatingStars(book.getId()));
-        model.addAttribute("reviews",bookReviewService.getReviewsByBook(book.getId()));
+        model.addAttribute("reviews", bookReviewService.getReviewsByBook(book.getId()));
         model.addAttribute("slugBook", book);
         if (principal == null) {
             return "/books/slug";
@@ -130,8 +129,11 @@ public class BooksController {
     @GetMapping("/recommended/page")
     @ResponseBody
     public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") Integer offset,
-                                                @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
+                                                @RequestParam("limit") Integer limit,
+                                                @CookieValue(value = "cartContents", required = false) String booksCart,
+                                                @CookieValue(value = "postContents", required = false) String booksPostponed,
+                                                Principal principal) {
+        return new BooksPageDto(bookService.getPageOfRecommendedBooks2(offset, limit, principal, booksCart, booksPostponed).getContent());
     }
 
 
