@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.controllers;
+package com.example.MyBookShopApp.controllerAdvice;
 
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.dto.ApiResponse;

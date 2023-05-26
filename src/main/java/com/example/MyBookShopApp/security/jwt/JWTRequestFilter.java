@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.security.jwt;
 
-import com.example.MyBookShopApp.controllers.GlobalExceptionHandlerController;
+import com.example.MyBookShopApp.controllerAdvice.GlobalExceptionHandlerController;
 import com.example.MyBookShopApp.security.UserDetailsImpl;
 import com.example.MyBookShopApp.security.UserDetailsServiceImpl;
 import com.example.MyBookShopApp.services.TokenService;
