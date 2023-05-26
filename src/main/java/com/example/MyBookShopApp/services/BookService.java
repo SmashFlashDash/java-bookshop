@@ -6,12 +6,16 @@ import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
+import io.swagger.v3.oas.models.headers.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -67,10 +71,30 @@ public class BookService {
         return bookRepository.findBookByTitleContaining(searchWord, PageRequest.of(offset, limit));
     }
 
+
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
         Pageable nextPage = PageRequest.of(offset, limit);
         return bookRepository.findAll(nextPage);
     }
+
+    public Page<Book> getPageOfRecommendedBooks2(Integer offset, Integer limit, Principal principal, String booksCart, String booksPostponed) {
+        boolean isCartPostEmpty = !(booksCart.isEmpty() && booksPostponed.isEmpty());
+        if (principal == null && isCartPostEmpty) {
+            // должны строиться на основе тех книг, которые имеют наивысший рейтинг на сайте (изначально нужно для 50% книг
+            // сгенерировать данные рейтинга), а также недавно появились
+            // TODO: pageble reposotory.getBestRaitring SortedByDate
+        } else if (isCartPostEmpty) {
+            // авторизован, покупал какие-то книги либо добавлял книги в корзину или в отложенные, то рекомендации
+            // должны строиться на основе этих добавлений
+            // В этом случае рекомендуемые книги должны подбираться по тэгам,
+            // жанрам и авторам книг, к которым пользователь имеет какое-либо отношение, а также по их новизне
+        } else {
+
+        }
+        return Page.empty();
+    }
+
+
 
     public Page<Book> getPageOfNewBooks(Integer offset, Integer limit) {
         return bookRepository.findAllByOrderByPubDateDesc(PageRequest.of(offset, limit));
@@ -117,5 +141,4 @@ public class BookService {
     public Page<Book> getPageOfBooksByAuthor(Author author, Integer offset, Integer limit) {
         return bookRepository.findAllByAuthorOrderByPubDateDesc(author, PageRequest.of(offset, limit));
     }
-
 }

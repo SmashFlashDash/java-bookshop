@@ -23,12 +23,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @SpringBootTest
@@ -37,6 +39,8 @@ import static org.mockito.ArgumentMatchers.any;
 class AuthServiceTest {
     private static RegistrationForm regForm;
     private static ContactConfirmationPayload payload;
+    private static AuthenticationImpl authImpl;
+    private static UserDetailsImpl userDetails;
     @MockBean
     private final UserService userServiceMock;
     @MockBean
@@ -44,6 +48,7 @@ class AuthServiceTest {
     @InjectMocks
     private final AuthService authService;
     private final JWTUtil jwtUtil;
+
 
     @BeforeAll
     static void setUp() {
@@ -55,13 +60,17 @@ class AuthServiceTest {
         payload = new ContactConfirmationPayload();
         payload.setCode("test-code");
         payload.setContact("test-contact");
-
+        User user = new User();
+        userDetails = new UserDetailsImpl(user);
+        authImpl = new AuthenticationImpl(userDetails);
     }
 
     @AfterAll
     static void tearDown() {
         regForm = null;
         payload = null;
+        userDetails = null;
+        authImpl = null;
     }
 
     @Test
@@ -85,26 +94,20 @@ class AuthServiceTest {
 
     @Test
     void jwtLogin() {
-        User user = new User();
-        UserDetailsImpl userDetails = new UserDetailsImpl(user);
-        AuthenticationImpl authImpl = new AuthenticationImpl(userDetails);
         String refToken = jwtUtil.generateToken(userDetails);
         Mockito.doReturn(authImpl).when(authenticationManagerMock).authenticate(any(UsernamePasswordAuthenticationToken.class));
-
         ContactConfirmationResponse response = authService.jwtLogin(payload);
         assertEquals(refToken, response.getResult());
     }
 
     @Test
     void getCurrentUser() {
-        // TODO: проверить аномниманого и заранее залогиненного пользоваттлея
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // if (auth instanceof AnonymousAuthenticationToken) {
-        //   return Optional.empty();
-        // }
-        // return Optional.of((UserDetailsImpl) auth.getPrincipal());
-
-
+      assertTrue(authService.getCurrentUser().isEmpty());
+      // TODO: проверить залогиненного пользоваттлея
+      //  но как залогинить ели все на моках
+      // SecurityContext.setContext(реализ интерфейса)
+      // authService.jwtLogin(payload);
+      // assertTrue(authService.getCurrentUser().isPresent());
     }
 }
 
@@ -143,7 +146,6 @@ class AuthenticationImpl implements Authentication {
 
     @Override
     public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-
     }
 
     @Override
