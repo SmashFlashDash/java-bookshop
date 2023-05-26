@@ -32,7 +32,7 @@ public class Author {
     @Column(columnDefinition = "TEXT")
     private String extendBiography;
 
-    @OneToMany(mappedBy = "author")
+    @ManyToMany(mappedBy = "author")
     private List<Book> bookList = new ArrayList<>();
 
     public String getLittleBiography() {

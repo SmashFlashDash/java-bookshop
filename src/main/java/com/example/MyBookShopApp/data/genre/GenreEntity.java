@@ -1,12 +1,14 @@
 package com.example.MyBookShopApp.data.genre;
 
 import com.example.MyBookShopApp.data.book.Book;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "genre")
+@Data
 public class GenreEntity {
 
     @Id
@@ -22,46 +24,6 @@ public class GenreEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL", unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "genre")
+    @ManyToMany(mappedBy = "genre")
     private List<Book> books;
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
