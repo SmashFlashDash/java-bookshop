@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.data.repositories;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.book.review.BookRating;
 import com.example.MyBookShopApp.dto.BookRatingItem;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

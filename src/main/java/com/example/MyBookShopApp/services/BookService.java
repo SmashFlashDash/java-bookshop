@@ -4,6 +4,7 @@ import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.genre.GenreEntity;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
+import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
 import io.swagger.v3.oas.models.headers.Header;
@@ -23,6 +24,7 @@ import java.util.List;
 public class BookService {
 
     BookRepository bookRepository;
+    RatingRepository ratingRepository;
 
     @Autowired
     public BookService(BookRepository bookRepository) {
@@ -78,18 +80,24 @@ public class BookService {
     }
 
     public Page<Book> getPageOfRecommendedBooks2(Integer offset, Integer limit, Principal principal, String booksCart, String booksPostponed) {
-        boolean isCartPostEmpty = !(booksCart.isEmpty() && booksPostponed.isEmpty());
-        if (principal == null && isCartPostEmpty) {
-            // должны строиться на основе тех книг, которые имеют наивысший рейтинг на сайте (изначально нужно для 50% книг
-            // сгенерировать данные рейтинга), а также недавно появились
-            // TODO: pageble reposotory.getBestRaitring SortedByDate
-        } else if (isCartPostEmpty) {
+        if (principal == null) {
+            // TODO: которые имеют наивысший рейтинг на сайте а также недавно появились
+            //  нет поля в ResultSet, которо authorId, связь идет через другую таблицу и не должна быть в БД при создании класса
+            return bookRepository.getRecommendedBooks(PageRequest.of(offset, limit));
+        } else {
+            // TODO: сначала получем список книг запросом (каки покупал, в коризне или в отложенных)
+            //  потом по id получим их тэги жанры и авторов книг
+            //  убрать из поиска сущетсвующие и отсортировать по новизне
+            List<Book> refBooks;
+            if (principal != null) {
+                // получить названия книг
+            }
+            // по куки
+
             // авторизован, покупал какие-то книги либо добавлял книги в корзину или в отложенные, то рекомендации
             // должны строиться на основе этих добавлений
             // В этом случае рекомендуемые книги должны подбираться по тэгам,
             // жанрам и авторам книг, к которым пользователь имеет какое-либо отношение, а также по их новизне
-        } else {
-
         }
         return Page.empty();
     }

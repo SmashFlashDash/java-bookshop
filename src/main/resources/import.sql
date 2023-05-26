@@ -844,7 +844,7 @@ insert into message (email, name, subject, text, time, user_id) values ('scolega
 -- insert into users_balance_transaction (user_entity_id, balance_transaction_id) values (21, 21);
 
 
--- рейтинги книги
+-- рейтинги книги 21
 insert into book_rating (value, book_id) values (1, 21);
 insert into book_rating (value, book_id) values (1, 21);
 insert into book_rating (value, book_id) values (1, 21);
@@ -865,6 +865,27 @@ insert into book_rating (value, book_id) values (5, 21);
 insert into book_rating (value, book_id) values (5, 21);
 insert into book_rating (value, book_id) values (5, 21);
 insert into book_rating (value, book_id) values (5, 21);
+-- рейтинги книг
+insert into book_rating (value, book_id) values (5, 1);
+insert into book_rating (value, book_id) values (5, 1);
+insert into book_rating (value, book_id) values (4, 2);
+insert into book_rating (value, book_id) values (3, 4);
+insert into book_rating (value, book_id) values (3, 5);
+insert into book_rating (value, book_id) values (2, 6);
+insert into book_rating (value, book_id) values (2, 6);
+insert into book_rating (value, book_id) values (2, 8);
+insert into book_rating (value, book_id) values (2, 9);
+insert into book_rating (value, book_id) values (2, 10);
+insert into book_rating (value, book_id) values (2, 11);
+insert into book_rating (value, book_id) values (2, 12);
+insert into book_rating (value, book_id) values (2, 13);
+insert into book_rating (value, book_id) values (2, 14);
+insert into book_rating (value, book_id) values (2, 15);
+insert into book_rating (value, book_id) values (2, 16);
+insert into book_rating (value, book_id) values (2, 17);
+insert into book_rating (value, book_id) values (2, 18);
+insert into book_rating (value, book_id) values (2, 19);
+insert into book_rating (value, book_id) values (2, 20);
 
 
 -- отзыв на кингу с сылкой на рейтинг
