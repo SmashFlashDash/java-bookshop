@@ -6,10 +6,13 @@ import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.tag.TagDto;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.tag.TagService;
+import com.example.MyBookShopApp.dto.BookDto;
+import com.example.MyBookShopApp.dto.BooksDtoPageDto;
 import com.example.MyBookShopApp.dto.BooksPageDto;
 import com.example.MyBookShopApp.services.*;
 import lombok.RequiredArgsConstructor;
 import org.joda.time.DateTime;
+import org.modelmapper.ModelMapper;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +28,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/books")
@@ -39,6 +44,7 @@ public class BooksController {
     private final AuthorService authorService;
     private final BookRatingService bookRating;
     private final BookReviewService bookReviewService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/popular")
     public String popularPage(Model model) {
@@ -128,12 +134,15 @@ public class BooksController {
 
     @GetMapping("/recommended/page")
     @ResponseBody
-    public BooksPageDto getRecommendedBooksPage(@RequestParam("offset") Integer offset,
-                                                @RequestParam("limit") Integer limit,
-                                                @CookieValue(value = "cartContents", required = false) String booksCart,
-                                                @CookieValue(value = "postContents", required = false) String booksPostponed,
-                                                Principal principal) {
-        return new BooksPageDto(bookService.getPageOfRecommendedBooks2(offset, limit, principal, booksCart, booksPostponed).getContent());
+    public BooksDtoPageDto getRecommendedBooksPage(@RequestParam("offset") Integer offset,
+                                                   @RequestParam("limit") Integer limit,
+                                                   @CookieValue(value = "cartContents", required = false) String booksCart,
+                                                   @CookieValue(value = "postContents", required = false) String booksPostponed,
+                                                   Principal principal) {
+        // TODO: использвоать modelMapper
+        //  изменить view postponed, cart, при клике на image error
+        List<Book> books =bookService.getPageOfRecommendedBooks(offset, limit, principal, booksCart, booksPostponed).getContent();
+        return new BooksDtoPageDto(books.stream().map(BookDto::new).collect(Collectors.toList()));
     }
 
 

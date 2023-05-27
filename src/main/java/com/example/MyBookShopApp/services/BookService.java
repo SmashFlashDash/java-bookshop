@@ -71,18 +71,8 @@ public class BookService {
     }
 
 
-    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findAll(nextPage);
-    }
-
-    public Page<Book> getPageOfRecommendedBooks2(Integer offset, Integer limit, Principal principal, String booksCart, String booksPostponed) {
-//            SELECT b.* FROM book b LEFT JOIN (SELECT book_id, AVG(value) AS avg  FROM book_rating AS br GROUP BY book_id) avg ON b.id = avg.book_id ORDER BY avg DESC NULLS LAST, pub_date DESC limit ? offset ?
-// Hibernate: SELECT b.* FROM book b LEFT JOIN (SELECT book_id, AVG(value) AS avg  FROM book_rating AS br GROUP BY book_id) avg ON b.id = avg.book_id ORDER BY avg DESC NULLS LAST, pub_date DESC limit ? offset ?
-// Hibernate: select count(b.*) FROM book b LEFT JOIN (SELECT book_id, AVG(value) AS avg  FROM book_rating AS br GROUP BY book_id) avg ON b.id = avg.book_id
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit, Principal principal, String booksCart, String booksPostponed) {
         if (principal == null) {
-            // TODO: которые имеют наивысший рейтинг на сайте а также недавно появились
-            //  нет поля в ResultSet, которо authorId, связь идет через другую таблицу и не должна быть в БД при создании класса
             return bookRepository.getRecommendedBooks(PageRequest.of(offset, limit));
         } else {
             // TODO: сначала получем список книг запросом (каки покупал, в коризне или в отложенных)
@@ -101,7 +91,6 @@ public class BookService {
         }
         return Page.empty();
     }
-
 
 
     public Page<Book> getPageOfNewBooks(Integer offset, Integer limit) {

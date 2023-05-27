@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -31,8 +32,10 @@ public class MainPageController {
     }
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
-        return bookService.getPageOfRecommendedBooks(0, 6).getContent();
+    public List<Book> recommendedBooks(@CookieValue(value = "cartContents", required = false) String booksCart,
+                                       @CookieValue(value = "postContents", required = false) String booksPostponed,
+                                       Principal principal) {
+        return bookService.getPageOfRecommendedBooks(0, 6, principal, booksCart, booksPostponed).getContent();
     }
 
     @ModelAttribute("newBooks")
