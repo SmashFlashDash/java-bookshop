@@ -2,21 +2,18 @@ package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
-import io.swagger.v3.oas.models.headers.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -141,7 +138,7 @@ public class BookService {
 
     }
 
-    public Page<Book> getPageOfBooksByListGenres(List<GenreEntity> genres, Integer offset, Integer limit) {
+    public Page<Book> getPageOfBooksByListGenres(List<Genre> genres, Integer offset, Integer limit) {
         if (genres == null || genres.isEmpty()) {
             return Page.empty();
         } else {

@@ -20,7 +20,7 @@ public class MapperGenreEntityToGenreDro {
 //    }
 
     private static int[] calculateAndSortTree(GenreDto genre) {
-        GenreEntity item = genre.getItem();
+        Genre item = genre.getItem();
         List<GenreDto> childs = genre.getChilds();
         if (childs.size() == 0) {
             genre.setMaxDepth(0);
@@ -43,8 +43,8 @@ public class MapperGenreEntityToGenreDro {
         return new int[]{genre.getMaxDepth(), genre.getCountBooks()};
     }
 
-    public static void treeOfMap(List<GenreEntity> genres, GenreDto root) {
-        Map<Integer, GenreDto> tmpMap = genres.stream().collect(Collectors.toMap(GenreEntity::getId, GenreDto::new));
+    public static void treeOfMap(List<Genre> genres, GenreDto root) {
+        Map<Integer, GenreDto> tmpMap = genres.stream().collect(Collectors.toMap(Genre::getId, GenreDto::new));
         for (Map.Entry<Integer, GenreDto> item : tmpMap.entrySet()) {
             GenreDto dto = item.getValue();
             Integer parId = dto.getItem().getParentId();

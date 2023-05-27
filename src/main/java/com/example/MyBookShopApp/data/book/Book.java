@@ -4,7 +4,7 @@ import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.file.BookFile;
 import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
 import com.example.MyBookShopApp.data.book.review.BookReview;
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
 import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.user.User;
@@ -13,8 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -87,7 +85,7 @@ public class Book {
     @JoinTable(name = "book2genre",
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "genreId")})
-    private List<GenreEntity> genre;
+    private List<Genre> genre;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2user",
@@ -132,6 +130,6 @@ public class Book {
     }
 
     public String toStringGenres(){
-        return genre.stream().map(GenreEntity::getName).collect(Collectors.joining(", "));
+        return genre.stream().map(Genre::getName).collect(Collectors.joining(", "));
     }
 }

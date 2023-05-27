@@ -68,7 +68,10 @@ p.error-browser
               <h1 class="ProductCard-title" th:text="${slugBook.title}">Мара и морок
               </h1>
               <div class="ProductCard-author"><span class="ProductCard-titleProp">Автор:</span>&#32;
-                <a href="#" th:text="${slugBook.author.getName()}" th:href="'/authors/' + ${slugBook.getAuthor().getName()}">Лия Арден</a>
+                <th:block th:each="author, iter : ${slugBook.getAuthor()}">
+                  <a href="#" th:text="${author.getName()}" th:href="'/authors/' + ${author.getSlug()}">Лия Арден</a>
+                  <span th:if="!${iter.last}">, </span>
+                </th:block>
               </div>
               <div class="ProductCard-rating"><span class="ProductCard-titleProp">Рейтинг:</span>
                 <button class="trigger trigger_dropdown" type="button">

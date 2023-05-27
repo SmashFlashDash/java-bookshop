@@ -2,7 +2,7 @@ package com.example.MyBookShopApp.data.repositories;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,9 +27,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Page<Book> findAllByTagsContainingOrderByPubDateDesc(TagEntity tag, Pageable nexPage);
 
-    Page<Book> findAllByGenreOrderByPubDateDesc(GenreEntity genre, Pageable nexPage);
+    Page<Book> findAllByGenreOrderByPubDateDesc(Genre genre, Pageable nexPage);
 
-    Page<Book> findAllByGenreInOrderByPubDateDesc(List<GenreEntity> genre, Pageable nexPage);
+    Page<Book> findAllByGenreInOrderByPubDateDesc(List<Genre> genre, Pageable nexPage);
 
     @Query("FROM Book b ORDER BY b.statBought + 0.7 * b.statInCart + 0.4 * b.statPostponed DESC")
     Page<Book> findAllByOrderByPopular(Pageable nextPage);
