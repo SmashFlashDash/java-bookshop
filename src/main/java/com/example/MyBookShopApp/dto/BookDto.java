@@ -24,6 +24,7 @@ public class BookDto {
     private final Integer statPostponed;
 
     private final String author;
+    private final String authorSlug;
     private final String genres;
 
     public BookDto(Book m) {
@@ -41,6 +42,7 @@ public class BookDto {
         this.statPostponed = m.getStatPostponed();
 
         this.author = m.getAuthor().stream().map(Author::getName).collect(Collectors.joining(", "));
+        this.authorSlug = m.getAuthor().stream().map(Author::getSlug).collect(Collectors.joining(", "));
         this.genres = m.getGenre().stream().map(Genre::getName).collect(Collectors.joining(", "));
     }
 }

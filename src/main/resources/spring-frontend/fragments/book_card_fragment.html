@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div class="Card-fragment" th:class= "${class}" th:fragment="bookFragment(book, class)">
-    <a class="Card-picture" href="/books/slug.html">
+    <a class="Card-picture" href="/books/slug.html" th:href="'/books/' + ${book.slug}">
         <img th:src="${book.image}" src="/assets/img/content/main/card.jpg" alt="card.jpg"/>
         <div class="Card-ribbon" th:if="${book.isBestseller == 1}">
             <span class="Card-ribbonText">Бестселлер</span>
