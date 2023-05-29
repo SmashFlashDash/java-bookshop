@@ -5,7 +5,7 @@ import com.example.MyBookShopApp.data.book.file.BookFile;
 import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
 import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.genre.Genre;
-import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+import com.example.MyBookShopApp.data.payments.BalanceTransaction;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Table(name = "book")
 @ApiModel(description = "entity representing a book")
 @Data
-@JsonIgnoreProperties({"author", "users", "genre", "fileDownload", "balanceTransaction", "bookReview"})
+@JsonIgnoreProperties({"author", "users", "genre", "tags", "fileDownload", "balanceTransaction", "bookReview"})
 public class Book {
 
     @Id
@@ -96,24 +96,22 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<BookFile> bookFileList = new ArrayList<>();
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2tag",
             joinColumns = @JoinColumn(name = "bookId"),
             inverseJoinColumns = @JoinColumn(name = "tagId"))
     private List<TagEntity> tags;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookId")
-    private List<FileDownloadEntity> fileDownload;
+     @OneToMany(fetch = FetchType.LAZY)
+     @JoinColumn(name = "bookId")
+     private List<FileDownloadEntity> fileDownload;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookId")
-    private List<BalanceTransactionEntity> balanceTransaction;
+    @OneToMany(mappedBy = "book", orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<BalanceTransaction> balanceTransaction;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookId")
-    private List<BookReview> bookReview;
+     @OneToMany(fetch = FetchType.LAZY)
+     @JoinColumn(name = "bookId")
+     private List<BookReview> bookReview;
 
     @Override
     public String toString() {

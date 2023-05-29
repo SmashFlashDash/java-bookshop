@@ -2,19 +2,22 @@ package com.example.MyBookShopApp.security;
 
 import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.data.user.UserContact;
+import com.example.MyBookShopApp.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+// @Component
+// @Scope("prototype")
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails, OAuth2User {
     private final User bookstoreUser;
@@ -46,7 +49,7 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override

@@ -18,11 +18,11 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public Genre getGenreEntityByName(String name) {
+    public Genre getGenreByName(String name) {
         return genreRepository.findByName(name);
     }
 
-    public Genre getGenreEntityBySlug(String slug) {
+    public Genre getGenreBySlug(String slug) {
         return genreRepository.findBySlug(slug);
     }
 

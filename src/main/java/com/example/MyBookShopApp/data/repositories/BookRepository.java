@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -27,9 +29,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Page<Book> findAllByTagsContainingOrderByPubDateDesc(TagEntity tag, Pageable nexPage);
 
-    Page<Book> findAllByGenreOrderByPubDateDesc(Genre genre, Pageable nexPage);
+    Page<Book> findByGenreOrderByPubDateDesc(Genre genre, Pageable nexPage);
 
-    Page<Book> findAllByGenreInOrderByPubDateDesc(List<Genre> genre, Pageable nexPage);
+    Page<Book> findAllByGenreInOrderByPubDateDesc(Collection<Genre> genre, Pageable nexPage);
 
     @Query("FROM Book b ORDER BY b.statBought + 0.7 * b.statInCart + 0.4 * b.statPostponed DESC")
     Page<Book> findAllByOrderByPopular(Pageable nextPage);
@@ -54,15 +56,30 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBooksByTitleContaining(String title);
 
+    List<Book> findBooksByTitleIn(Collection<String> titles);
+
     @Query(value = "SELECT b.* FROM book b LEFT JOIN " +
             "(SELECT book_id, AVG(value) AS avg  FROM book_rating AS br GROUP BY book_id) avg " +
             "ON b.id = avg.book_id " +
             "ORDER BY avg DESC NULLS LAST, pub_date DESC", nativeQuery = true)
-    Page<Book> getRecommendedBooks(Pageable nextPage);
+    Page<Book> findRecommendedBooks(Pageable nextPage);
 
-    // @Query(value = "SELECT b.w FROM book b LEFT JOIN " +
-    //         "(SELECT book_id, AVG(value) AS avg  FROM book_rating AS br GROUP BY book_id) avg " +
-    //         "ON b.id = avg.book_id " +
-    //         "ORDER BY avg, pub_date DESC;", nativeQuery = true)
-    // Page<Book> getRecommendedBooksByTagsGenreAuthor(Pageable nextPage);
+    @Query(value = "SELECT b.* from book b " +
+            "LEFT JOIN (SELECT * FROM book2genre b2g INNER JOIN genre g ON b2g.genre_id = g.id " +
+            "     WHERE g.name in :genres) b2g " +
+            "ON b2g.book_id = b.id " +
+//            "LEFT JOIN (SELECT * FROM book2tag b2t INNER JOIN tag t ON b2t.tag_id = t.id" +
+//            "     WHERE t.tag in :tags) b2t " +
+//            "ON b2t.book_id = b.id " +
+//            "LEFT JOIN (SELECT * FROM book2author b2a INNER JOIN author a ON b2a.author_id = a.id" +
+//            "     WHERE a.name in :authors) b2a " +
+//            "ON b2a.book_id = b.id " +
+            "LEFT JOIN (SELECT book_id, AVG(value) avg FROM book_rating br GROUP BY book_id) avg " +
+            "ON b.id = avg.book_id " +
+            "ORDER BY avg.avg DESC NULLS LAST, pub_date DESC", nativeQuery = true)
+//            "ORDER BY avg.avg DESC NULLS LAST, b2t.tag, b2g.name, pub_date DESC", nativeQuery = true)
+    Page<Book> findBooksByGenreInOrTagsInOrAuthorIn(@Param("genres") Collection<Genre> genres,
+//                                                    @Param("tags") Collection<TagEntity> tags,
+//                                                    @Param("authors") Collection<Author> authors,
+                                                    Pageable nexPage);
 }

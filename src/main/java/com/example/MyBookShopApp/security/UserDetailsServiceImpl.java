@@ -16,11 +16,4 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
                 .map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found doh!"));
     }
-
-//    @Override
-//    public UserDetailsImpl loadUserByUsername(String emailOrPhone) throws UsernameNotFoundException {
-//        return userContactRepository.findUserContactByContact(emailOrPhone)
-//                .map(userContact -> new UserDetailsImpl(userContact.getUser()))
-//                .orElseThrow(()->new UsernameNotFoundException("user not found doh!"));
-//    }
 }

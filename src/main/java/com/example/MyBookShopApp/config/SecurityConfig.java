@@ -34,6 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTRequestFilter jwtFilter;
     private final OAuth2UserServiceImpl oAuth2UserService;
 
+    // TODO: т.к. WebSecurityConfigurerAdapter deprecated нужно делать через SecurityFilterChain
+    //  https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
     public SecurityConfig(LogoutHandlerImpl logoutHandler,
                           @Lazy JWTRequestFilter jwtFilter,
                           @Lazy UserDetailsServiceImpl userDetailsService,
@@ -83,6 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
+
 
     @Bean
     // не используется

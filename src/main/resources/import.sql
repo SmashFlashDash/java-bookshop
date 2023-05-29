@@ -432,6 +432,8 @@ insert into book2tag ( book_id, tag_id) values ( 99, 2);
 insert into book2tag ( book_id, tag_id) values ( 100, 4);
 
 
+insert into balance_transaction (book_id, user_id, description, time, value) values (1, 101, 'lobortis convallis', '2022-11-08 19:51:48', 878);
+insert into balance_transaction (book_id, user_id, description, time, value) values (2, 101, 'lobortis convallis', '2022-11-08 19:51:48', 878);
 insert into balance_transaction (book_id, user_id, description, time, value) values (85, 12, 'lobortis convallis', '2022-11-08 19:51:48', 878);
 insert into balance_transaction (book_id, user_id, description, time, value) values (97, 1, 'luctus cum', '2022-05-14 16:03:10', 565);
 insert into balance_transaction (book_id, user_id, description, time, value) values (26, 3, 'neque duis', '2022-02-24 00:18:55', 597);

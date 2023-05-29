@@ -3,30 +3,35 @@ package com.example.MyBookShopApp.services;
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.genre.Genre;
+import com.example.MyBookShopApp.data.payments.BalanceTransaction;
+import com.example.MyBookShopApp.data.repositories.BalanceTransactionRepository;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
 import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.tag.TagEntity;
+import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.MyBookShopApp.security.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class BookService {
-
-    BookRepository bookRepository;
-    RatingRepository ratingRepository;
-
-    @Autowired
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private final BookRepository bookRepository;
+    private final RatingRepository ratingRepository;
+    private final BalanceTransactionRepository balanceTransactionRep;
+    private final AuthService authService;
 
     public List<Book> getBooksData() {
         return bookRepository.findAll();
@@ -70,26 +75,32 @@ public class BookService {
         return bookRepository.findBookByTitleContaining(searchWord, PageRequest.of(offset, limit));
     }
 
-
-    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit, Principal principal, String booksCart, String booksPostponed) {
-        if (principal == null) {
-            return bookRepository.getRecommendedBooks(PageRequest.of(offset, limit));
-        } else {
-            // TODO: сначала получем список книг запросом (каки покупал, в коризне или в отложенных)
-            //  потом по id получим их тэги жанры и авторов книг
-            //  убрать из поиска сущетсвующие и отсортировать по новизне
-            List<Book> refBooks;
-            if (principal != null) {
-                // получить названия книг
-            }
-            // по куки
-
-            // авторизован, покупал какие-то книги либо добавлял книги в корзину или в отложенные, то рекомендации
-            // должны строиться на основе этих добавлений
-            // В этом случае рекомендуемые книги должны подбираться по тэгам,
-            // жанрам и авторам книг, к которым пользователь имеет какое-либо отношение, а также по их новизне
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit, Principal principal, String booksCart, String booksPost) {
+        Set<String> titlesCookie = new HashSet<>();
+        if (!StringUtils.isEmpty(booksCart)) {
+            titlesCookie.addAll(List.of(StringUtils.strip(booksPost, "/").split("/")));
         }
-        return Page.empty();
+        if (!StringUtils.isEmpty(booksPost)) {
+            titlesCookie.addAll(List.of(StringUtils.strip(booksCart, "/").split("/")));
+        }
+        List<Book> refBooks = bookRepository.findBooksByTitleIn(titlesCookie);
+
+        if (principal != null) {
+            User user = ((UserDetailsImpl) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getBookstoreUser();
+            refBooks.addAll(balanceTransactionRep.findAllByUser(user).stream()
+                    .map(BalanceTransaction::getBook).collect(Collectors.toList()));
+        }
+
+        if (refBooks.isEmpty()) {
+            return bookRepository.findRecommendedBooks(PageRequest.of(offset, limit));
+        } else {
+            Collection<TagEntity> tags = refBooks.stream().map(Book::getTags).flatMap(Collection::stream).collect(Collectors.toSet());
+            Collection<Genre> genres = refBooks.stream().map(Book::getGenre).flatMap(Collection::stream).collect(Collectors.toSet());
+            Collection<Author> authors = refBooks.stream().map(Book::getAuthor).flatMap(Collection::stream).collect(Collectors.toSet());
+            //return bookRepository.findBooksByGenreInOrTagsIn(genres, tags, PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "user")));
+            return bookRepository.findBooksByGenreInOrTagsInOrAuthorIn(new ArrayList<>(genres), PageRequest.of(offset, limit));
+//            return bookRepository.findBooksByGenreInOrTagsInOrAuthorIn(new ArrayList<>(genres), new ArrayList<>(tags), new ArrayList<>(authors), PageRequest.of(offset, limit));
+        }
     }
 
 
