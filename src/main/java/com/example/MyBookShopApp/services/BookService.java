@@ -78,12 +78,12 @@ public class BookService {
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit, Principal principal, String booksCart, String booksPost) {
         Set<String> titlesCookie = new HashSet<>();
         if (!StringUtils.isEmpty(booksCart)) {
-            titlesCookie.addAll(List.of(StringUtils.strip(booksPost, "/").split("/")));
-        }
-        if (!StringUtils.isEmpty(booksPost)) {
             titlesCookie.addAll(List.of(StringUtils.strip(booksCart, "/").split("/")));
         }
-        List<Book> refBooks = bookRepository.findBooksByTitleIn(titlesCookie);
+        if (!StringUtils.isEmpty(booksPost)) {
+            titlesCookie.addAll(List.of(StringUtils.strip(booksPost, "/").split("/")));
+        }
+        List<Book> refBooks = bookRepository.findBooksBySlugIn(titlesCookie);
 
         if (principal != null) {
             User user = ((UserDetailsImpl) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getBookstoreUser();
@@ -94,12 +94,12 @@ public class BookService {
         if (refBooks.isEmpty()) {
             return bookRepository.findRecommendedBooks(PageRequest.of(offset, limit));
         } else {
+            // TODO: добавил @Formula в Book чтобы считать raitong, можно ли было через hql join?
+            // после того как добавил @Formula не работает nativeQuery
             Collection<TagEntity> tags = refBooks.stream().map(Book::getTags).flatMap(Collection::stream).collect(Collectors.toSet());
             Collection<Genre> genres = refBooks.stream().map(Book::getGenre).flatMap(Collection::stream).collect(Collectors.toSet());
             Collection<Author> authors = refBooks.stream().map(Book::getAuthor).flatMap(Collection::stream).collect(Collectors.toSet());
-            //return bookRepository.findBooksByGenreInOrTagsIn(genres, tags, PageRequest.of(offset, limit, Sort.by(Sort.Direction.DESC, "user")));
-            return bookRepository.findBooksByGenreInOrTagsInOrAuthorIn(new ArrayList<>(genres), PageRequest.of(offset, limit));
-//            return bookRepository.findBooksByGenreInOrTagsInOrAuthorIn(new ArrayList<>(genres), new ArrayList<>(tags), new ArrayList<>(authors), PageRequest.of(offset, limit));
+            return bookRepository.findBooksByGenreInOrTagsInOrAuthorIn(genres, tags, authors, PageRequest.of(offset, 6));
         }
     }
 

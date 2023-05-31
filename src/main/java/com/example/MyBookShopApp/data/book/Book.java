@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -112,6 +113,10 @@ public class Book {
      @OneToMany(fetch = FetchType.LAZY)
      @JoinColumn(name = "bookId")
      private List<BookReview> bookReview;
+
+//    @Formula("select min(o.creation_date) from Orders o where o.customer_id = id)")
+    @Formula("(SELECT avg(br.value) from book_rating br where br.book_id = id)")
+    private Float raiting;
 
     @Override
     public String toString() {
