@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Field;
 import java.util.*;
 
-// @Component
-// @Scope("prototype")
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails, OAuth2User {
     private final User bookstoreUser;

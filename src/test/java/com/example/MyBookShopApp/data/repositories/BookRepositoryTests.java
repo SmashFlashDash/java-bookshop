@@ -42,7 +42,7 @@ class BookRepositoryTests {
         for (Book book : bookListByName) {
             // проверка что каждый элемент сожержит имя автора
             Logger.getLogger(this.getClass().getSimpleName()).info(book.toString());
-            assertThat(book.getAuthor().getName()).contains(token);
+            assertThat(book.getAuthor().get(0).getName()).contains(token);
         }
     }
 
@@ -55,7 +55,7 @@ class BookRepositoryTests {
         assertFalse(bookListByTitle.isEmpty());
         for (Book book : bookListByTitle) {
             Logger.getLogger(this.getClass().getSimpleName()).info(book.toString());
-            assertThat(book.getAuthor().getName()).contains(token);
+            assertThat(book.getAuthor().get(0).getName()).contains(token);
         }
     }
 }

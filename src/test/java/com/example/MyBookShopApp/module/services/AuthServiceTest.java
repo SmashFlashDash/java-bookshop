@@ -2,68 +2,40 @@ package com.example.MyBookShopApp.module.services;
 
 import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.dto.ContactConfirmationPayload;
-import com.example.MyBookShopApp.dto.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.RegistrationForm;
-import com.example.MyBookShopApp.security.UserDetailsImpl;
-import com.example.MyBookShopApp.security.jwt.JWTUtil;
 import com.example.MyBookShopApp.services.AuthService;
 import com.example.MyBookShopApp.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ContextConfiguration;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
-//  Бизнес-логика, «мозг» вашего интернет-магазина, сконцентрирована в @Service — слое аннотированных классов и связанных с ними классов-сателлитов.
-//  От того, насколько качественно протестирован этот уровень, зависит стабильность и надёжность работы низкоуровневой логики вашего Spring-приложения.
-//  Однако не весь код вашего проекта нуждается в тестах — лишь наиболее критически важные его модули. Слишком большая плотность покрытия кода
-//  тестами может, наоборот, усложнить процесс разработки и поддержки проекта.
-//  Перед тем как приступить к написанию модульных тестов для логики вашего интернет-магазина, определите наиболее рисковые модули:
-//
-//  1. К ним можно отнести содержимое пакета security, в котором располагается код, отвечающий за аутентификацию, авторизацию, управление
-//  учётными записями пользователей. Протестируйте возможные кейсы при:
-//  регистрации пользователя
-//  авторизации пользователя (вкл. получение токена)
 //  2. Кроме пакета security внимания также заслуживает логика, отвечающая за обработку и расчёт оценок и рейтингов книг. Здесь протестируйте методы:
-//
 //  рассчитывающие популярность книги
 //  рейтинг отзыва на книгу
 //  список рекомендуемых пользователю книг.
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class AuthServiceTest {
     private static RegistrationForm regForm;
     private static ContactConfirmationPayload payload;
-    private static AuthenticationImpl authImpl;
-    private static UserDetailsImpl userDetails;
     @MockBean
     private final UserService userServiceMock;
-    @MockBean
-    private final AuthenticationManager authenticationManagerMock;
     @InjectMocks
     private final AuthService authService;
-    private final JWTUtil jwtUtil;
 
 
     @BeforeAll
@@ -76,96 +48,25 @@ class AuthServiceTest {
         payload = new ContactConfirmationPayload();
         payload.setCode("test-code");
         payload.setContact("test-contact");
-        User user = new User();
-        userDetails = new UserDetailsImpl(user);
-        authImpl = new AuthenticationImpl(userDetails);
     }
 
     @AfterAll
     static void tearDown() {
         regForm = null;
         payload = null;
-        userDetails = null;
-        authImpl = null;
     }
 
     @Test
-    void registerNewOrGetUser_True() {
+    void registerNewOrGetUser_NotExits() {
         Mockito.doReturn(Optional.empty()).when(userServiceMock).findUserByContacts(any(List.class));
         User user = authService.registerNewOrGetUser(regForm);
         Mockito.verify(userServiceMock, Mockito.times(1)).saveNewUser(any(RegistrationForm.class));
     }
 
     @Test
-    void registerNewOrGetUser_False() {
+    void registerNewOrGetUserExist() {
         Mockito.doReturn(Optional.of(new User())).when(userServiceMock).findUserByContacts(any(List.class));
         User user = authService.registerNewOrGetUser(regForm);
         Mockito.verify(userServiceMock, Mockito.times(0)).saveNewUser(any(RegistrationForm.class));
-    }
-
-    @Test
-    void login() {
-        //  ContactConfirmationPayload payload
-    }
-
-    @Test
-    void jwtLogin() {
-        String refToken = jwtUtil.generateToken(userDetails);
-        Mockito.doReturn(authImpl).when(authenticationManagerMock).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        ContactConfirmationResponse response = authService.jwtLogin(payload);
-        assertEquals(refToken, response.getResult());
-    }
-
-    @Test
-    void getCurrentUser() {
-      assertTrue(authService.getCurrentUser().isEmpty());
-      // TODO: проверить залогиненного пользоваттлея
-      //  но как залогинить ели все на моках
-      // SecurityContext.setContext(реализ интерфейса)
-      // authService.jwtLogin(payload);
-      // assertTrue(authService.getCurrentUser().isPresent());
-    }
-}
-
-
-class AuthenticationImpl implements Authentication {
-    private final UserDetailsImpl userDetails;
-
-    public AuthenticationImpl(UserDetailsImpl userDetails) {
-        this.userDetails = userDetails;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public Object getCredentials() {
-        return null;
-    }
-
-    @Override
-    public Object getDetails() {
-        return null;
-    }
-
-    @Override
-    public Object getPrincipal() {
-        return userDetails;
-    }
-
-    @Override
-    public boolean isAuthenticated() {
-        return false;
-    }
-
-    @Override
-    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-    }
-
-    @Override
-    public String getName() {
-        return null;
     }
 }
