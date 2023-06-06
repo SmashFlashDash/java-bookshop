@@ -21,11 +21,6 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
-//  2. Кроме пакета security внимания также заслуживает логика, отвечающая за обработку и расчёт оценок и рейтингов книг. Здесь протестируйте методы:
-//  рассчитывающие популярность книги
-//  рейтинг отзыва на книгу
-//  список рекомендуемых пользователю книг.
-
 @SpringBootTest
 @ContextConfiguration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
