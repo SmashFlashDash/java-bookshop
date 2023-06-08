@@ -38,6 +38,7 @@ insert into genre (name, parent_id, slug) values ('Documentary', null, 'document
 -- тестовый пользователь password = test-password
 insert into "user" (password, balance, hash, name, reg_time) values ('$2a$10$kekAsZqa8AKAUzGH09rw9u3EfqP6ADmsQPWXYQ0WJoro4O2PzRqn.', 649, '10fb670b93848837ad8f4a7b8fee8f7687d4b827', 'test-user', '2022-08-09 03:21:10');
 insert into user_contact (user_id, type, approved, code, code_trails, code_time, contact) values (1, 'EMAIL', 1, 'code', 0, '2023-05-06 14:04:58.428116', 'test-contact');
+-- password 222 222
 insert into "user" (password, balance, hash, name, reg_time) values ('$2a$10$XzXiuJ1jQZciIVzGhp6uluDXAjrvsUW/W.wvP7n/XnWH9SnIcK7L6', 649, '0000000000000000000000', 'Test User', '2022-08-09 03:21:10');
 insert into user_contact (user_id, type, approved, code, code_trails, code_time, contact) values (2, 'EMAIL', 1, 'code', 0, '2023-05-06 14:04:58.428116', 'test@test.test');
 insert into user_contact (user_id, type, approved, code, code_trails, code_time, contact) values (2, 'PHONE', 1, 'code', 0, '2023-05-06 14:04:58.428116', '+7 (222) 222 2222');

@@ -57,8 +57,8 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return bookstoreUser.getContacts().stream()
-                .findFirst().map(UserContact::getContact)
+        return bookstoreUser.getContacts()
+                .stream().min(Comparator.comparingInt(UserContact::getId)).map(UserContact::getContact)
                 .orElse(null);
     }
 
