@@ -114,7 +114,6 @@ public class Book {
      @JoinColumn(name = "bookId")
      private List<BookReview> bookReview;
 
-//    @Formula("select min(o.creation_date) from Orders o where o.customer_id = id)")
     @Formula("(SELECT avg(br.value) from book_rating br where br.book_id = id)")
     private Float raiting;
 

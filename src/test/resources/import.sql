@@ -41,7 +41,20 @@ insert into genre (name, parent_id, slug) values ('Documentary', null, 'document
 insert into "user" (password, balance, hash, name, reg_time) values ('www', 649, '0000000000000000000000', 'Edin Giraudot', '2022-08-09 03:21:10');
 insert into user_contact (user_id, type, approved, code, code_trails, code_time, contact) values (2, 'EMAIL', 1, 'code', 0, '2023-05-06 14:04:58.428116', 'w@w.w');
 insert into tag (tag, slug, description) values ('challenge', 'challenge', 'nunc');
-insert into book (is_bestseller, pub_date, price, discount, title, slug, image, description, stat_in_cart, stat_bought, stat_postponed) values (0, '2022-06-02 05:10:52', 800, 669, 'Playboys, The', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 0, 0, 0);
+
+
+insert into book (is_bestseller, pub_date, price, discount, title, slug, image, description, stat_in_cart, stat_bought, stat_postponed) values
+(0, '2022-06-02 05:10:52', 800, 669, 'Number1', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 1, 1),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number2', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 1, 0),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number3', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 0, 0),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number4', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 0, 0, 0),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number5', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 3, 3, 3),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number6', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 0, 0, 3),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number7', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 0, 3, 0),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number8', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 3, 0, 0),
+(0, '2022-06-02 05:10:52', 800, 669, 'Number9', 'playboys_the', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 3, 3, 3);
+
+
 insert into book2tag (book_id, tag_id) values (1, 1);
 insert into balance_transaction (book_id, user_id, description, time, value) values (1, 1, 'lobortis convallis', '2022-11-08 19:51:48', 878);
 insert into book2author (author_id, book_id) values (1, 1);
