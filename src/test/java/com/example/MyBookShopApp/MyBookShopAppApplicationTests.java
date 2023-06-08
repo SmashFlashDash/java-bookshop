@@ -17,17 +17,17 @@ class MyBookShopAppApplicationTests {
     String authSecret;
 
     @Autowired
-    public MyBookShopAppApplicationTests(MyBookShopAppApplication appApplication){
+    public MyBookShopAppApplicationTests(MyBookShopAppApplication appApplication) {
         this.application = appApplication;
     }
 
-	@Test
-	void contextLoads() {
+    @Test
+    void contextLoads() {
         Assertions.assertNotNull(application);
-	}
+    }
 
-	@Test
-    void verifyAuthSecret(){
+    @Test
+    void verifyAuthSecret() {
         assertThat(authSecret, Matchers.containsString("box"));
     }
 

@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +22,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration
 @TestPropertySource("/application-test.properties")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MainPageControllerTests {
     private final MockMvc mockMvc;
-
-    @Autowired
-    public MainPageControllerTests(MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
-    }
 
     @BeforeEach
     void setUp() {
@@ -53,23 +52,24 @@ class MainPageControllerTests {
                 .andExpect(redirectedUrl("http://localhost/signin"));
     }
 
-       @Test
+    @Test
     public void correctLoginTest() throws Exception {
         mockMvc.perform(formLogin("/signin")
-                .user("w@w.w").password("222 222"))
+                        .user("test@test.test").password("222 222"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }
 
     @Test
-    @WithUserDetails("w@w.w")   // предоставим credentinals котоырй есть в БД
+    @WithUserDetails(value = "test@test.test", userDetailsServiceBeanName = "userDetailsServiceImpl")
+    // предоставим credentinals котоырй есть в БД
     public void testAuthenticatiedAcessToProfilePage() throws Exception {
         mockMvc.perform(get("/profile"))
                 .andDo(print())
                 .andExpect(authenticated())
                 .andExpect(xpath("/html/body/header/div[1]/div/div/div[3]/div/a[4]/span[1]")
-                        .string("w"));
+                        .string("Test User"));
     }
 
     @Test
