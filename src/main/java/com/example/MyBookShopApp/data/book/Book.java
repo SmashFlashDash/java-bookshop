@@ -8,7 +8,6 @@ import com.example.MyBookShopApp.data.genre.Genre;
 import com.example.MyBookShopApp.data.payments.BalanceTransaction;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -103,16 +102,16 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "tagId"))
     private List<TagEntity> tags;
 
-     @OneToMany(fetch = FetchType.LAZY)
-     @JoinColumn(name = "bookId")
-     private List<FileDownloadEntity> fileDownload;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookId")
+    private List<FileDownloadEntity> fileDownload;
 
-    @OneToMany(mappedBy = "book", orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BalanceTransaction> balanceTransaction;
 
-     @OneToMany(fetch = FetchType.LAZY)
-     @JoinColumn(name = "bookId")
-     private List<BookReview> bookReview;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bookId")
+    private List<BookReview> bookReview;
 
     @Formula("(SELECT avg(br.value) from book_rating br where br.book_id = id)")
     private Float raiting;
@@ -127,11 +126,11 @@ public class Book {
                 '}';
     }
 
-    public String toStringAuthors(){
+    public String toStringAuthors() {
         return author.stream().map(Author::getName).collect(Collectors.joining(", "));
     }
 
-    public String toStringGenres(){
+    public String toStringGenres() {
         return genre.stream().map(Genre::getName).collect(Collectors.joining(", "));
     }
 }

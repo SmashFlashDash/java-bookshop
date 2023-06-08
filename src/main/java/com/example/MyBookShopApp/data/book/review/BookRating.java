@@ -1,7 +1,5 @@
 package com.example.MyBookShopApp.data.book.review;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

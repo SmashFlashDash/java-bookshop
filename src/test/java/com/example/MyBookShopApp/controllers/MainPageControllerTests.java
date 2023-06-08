@@ -63,7 +63,6 @@ class MainPageControllerTests {
 
     @Test
     @WithUserDetails(value = "test@test.test", userDetailsServiceBeanName = "userDetailsServiceImpl")
-    // предоставим credentinals котоырй есть в БД
     public void testAuthenticatiedAcessToProfilePage() throws Exception {
         mockMvc.perform(get("/profile"))
                 .andDo(print())

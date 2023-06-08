@@ -25,7 +25,7 @@ public class BookFile {
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
 
-    public String getBookFileExtensionString(){
+    public String getBookFileExtensionString() {
         return BookFileTypeEnumNoTable.getExtensionStringByTypeId(typeId);
     }
 

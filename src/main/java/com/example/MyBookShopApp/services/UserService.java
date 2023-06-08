@@ -71,7 +71,6 @@ public class UserService {
 
         ProfileUpdateResponse response = new ProfileUpdateResponse();
         try {
-            // TODO: баг, а если поставить Transactional, оишбка что rollback транзакцию
             response.setUser(new UserDetailsImpl(userRepository.save(user)));
         } catch (DataIntegrityViolationException e) {
             response.setUser(new UserDetailsImpl(userRepository.findById(user.getId()).get()));

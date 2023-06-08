@@ -10,8 +10,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.security.sasl.AuthenticationException;
@@ -47,10 +45,6 @@ public class GlobalExceptionHandlerController {
 
     @ExceptionHandler(AuthenticationException.class)
     public boolean handleAuthentificationException(Exception exception) {
-        // TODO: хорошо обьект вернуть но нужно изменить sript.min.js
-        // ContactConfirmationResponse response = new ContactConfirmationResponse();
-        // response.setResult(exception.getMessage());
-        // return response;
         return false;
     }
 }

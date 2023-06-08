@@ -36,8 +36,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("FROM Book b ORDER BY b.statBought + 0.7 * b.statInCart + 0.4 * b.statPostponed DESC")
     Page<Book> findAllByOrderByPopular(Pageable nextPage);
 
-
-    // @Query("from Book book WHERE book.is_bestseller = 1 ORDER BY book.pub_date DESC ")
     Page<Book> findBookByIsBestsellerEqualsOrderByPubDateDesc(Short num, Pageable nextPage);
 
     Page<Book> findAllByOrderByPubDateDesc(Pageable nextPage);
@@ -60,26 +58,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     List<Book> findBooksBySlugIn(Collection<String> titles);
 
-    //@Query(value = "SELECT b. FROM book b LEFT JOIN " +
-    //        "(SELECT book_id, AVG(value) AS avg  FROM book_rating AS br GROUP BY book_id) avg " +
-    //        "ON b.id = avg.book_id " +
-    //        "ORDER BY avg DESC NULLS LAST, pub_date DESC", nativeQuery = true)
     @Query("SELECT b from Book b ORDER BY b.raiting DESC NULLS LAST, b.pubDate DESC")
     Page<Book> findRecommendedBooks(Pageable nextPage);
-
-//    @Query(value = "SELECT b.* from book b " +
-//            "LEFT JOIN (SELECT * FROM book2genre b2g INNER JOIN genre g ON b2g.genre_id = g.id " +
-//            "     WHERE g.name in :genres) b2g " +
-//            "ON b2g.book_id = b.id " +
-//            "LEFT JOIN (SELECT * FROM book2tag b2t INNER JOIN tag t ON b2t.tag_id = t.id" +
-//            "     WHERE t.tag in :tags) b2t " +
-//            "ON b2t.book_id = b.id " +
-//            "LEFT JOIN (SELECT * FROM book2author b2a INNER JOIN author a ON b2a.author_id = a.id" +
-//            "     WHERE a.name in :authors) b2a " +
-//            "ON b2a.book_id = b.id " +
-//            "LEFT JOIN (SELECT book_id, AVG(value) avg FROM book_rating br GROUP BY book_id) avg " +
-//            "ON b.id = avg.book_id " +
-//            "ORDER BY avg.avg DESC NULLS LAST, pub_date DESC", nativeQuery = true)
 
     @Query(value = "SELECT b from Book b " +
             "LEFT JOIN b.genre g LEFT JOIN b.tags t LEFT JOIN b.author a " +

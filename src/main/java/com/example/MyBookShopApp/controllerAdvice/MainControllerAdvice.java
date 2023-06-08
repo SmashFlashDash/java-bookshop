@@ -24,7 +24,6 @@ public class MainControllerAdvice {
 
     @ModelAttribute("bookCartCount")
     public Integer booksCart(@CookieValue(name = "cartContents", required = false) String cartContents, Principal principal) {
-        // TODO: сделано для ананоинмного пользователь, добавить авторизованному
         return splitCookie(cartContents).length;
     }
 
@@ -35,7 +34,7 @@ public class MainControllerAdvice {
 
     private String[] splitCookie(String cookie) {
         if (cookie == null || cookie.equals("")) {
-            return new String[] {};
+            return new String[]{};
         }
         cookie = StringUtils.strip(cookie, "/");
         return cookie.split("/");

@@ -140,7 +140,7 @@ public class BooksController {
                                                    @CookieValue(value = "postContents", required = false) String booksPostponed,
                                                    Principal principal) {
         // TODO: использвоать modelMapper
-        List<Book> books =bookService.getPageOfRecommendedBooks(offset, limit, principal, booksCart, booksPostponed).getContent();
+        List<Book> books = bookService.getPageOfRecommendedBooks(offset, limit, principal, booksCart, booksPostponed).getContent();
         return new BooksDtoPageDto(books.stream().map(BookDto::new).collect(Collectors.toList()));
     }
 

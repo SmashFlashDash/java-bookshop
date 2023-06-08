@@ -34,8 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JWTRequestFilter jwtFilter;
     private final OAuth2UserServiceImpl oAuth2UserService;
 
-    // TODO: т.к. WebSecurityConfigurerAdapter deprecated нужно делать через SecurityFilterChain
-    //  https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
     public SecurityConfig(LogoutHandlerImpl logoutHandler,
                           @Lazy JWTRequestFilter jwtFilter,
                           @Lazy UserDetailsServiceImpl userDetailsService,
@@ -48,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-        //  return NoOpPasswordEncoder.getInstance();
         return new BCryptPasswordEncoder();
     }
 
@@ -79,21 +76,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oidcUserService(this.oidcUserService())    // regUser
                 .userService(oAuth2UserService::loadUser)   // regUser
                 .and().and().oauth2Client();
-//                .and().exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
 
-        // для oauth нужно включить сессии, заккоментить отключение
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 
-
     @Bean
-    // не используется
     public OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
         final OidcUserService delegate = new OidcUserService();
         return (userRequest) -> {
-            // Delegate to the default implementation for loading a user
             OidcUser oidcUser = delegate.loadUser(userRequest);
             OAuth2AccessToken accessToken = userRequest.getAccessToken();
             Set<GrantedAuthority> mappedAuthorities = new HashSet<>();

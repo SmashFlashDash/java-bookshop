@@ -5,8 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class MainPage {
-    private String url = "http://127.0.0.1:8085/";
-    private ChromeDriver driver;
+    private final String url = "http://127.0.0.1:8085/";
+    private final ChromeDriver driver;
 
     public MainPage(ChromeDriver driver) {
         this.driver = driver;

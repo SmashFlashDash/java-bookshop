@@ -95,7 +95,6 @@ public class BookService {
             return bookRepository.findRecommendedBooks(PageRequest.of(offset, limit));
         } else {
             // TODO: добавил @Formula в Book чтобы считать raitong, можно ли было через hql join?
-            // после того как добавил @Formula не работает nativeQuery
             Collection<TagEntity> tags = refBooks.stream().map(Book::getTags).flatMap(Collection::stream).collect(Collectors.toSet());
             Collection<Genre> genres = refBooks.stream().map(Book::getGenre).flatMap(Collection::stream).collect(Collectors.toSet());
             Collection<Author> authors = refBooks.stream().map(Book::getAuthor).flatMap(Collection::stream).collect(Collectors.toSet());

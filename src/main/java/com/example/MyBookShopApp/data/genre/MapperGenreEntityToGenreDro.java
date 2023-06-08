@@ -9,15 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MapperGenreEntityToGenreDro {
-//    public int calculateCountBooks() {
-//        countBooks = (childs.size() == 0) ? item.getBooks().size() : childs.stream().mapToInt(GenreDto::calculateCountBooks).sum();
-//        return countBooks;
-//    }
-//
-//    public Integer calculateDepth() {
-//        maxDepth =  (childs.size() == 0) ? 0 : childs.stream().mapToInt(GenreDto::calculateDepth).max().getAsInt() + 1;
-//        return maxDepth;
-//    }
 
     private static int[] calculateAndSortTree(GenreDto genre) {
         Genre item = genre.getItem();
