@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.integration;
 import com.example.MyBookShopApp.controllers.AuthController;
 import com.example.MyBookShopApp.dto.ContactConfirmationPayload;
 import com.example.MyBookShopApp.services.AuthService;
+import com.example.MyBookShopApp.services.TokenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +17,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.servlet.http.Cookie;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,6 +33,7 @@ class AuthControllerTests {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
     private final AuthService authService;
+    private final TokenService tokenService;
 
     // регистрацию новой учётной записи
     // варианты login (по номеру телефона и по почте)
@@ -80,6 +85,22 @@ class AuthControllerTests {
                         .content(jsoon).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(cookie().value("token", token));
+    }
+
+    @Test
+    void logout() throws Exception {
+        ContactConfirmationPayload payload = ContactConfirmationPayload.builder()
+                .code("222 222")
+                .contact("test@test.test").build();
+        String jsoon = objectMapper.writeValueAsString(payload);
+        String token = authService.jwtLogin(payload).getResult();
+        mockMvc.perform(post("/login").content(jsoon).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/logout")
+                        .cookie(new Cookie("token", token)))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/signin"));
+        assertTrue(tokenService.isJwtInBlackList(token));
     }
 
 }

@@ -1,10 +1,11 @@
 package com.example.MyBookShopApp.integration;
 
 import com.example.MyBookShopApp.controllers.ChangeBookStatusController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,14 +14,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.servlet.http.Cookie;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,8 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ChangeBookStatusControllerTests {
     private final MockMvc mockMvc;
     private final ChangeBookStatusController controller;
-    private Cookie cookie;
     private final ObjectMapper objectMapper;
+    private Cookie cookie;
 
     @BeforeEach
     void setUp() {
@@ -44,8 +43,8 @@ class ChangeBookStatusControllerTests {
 
     @Test
     void addBookToCart() throws Exception {
-        Map<String, String> body = new HashMap<>(){{
-            put("status","CART");
+        Map<String, String> body = new HashMap<>() {{
+            put("status", "CART");
         }};
         String jsoon = objectMapper.writeValueAsString(body);
         mockMvc.perform(post("/books/changeBookStatus/{slug}", "snowriders")
@@ -58,8 +57,8 @@ class ChangeBookStatusControllerTests {
 
     @Test
     void removeBookFromCart() throws Exception {
-        Map<String, String> body = new HashMap<>(){{
-            put("status","UNLINK");
+        Map<String, String> body = new HashMap<>() {{
+            put("status", "UNLINK");
         }};
         String jsoon = objectMapper.writeValueAsString(body);
         mockMvc.perform(post("/books/changeBookStatus/{slug}", "number2")
