@@ -4,24 +4,27 @@ import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.file.BookFile;
 import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
 import com.example.MyBookShopApp.data.book.review.BookReview;
-import com.example.MyBookShopApp.data.genre.GenreEntity;
-import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
+import com.example.MyBookShopApp.data.payments.BalanceTransaction;
 import com.example.MyBookShopApp.data.tag.TagEntity;
 import com.example.MyBookShopApp.data.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "book")
 @ApiModel(description = "entity representing a book")
-@JsonIgnoreProperties({"author", "users", "genre", "fileDownload", "balanceTransaction", "bookReview"})
+@Data
+@JsonIgnoreProperties({"author", "users", "genre", "tags", "fileDownload", "balanceTransaction", "bookReview"})
 public class Book {
 
     @Id
@@ -72,17 +75,17 @@ public class Book {
     @Column(name = "stat_postponed", columnDefinition = "INT NOT NULL")
     private Integer statPostponed;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2author",
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "authorId")})
-    private Author author;
+    private List<Author> author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2genre",
             joinColumns = {@JoinColumn(name = "bookId")},
             inverseJoinColumns = {@JoinColumn(name = "genreId")})
-    private GenreEntity genre;
+    private List<Genre> genre;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2user",
@@ -93,16 +96,6 @@ public class Book {
     @OneToMany(mappedBy = "book")
     private List<BookFile> bookFileList = new ArrayList<>();
 
-    public List<BookFile> getBookFileList() {
-        return bookFileList;
-    }
-
-    public void setBookFileList(List<BookFile> bookFileList) {
-        this.bookFileList = bookFileList;
-    }
-
-
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book2tag",
             joinColumns = @JoinColumn(name = "bookId"),
@@ -113,165 +106,15 @@ public class Book {
     @JoinColumn(name = "bookId")
     private List<FileDownloadEntity> fileDownload;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bookId")
-    private List<BalanceTransactionEntity> balanceTransaction;
+    @OneToMany(mappedBy = "book", orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BalanceTransaction> balanceTransaction;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "bookId")
     private List<BookReview> bookReview;
 
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public GenreEntity getGenre() {
-        return genre;
-    }
-
-    public void setGenre(GenreEntity genre) {
-        this.genre = genre;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<FileDownloadEntity> getFileDownload() {
-        return fileDownload;
-    }
-
-    public void setFileDownload(List<FileDownloadEntity> fileDownloadEntities) {
-        this.fileDownload = fileDownloadEntities;
-    }
-
-    public List<BalanceTransactionEntity> getBalanceTransaction() {
-        return balanceTransaction;
-    }
-
-    public void setBalanceTransaction(List<BalanceTransactionEntity> balanceTransaction) {
-        this.balanceTransaction = balanceTransaction;
-    }
-
-    public List<BookReview> getBookReview() {
-        return bookReview;
-    }
-
-    public void setBookReview(List<BookReview> bookReview) {
-        this.bookReview = bookReview;
-    }
-
-    public Integer getStatInCart() {
-        return statInCart;
-    }
-
-    public void setStatInCart(Integer statInCart) {
-        this.statInCart = statInCart;
-    }
-
-    public Integer getStatBought() {
-        return statBought;
-    }
-
-    public void setStatBought(Integer statBought) {
-        this.statBought = statBought;
-    }
-
-    public Integer getStatPostponed() {
-        return statPostponed;
-    }
-
-    public void setStatPostponed(Integer statPostponed) {
-        this.statPostponed = statPostponed;
-    }
-
-    public List<TagEntity> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<TagEntity> tags) {
-        this.tags = tags;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public short getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(short discount) {
-        this.discount = discount;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public short getIsBestseller() {
-        return isBestseller;
-    }
-
-    public void setIsBestseller(short isBestseller) {
-        this.isBestseller = isBestseller;
-    }
-
-    public Date getPubDate() {
-        return pubDate;
-    }
-
-    public void setPubDate(Date pubDate) {
-        this.pubDate = pubDate;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    @Formula("(SELECT avg(br.value) from book_rating br where br.book_id = id)")
+    private Float raiting;
 
     @Override
     public String toString() {
@@ -281,5 +124,13 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public String toStringAuthors() {
+        return author.stream().map(Author::getName).collect(Collectors.joining(", "));
+    }
+
+    public String toStringGenres() {
+        return genre.stream().map(Genre::getName).collect(Collectors.joining(", "));
     }
 }

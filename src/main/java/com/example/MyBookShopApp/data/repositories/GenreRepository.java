@@ -1,19 +1,19 @@
 package com.example.MyBookShopApp.data.repositories;
 
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface GenreRepository extends JpaRepository<GenreEntity, Integer> {
+public interface GenreRepository extends JpaRepository<Genre, Integer> {
 
-    GenreEntity findByName(String name);
+    Genre findByName(String name);
 
-    GenreEntity findBySlug(String slug);
+    Genre findBySlug(String slug);
 
-    List<GenreEntity> findBySlugIn(List<String> slug);
+    List<Genre> findBySlugIn(List<String> slug);
 
     //    WITH RECURSIVE r AS (
 //            SELECT id, name, parent_id, slug, 1 AS depth FROM genre
@@ -36,7 +36,7 @@ public interface GenreRepository extends JpaRepository<GenreEntity, Integer> {
             "JOIN r ON g.parent_id = r.id" +
             ") " +
             "SELECT * FROM r;", nativeQuery = true)
-    List<GenreEntity> findAllNodesByGenreEntity(@Param("id") Integer id);
+    List<Genre> findAllNodesByGenreEntity(@Param("id") Integer id);
 
     @Query(value = "WITH RECURSIVE r AS ( " +
             "SELECT id, name, parent_id, slug, 1 AS depth FROM genre " +
@@ -46,5 +46,5 @@ public interface GenreRepository extends JpaRepository<GenreEntity, Integer> {
             "JOIN r ON g.parent_id = r.id" +
             ") " +
             "SELECT * FROM r;", nativeQuery = true)
-    List<GenreEntity> findAllNodesByGenreEntity(@Param("slug") String slug);
+    List<Genre> findAllNodesByGenreEntity(@Param("slug") String slug);
 }

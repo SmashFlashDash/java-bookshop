@@ -3,7 +3,6 @@ package com.example.MyBookShopApp.controllers;
 
 import com.example.MyBookShopApp.dto.*;
 import com.example.MyBookShopApp.services.AuthService;
-import com.example.MyBookShopApp.services.TokenService;
 import com.example.MyBookShopApp.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +82,7 @@ public class AuthController {
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@RequestParam Map<String,String> params, Model model) {
+    public String updateProfile(@RequestParam Map<String, String> params, Model model) {
         ProfileUpdateRequest request = objectMapper.convertValue(params, ProfileUpdateRequest.class);
         ProfileUpdateResponse response = userService.updateUser(request);
         model.addAttribute("curUsr", new UserDto(response.getUser()));

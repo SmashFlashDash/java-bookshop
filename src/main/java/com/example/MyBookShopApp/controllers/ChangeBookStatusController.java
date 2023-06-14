@@ -4,7 +4,6 @@ import com.example.MyBookShopApp.dto.BookStatusDto;
 import com.example.MyBookShopApp.dto.ChangeBookStatusRequest;
 import com.example.MyBookShopApp.services.BookRatingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.StringJoiner;
 
 @RestController
@@ -26,9 +26,9 @@ public class ChangeBookStatusController {
     public ResponseEntity<BookStatusDto> handleChangeBookStatus(@PathVariable(name = "slug", required = false) String slug,
                                                                 @CookieValue(name = "postContents", required = false) Cookie postContents,
                                                                 @CookieValue(name = "cartContents", required = false) Cookie cartContents,
+                                                                @RequestBody Map<String, String> status,
                                                                 HttpServletRequest request, HttpServletResponse response, Model model) {
-        String status = request.getParameter("status");
-        switch (status) {
+        switch (status.get("status")) {
             case "KEPT":
                 removeBookFromCookie(cartContents, slug, response);
                 addBookToCookie(postContents, "postContents", slug, response);
@@ -43,7 +43,6 @@ public class ChangeBookStatusController {
                 removeBookFromCookie(cartContents, slug, response);
                 return ResponseEntity.ok(new BookStatusDto(true));
             default:
-                // TODO: вообще exception еще есть ARCHIVED
                 return ResponseEntity.ok(new BookStatusDto(false));
         }
     }

@@ -2,28 +2,36 @@ package com.example.MyBookShopApp.services;
 
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
+import com.example.MyBookShopApp.data.payments.BalanceTransaction;
+import com.example.MyBookShopApp.data.repositories.BalanceTransactionRepository;
 import com.example.MyBookShopApp.data.repositories.BookRepository;
+import com.example.MyBookShopApp.data.repositories.RatingRepository;
 import com.example.MyBookShopApp.data.tag.TagEntity;
+import com.example.MyBookShopApp.data.user.User;
 import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.MyBookShopApp.security.UserDetailsImpl;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class BookService {
-
-    BookRepository bookRepository;
-
-    @Autowired
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private final BookRepository bookRepository;
+    private final RatingRepository ratingRepository;
+    private final BalanceTransactionRepository balanceTransactionRep;
+    private final AuthService authService;
 
     public List<Book> getBooksData() {
         return bookRepository.findAll();
@@ -67,10 +75,33 @@ public class BookService {
         return bookRepository.findBookByTitleContaining(searchWord, PageRequest.of(offset, limit));
     }
 
-    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit) {
-        Pageable nextPage = PageRequest.of(offset, limit);
-        return bookRepository.findAll(nextPage);
+    public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit, Principal principal, String booksCart, String booksPost) {
+        Set<String> titlesCookie = new HashSet<>();
+        if (!StringUtils.isEmpty(booksCart)) {
+            titlesCookie.addAll(List.of(StringUtils.strip(booksCart, "/").split("/")));
+        }
+        if (!StringUtils.isEmpty(booksPost)) {
+            titlesCookie.addAll(List.of(StringUtils.strip(booksPost, "/").split("/")));
+        }
+        List<Book> refBooks = bookRepository.findBooksBySlugIn(titlesCookie);
+
+        if (principal != null) {
+            User user = ((UserDetailsImpl) ((UsernamePasswordAuthenticationToken) principal).getPrincipal()).getBookstoreUser();
+            refBooks.addAll(balanceTransactionRep.findAllByUser(user).stream()
+                    .map(BalanceTransaction::getBook).collect(Collectors.toList()));
+        }
+
+        if (refBooks.isEmpty()) {
+            return bookRepository.findRecommendedBooks(PageRequest.of(offset, limit));
+        } else {
+            // TODO: добавил @Formula в Book чтобы считать raitong, можно ли было через hql join?
+            Collection<TagEntity> tags = refBooks.stream().map(Book::getTags).flatMap(Collection::stream).collect(Collectors.toSet());
+            Collection<Genre> genres = refBooks.stream().map(Book::getGenre).flatMap(Collection::stream).collect(Collectors.toSet());
+            Collection<Author> authors = refBooks.stream().map(Book::getAuthor).flatMap(Collection::stream).collect(Collectors.toSet());
+            return bookRepository.findBooksByGenreInOrTagsInOrAuthorIn(genres, tags, authors, PageRequest.of(offset, 6));
+        }
     }
+
 
     public Page<Book> getPageOfNewBooks(Integer offset, Integer limit) {
         return bookRepository.findAllByOrderByPubDateDesc(PageRequest.of(offset, limit));
@@ -106,7 +137,7 @@ public class BookService {
 
     }
 
-    public Page<Book> getPageOfBooksByListGenres(List<GenreEntity> genres, Integer offset, Integer limit) {
+    public Page<Book> getPageOfBooksByListGenres(List<Genre> genres, Integer offset, Integer limit) {
         if (genres == null || genres.isEmpty()) {
             return Page.empty();
         } else {
@@ -117,5 +148,4 @@ public class BookService {
     public Page<Book> getPageOfBooksByAuthor(Author author, Integer offset, Integer limit) {
         return bookRepository.findAllByAuthorOrderByPubDateDesc(author, PageRequest.of(offset, limit));
     }
-
 }

@@ -10,12 +10,16 @@ public enum BookFileTypeEnumNoTable {
         this.fileExtensionString = fileExtensionString;
     }
 
-    public static String getExtensionStringByTypeId(Integer typeId){
-        switch (typeId){
-            case 1: return BookFileTypeEnumNoTable.PDF.fileExtensionString;
-            case 2: return BookFileTypeEnumNoTable.EPUB.fileExtensionString;
-            case 3: return BookFileTypeEnumNoTable.FB2.fileExtensionString;
-            default: return "";
+    public static String getExtensionStringByTypeId(Integer typeId) {
+        switch (typeId) {
+            case 1:
+                return BookFileTypeEnumNoTable.PDF.fileExtensionString;
+            case 2:
+                return BookFileTypeEnumNoTable.EPUB.fileExtensionString;
+            case 3:
+                return BookFileTypeEnumNoTable.FB2.fileExtensionString;
+            default:
+                return "";
         }
     }
 }

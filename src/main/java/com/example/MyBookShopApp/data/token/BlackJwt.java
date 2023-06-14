@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "jwt_blacklist",
-    indexes = {@Index(name = "token", columnList = "token")})
+        indexes = {@Index(name = "token", columnList = "token")})
 public class BlackJwt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

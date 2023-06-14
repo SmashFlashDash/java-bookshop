@@ -1,34 +1,33 @@
 package com.example.MyBookShopApp.data.repositories;
 
 import com.example.MyBookShopApp.data.user.User;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-@TestPropertySource("/application-test.properties")
+@ActiveProfiles("test")
 class UserRepositoryTests {
-  private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-  @Autowired
-  public UserRepositoryTests(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
+    @Autowired
+    public UserRepositoryTests(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-  @Test
-  public void testAddNewUser() {
-    User user = new User();
-    user.setPassword("");
-    user.setBalance(0);
-    user.setName("Name");
-    user.setRegTime(LocalDateTime.now());
-    user.setHash(String.valueOf(user.hashCode()));
-    assertNotNull(userRepository.save(user));
-  }
+    @Test
+    public void testAddNewUser() {
+        User user = new User();
+        user.setPassword("");
+        user.setBalance(0);
+        user.setName("Name");
+        user.setRegTime(LocalDateTime.now());
+        user.setHash(String.valueOf(user.hashCode()));
+        assertNotNull(userRepository.save(user));
+    }
 }

@@ -59,7 +59,11 @@
               </div>
               <div class="Cart-block Cart-block_row">
                 <div class="Cart-block Cart-block_info">
-                  <div class="Cart-author"><a href="#" th:text="${book.author.toString()}">Борис Васильевич Маяковский</a>
+                  <div class="Cart-author">
+                    <th:block th:each="author, iter : ${book.author}">
+                      <a href="#" th:href="'authors/' + ${author.getSlug()}" th:text="${author.getName()}">Борис Васильевич Маяковский</a>
+                      <span th:if="!${iter.last}" >, </span>
+                    </th:block>
                   </div>
                   <div class="Cart-title"><a href="#" th:text="${book.title}">Трубы</a>
                   </div>

@@ -3,26 +3,28 @@ package com.example.MyBookShopApp.selenium;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MainPageSeleniumTests {
     private static ChromeDriver driver;
+    private final String seleniumPath = "C://Users/SVAN/Downloads/chromedriver_win32/chromedriver.exe";
 
     @BeforeAll
-    static void setup() {
-        System.setProperty("webdriver.chrome.driver", "C:/Users/SVAN/Downloads/chromedriver_win32/chromedriver.exe");
+    public void setup() {
+        System.setProperty("webdriver.chrome.driver", seleniumPath);
+        System.setProperty("webdriver.http.factory", "jdk-http-client");
         driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @AfterAll
-    static void afterAll() {
+    public void afterAll() {
         driver.quit();
     }
 
@@ -37,14 +39,15 @@ class MainPageSeleniumTests {
 
     @Test
     public void testMainPageSearchQuery() throws InterruptedException {
+        driver.manage().window().maximize();    // или элемент unreachable т.к. скрыт в верстке
         MainPage mainPage = new MainPage(driver);
         mainPage
                 .callPage()
                 .pause()
-                .setUpSearchToken("Belle")  // заполнгить строку поиска
+                .setUpSearchToken("Snowriders")  // заполнгить строку поиска
                 .pause()
                 .submit()   // нажать кнопку
                 .pause();
-        assertTrue(driver.getPageSource().contains("Belle"));
+        assertTrue(driver.getPageSource().contains("Snowriders"));
     }
 }

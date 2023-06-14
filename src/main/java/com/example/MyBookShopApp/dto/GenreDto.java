@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.dto;
 
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GenreDto implements Comparable<GenreDto> {
     private final List<GenreDto> childs = new ArrayList<>();
-    private GenreEntity item;
+    private Genre item;
     private GenreDto parent;
     private String slug = "";
     private Integer countBooks = null;
@@ -18,7 +18,7 @@ public class GenreDto implements Comparable<GenreDto> {
         this.item = null;
     }
 
-    public GenreDto(GenreEntity item) {
+    public GenreDto(Genre item) {
         this.item = item;
         slug = item.getSlug();
     }
@@ -33,11 +33,11 @@ public class GenreDto implements Comparable<GenreDto> {
         return childs;
     }
 
-    public GenreEntity getItem() {
+    public Genre getItem() {
         return item;
     }
 
-    public void setItem(GenreEntity item) {
+    public void setItem(Genre item) {
         this.item = item;
     }
 

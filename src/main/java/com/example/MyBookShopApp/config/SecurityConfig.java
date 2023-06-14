@@ -46,12 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
-//        return NoOpPasswordEncoder.getInstance();
         return new BCryptPasswordEncoder();
     }
-
-
-
 
     @Bean
     @Override
@@ -61,9 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(getPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(getPasswordEncoder());
     }
 
     @Override
@@ -78,80 +72,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/signin").deleteCookies("token")
                 .addLogoutHandler(logoutHandler)    // jwt blackilist
                 .and().oauth2Login().defaultSuccessUrl("/my")
-                    .userInfoEndpoint()
-                        .oidcUserService(this.oidcUserService())    // regUser
-                        .userService(oAuth2UserService::loadUser)   // regUser
+                .userInfoEndpoint()
+                .oidcUserService(this.oidcUserService())    // regUser
+                .userService(oAuth2UserService::loadUser)   // regUser
                 .and().and().oauth2Client();
-//                .and().exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
 
-        // TODO: для oauth нужно включить сессии, заккоментить отключение
-        //http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-//    @Bean
-//    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
-//        final DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();// breakpoint here
-//        return (OAuth2UserService) oAuth2UserRequest -> {
-//            OAuth2User defUser = delegate.loadUser(oAuth2UserRequest);
-//            return new UserDetailsImpl(userRepository.findUserByEmail(defUser.getAttribute("email")).orElseGet(() -> authService.registerNewUser(
-//                    defUser.getAttribute("name"),
-//                    defUser.getAttribute("email"),
-//                    defUser.getAttribute("password"),
-//                    defUser.getAttribute("phone"))));
-//        };
-//      }
 
     @Bean
     public OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
         final OidcUserService delegate = new OidcUserService();
         return (userRequest) -> {
-            // Delegate to the default implementation for loading a user
             OidcUser oidcUser = delegate.loadUser(userRequest);
             OAuth2AccessToken accessToken = userRequest.getAccessToken();
             Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-            // TODO
-            // 1) Fetch the authority information from the protected resource using accessToken
-            // 2) Map the authority information to one or more GrantedAuthority's and add it to mappedAuthorities
-            // 3) Create a copy of oidcUser but use the mappedAuthorities instead
             oidcUser = new DefaultOidcUser(mappedAuthorities, oidcUser.getIdToken(), oidcUser.getUserInfo());
             return oidcUser;
         };
     }
-
-
-    // если конфигурируть через filterChain а не configre
-    // но созадавать в другом конфиге чтобы здесь имплементить
-    // вместо configure(AuthenticationManagerBuilder auth)
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userDetailsService);
-//        authenticationProvider.setPasswordEncoder(getPasswordEncoder());
-//        return authenticationProvider;
-//    }
-    // можно было клас User implement userDetails и тогда не нужно кастовать
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return s -> (UserDetails) userRepository.findBookstoreUserByEmail(s).orElseThrow(() ->new UsernameNotFoundException(""));
-//    }
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        return config.getAuthenticationManager();
-//    }
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/**").permitAll()
-//                .antMatchers("/my", "/profile").authenticated().and()
-//                .formLogin().loginPage("/signin").failureUrl("/signin").and()
-//                .logout().logoutUrl("/logout").logoutSuccessUrl("/signin").deleteCookies("token")
-//                .addLogoutHandler(logoutHandler).and()
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-//        return http.build();
-//    }
 }
 

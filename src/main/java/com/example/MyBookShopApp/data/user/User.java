@@ -5,7 +5,7 @@ import com.example.MyBookShopApp.data.book.file.FileDownloadEntity;
 import com.example.MyBookShopApp.data.book.review.BookReview;
 import com.example.MyBookShopApp.data.book.review.BookReviewLike;
 import com.example.MyBookShopApp.data.book.review.MessageEntity;
-import com.example.MyBookShopApp.data.payments.BalanceTransactionEntity;
+import com.example.MyBookShopApp.data.payments.BalanceTransaction;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -38,25 +38,24 @@ public class User {
     private String password;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
-    private List<Book> books  = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private List<FileDownloadEntity> fileDownload  = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private List<BalanceTransactionEntity> BalanceTransaction  = new ArrayList<>();
+    private List<FileDownloadEntity> fileDownload = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<MessageEntity> message  = new ArrayList<>();
+    private List<MessageEntity> message = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
-            orphanRemoval = true ,fetch = FetchType.EAGER)
-    private List<UserContact> contacts  = new ArrayList<>();
+            orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<UserContact> contacts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<BookReview> bookReview  = new ArrayList<>();
+    private List<BookReview> bookReview = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<BalanceTransaction> balanceTransaction = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")

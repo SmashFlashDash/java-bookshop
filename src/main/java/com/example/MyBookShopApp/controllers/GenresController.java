@@ -1,13 +1,10 @@
 package com.example.MyBookShopApp.controllers;
 
-import com.example.MyBookShopApp.data.genre.GenreEntity;
-import com.example.MyBookShopApp.dto.UserDto;
+import com.example.MyBookShopApp.data.genre.Genre;
 import com.example.MyBookShopApp.services.AuthService;
 import com.example.MyBookShopApp.services.BookService;
 import com.example.MyBookShopApp.services.GenreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +32,8 @@ public class GenresController {
     public String slugPage(HttpServletRequest request, Model model) {
         ArrayList<String> slugs = new ArrayList<>(Arrays.asList(request.getRequestURI().split("/")));
         slugs.removeIf(s -> (s.equals("") || s.equals("genres")));
-        List<GenreEntity> genres = genreService.getGenreEntitesBySlugs(slugs);
-        model.addAttribute("pathVars", genres.stream().map(GenreEntity::getSlug).collect(Collectors.toList()));
+        List<Genre> genres = genreService.getGenreEntitesBySlugs(slugs);
+        model.addAttribute("pathVars", genres.stream().map(Genre::getSlug).collect(Collectors.toList()));
         model.addAttribute("genres", genres);
         model.addAttribute("books", bookService.getPageOfBooksByListGenres(
                 genreService.getGenreNodes(slugs.get(slugs.size() - 1)), 0, 10).getContent());

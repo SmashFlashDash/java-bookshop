@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.services;
 
-import com.example.MyBookShopApp.data.genre.GenreEntity;
+import com.example.MyBookShopApp.data.genre.Genre;
 import com.example.MyBookShopApp.data.genre.MapperGenreEntityToGenreDro;
 import com.example.MyBookShopApp.data.repositories.GenreRepository;
 import com.example.MyBookShopApp.dto.GenreDto;
@@ -18,15 +18,15 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public GenreEntity getGenreEntityByName(String name) {
+    public Genre getGenreByName(String name) {
         return genreRepository.findByName(name);
     }
 
-    public GenreEntity getGenreEntityBySlug(String slug) {
+    public Genre getGenreBySlug(String slug) {
         return genreRepository.findBySlug(slug);
     }
 
-    public List<GenreEntity> getGenreEntitesBySlugs(List<String> slugs) {
+    public List<Genre> getGenreEntitesBySlugs(List<String> slugs) {
         return genreRepository.findBySlugIn(slugs);
     }
 
@@ -36,11 +36,11 @@ public class GenreService {
         return root;
     }
 
-    public List<GenreEntity> getGenreNodes(GenreEntity genreEntity) {
+    public List<Genre> getGenreNodes(Genre genreEntity) {
         return genreRepository.findAllNodesByGenreEntity(genreEntity.getId());
     }
 
-    public List<GenreEntity> getGenreNodes(String slug) {
+    public List<Genre> getGenreNodes(String slug) {
         return genreRepository.findAllNodesByGenreEntity(slug);
     }
 }

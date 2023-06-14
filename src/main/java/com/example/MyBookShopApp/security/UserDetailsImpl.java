@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails, OAuth2User {
@@ -46,7 +43,7 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -56,8 +53,8 @@ public class UserDetailsImpl implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return bookstoreUser.getContacts().stream()
-                .findFirst().map(UserContact::getContact)
+        return bookstoreUser.getContacts()
+                .stream().min(Comparator.comparingInt(UserContact::getId)).map(UserContact::getContact)
                 .orElse(null);
     }
 
