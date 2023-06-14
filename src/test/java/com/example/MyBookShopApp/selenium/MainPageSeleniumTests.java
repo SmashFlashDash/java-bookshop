@@ -5,27 +5,22 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
-@ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MainPageSeleniumTests {
-    @Value("${selenium.path}")
-    private String seleniumPath;
     private static ChromeDriver driver;
+    private final String seleniumPath = "C://Users/SVAN/Downloads/chromedriver_win32/chromedriver.exe";
 
     @BeforeAll
     public void setup() {
         System.setProperty("webdriver.chrome.driver", seleniumPath);
+        System.setProperty("webdriver.http.factory", "jdk-http-client");
         driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @AfterAll
@@ -44,6 +39,7 @@ class MainPageSeleniumTests {
 
     @Test
     public void testMainPageSearchQuery() throws InterruptedException {
+        driver.manage().window().maximize();    // или элемент unreachable т.к. скрыт в верстке
         MainPage mainPage = new MainPage(driver);
         mainPage
                 .callPage()
