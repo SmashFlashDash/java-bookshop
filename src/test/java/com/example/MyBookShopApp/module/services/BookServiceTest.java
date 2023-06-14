@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
@@ -16,8 +17,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@TestPropertySource("/application-test.properties")
 class BookServiceTest {
     private final BookService bookService;
 
@@ -36,6 +37,7 @@ class BookServiceTest {
             Book curBook = iter.next();
             if (iter.hasPrevious()) {
                 Book prevBook = iter.previous();
+                iter.next();
                 double prev = popilarFormula(prevBook.getStatBought(), prevBook.getStatInCart(), prevBook.getStatPostponed());
                 double cur = popilarFormula(curBook.getStatBought(), curBook.getStatInCart(), curBook.getStatPostponed());
                 assertThat("popular", prev, greaterThanOrEqualTo(cur));

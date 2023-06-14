@@ -47,7 +47,7 @@ insert into user_contact (user_id, type, approved, code, code_trails, code_time,
 insert into tag (tag, slug, description) values ('test', 'test', 'test');
 insert into tag (tag, slug, description) values ('challenge', 'challenge', 'nunc');
 insert into book (is_bestseller, pub_date, price, discount, title, slug, image, description, stat_in_cart, stat_bought, stat_postponed) values
-(0, '2022-06-02 05:10:52', 800, 669, 'Number1', 'number1', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 1, 1),
+(1, '2022-06-02 05:10:52', 800, 669, 'Number1', 'number1', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 1, 1),
 (0, '2022-06-02 05:10:52', 800, 669, 'Number2', 'number2', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 1, 0),
 (0, '2022-06-02 05:10:52', 800, 669, 'Number3', 'number3', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 1, 0, 0),
 (0, '2022-06-02 05:10:52', 800, 669, 'Number4', 'number4', 'http://dummyimage.com/122x100.png/dddddd/000000', 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus', 0, 0, 0),
