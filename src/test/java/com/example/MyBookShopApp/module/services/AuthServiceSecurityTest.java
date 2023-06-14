@@ -49,6 +49,6 @@ public class AuthServiceSecurityTest {
     @Test
     @WithUserDetails(value = "test-contact", userDetailsServiceBeanName = "userDetailsServiceImpl")
     void getCurrentUser() {
-        assertEquals("test-contact", authService.getCurrentUser().get().getUsername());
+        assertEquals("test-user", authService.getCurrentUser().get().getUsername());
     }
 }
