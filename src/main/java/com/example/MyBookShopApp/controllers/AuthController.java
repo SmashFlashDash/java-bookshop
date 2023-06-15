@@ -4,6 +4,8 @@ package com.example.MyBookShopApp.controllers;
 import com.example.MyBookShopApp.dto.*;
 import com.example.MyBookShopApp.services.AuthService;
 import com.example.MyBookShopApp.services.UserService;
+import com.example.MyBookShopApp.sms.SmsCode;
+import com.example.MyBookShopApp.sms.SmsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,7 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final SmsService smsService;
 
     @GetMapping("/signin")
     public String handleSignin() {
@@ -36,11 +39,17 @@ public class AuthController {
 
     @PostMapping("/requestContactConfirmation")
     @ResponseBody
-    public ContactConfirmationResponse requestContactConfirmation(
-            @RequestBody ContactConfirmationPayload contactConfirmationPayload) {
+    public ContactConfirmationResponse requestContactConfirmation(@RequestBody ContactConfirmationPayload payload) {
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult("true");
-        return response;
+
+        if (payload.getContact().contains("@")) {
+            return response;    // заглуша на email
+        } else {
+            String smsCode = smsService.sendSecretCodeSms(payload.getContact());
+            smsService.saveNewCode(new SmsCode(smsCode, 60));   // expire in 1 min
+            return response;
+        }
     }
 
     @PostMapping("/approveContact")
@@ -48,7 +57,16 @@ public class AuthController {
     public ContactConfirmationResponse approveContact(
             @RequestBody ContactConfirmationPayload payload) {
         ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult("true");
+
+         if (smsService.verifyCode(payload.getCode())) {
+             response.setResult("true");
+         } else {
+             if (payload.getContact().contains("@")) {
+                 response.setResult("true");
+             } else {
+                 response.setResult("false");
+             }
+         }
         return response;
     }
 
@@ -57,6 +75,20 @@ public class AuthController {
         authService.registerNewOrGetUser(registrationForm);
         model.addAttribute("regOk", true);
         return "signin";
+    }
+
+    @PostMapping("/login-by-phone-number")
+    @ResponseBody
+    public ContactConfirmationResponse loginByPhone(@RequestBody ContactConfirmationPayload payload,
+                                             HttpServletResponse httpServletResponse) {
+        if (smsService.verifyCode(payload.getCode())) {
+            ContactConfirmationResponse loginResponse = authService.jwtLoginByPhone(payload);
+            Cookie cookie = new Cookie("token", loginResponse.getResult());
+            httpServletResponse.addCookie(cookie);
+            return loginResponse;
+        } else {
+            return null;
+        }
     }
 
     @PostMapping("/login")

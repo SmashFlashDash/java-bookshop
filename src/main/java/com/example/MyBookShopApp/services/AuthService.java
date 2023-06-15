@@ -53,6 +53,14 @@ public class AuthService {
         return response;
     }
 
+    public ContactConfirmationResponse jwtLoginByPhone(ContactConfirmationPayload payload) {
+        RegistrationForm registrationForm = new RegistrationForm();
+        registrationForm.setPhone(payload.getContact());
+        registrationForm.setPass(payload.getCode());
+        registerNewOrGetUser(registrationForm);
+        return jwtLogin(payload);
+    }
+
     public Optional<UserDetailsImpl> getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
@@ -60,4 +68,6 @@ public class AuthService {
         }
         return Optional.of((UserDetailsImpl) auth.getPrincipal());
     }
+
+
 }
