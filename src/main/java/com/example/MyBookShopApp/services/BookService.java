@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.services;
 
+import com.example.MyBookShopApp.aspects.annotations.LogResult;
 import com.example.MyBookShopApp.data.author.Author;
 import com.example.MyBookShopApp.data.book.Book;
 import com.example.MyBookShopApp.data.genre.Genre;
@@ -24,9 +25,11 @@ import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 @Transactional
 @RequiredArgsConstructor
+@LogResult
 public class BookService {
     private final BookRepository bookRepository;
     private final RatingRepository ratingRepository;
@@ -46,7 +49,7 @@ public class BookService {
     }
 
     public List<Book> getBooksByTitle(String title) throws BookstoreApiWrongParameterException {
-        if (title.equals("") || title.length() <= 1) {
+        if (title.length() <= 1) {
             throw new BookstoreApiWrongParameterException("Wrong values passed to one or more parameters");
         } else {
             List<Book> data = bookRepository.findBooksByTitleContaining(title);
